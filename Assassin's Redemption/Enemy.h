@@ -39,7 +39,7 @@ public:
 	float getAngle();
 	void calcDir(sf::Vector2f player);
 	void chasePlayer(int flag);
-	int detectPlayer(int flagE, sf::Vector2f player,int a);
+	int detectPlayer(int flagE, sf::Vector2f player);
 	void shoot();
 	void stop();
 };

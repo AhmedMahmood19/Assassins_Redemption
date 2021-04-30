@@ -88,6 +88,7 @@ void Enemy::chasePlayer(int flagE) {
     if (flagE != 1)
     {
         //If no collision
+        
         PrevPos = eSpr.getPosition();
         eSpr.move(aimDirNorm);
         updateEnemySprite();
@@ -95,20 +96,24 @@ void Enemy::chasePlayer(int flagE) {
     if (flagE == 1)
     {
         //If collision
-        oldpos = eSpr.getPosition();
+        
         eSpr.setPosition(PrevPos.x, PrevPos.y);
         flagE = 0;
     }
 }
 
-int Enemy::detectPlayer(int flagE,sf::Vector2f player, int a) {
+int Enemy::detectPlayer(int flagE,sf::Vector2f player) {
     calcDir(player);
-    if (magnitude <= 200) {
+    if (magnitude <= 200 && magnitude>=70) {
         lookAtPlayer(player);
-        if(a==0)
         chasePlayer(flagE);
 
         return 1;
+    }
+    else if (magnitude <70 )
+    {
+        lookAtPlayer(player);
+        stop();
     }
     else {
         cout << "Player is not close!\n";
