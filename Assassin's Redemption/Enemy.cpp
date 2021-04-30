@@ -95,31 +95,41 @@ void Enemy::chasePlayer(int flagE) {
     if (flagE == 1)
     {
         //If collision
+        oldpos = eSpr.getPosition();
         eSpr.setPosition(PrevPos.x, PrevPos.y);
         flagE = 0;
     }
 }
 
-void Enemy::detectPlayer(int flagE,sf::Vector2f player) {
+int Enemy::detectPlayer(int flagE,sf::Vector2f player, int a) {
     calcDir(player);
     if (magnitude <= 200) {
         lookAtPlayer(player);
+        if(a==0)
         chasePlayer(flagE);
+
+        return 1;
     }
     else {
         cout << "Player is not close!\n";
+        return 0;
     }
 }
 
 void Enemy::shoot() {
     b1.rotateSprite(angle);
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
+    
+
         b1.setSpritePos(this->getEnemyPos());
         b1.setcurrentVel(b1.getMaxSpd() * aimDirNorm);
         bullets.push_back(Bullet(b1));
-    }
+    
     for (size_t i = 0; i < bullets.size(); i++) {
         bullets[i].moveSprite();
     }
+}
+
+void Enemy::stop()
+{
+    eSpr.move(oldpos.x, oldpos.y);
 }

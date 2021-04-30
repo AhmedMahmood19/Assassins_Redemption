@@ -16,6 +16,7 @@ private:
 	sf::Sprite eSpr;
 	sf::Vector2i* PtrmousePos;
 	sf::Vector2f aimDir;
+	sf::Vector2f oldpos;
 	float magnitude;
 	float angle;
 	sf::Vector2f aimDirNorm;
@@ -38,6 +39,7 @@ public:
 	float getAngle();
 	void calcDir(sf::Vector2f player);
 	void chasePlayer(int flag);
-	void detectPlayer(int flagE, sf::Vector2f player);
+	int detectPlayer(int flagE, sf::Vector2f player,int a);
 	void shoot();
+	void stop();
 };

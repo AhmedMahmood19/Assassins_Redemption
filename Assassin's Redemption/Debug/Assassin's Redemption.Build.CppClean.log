@@ -3,9 +3,15 @@ d:\projects c++\sfml-game\assassin's redemption\debug\vc142.idb
 d:\projects c++\sfml-game\assassin's redemption\debug\wall.obj
 d:\projects c++\sfml-game\assassin's redemption\debug\player.obj
 d:\projects c++\sfml-game\assassin's redemption\debug\main.obj
+<<<<<<< Updated upstream
 d:\projects c++\sfml-game\assassin's redemption\debug\enemy.obj
 d:\projects c++\sfml-game\assassin's redemption\debug\bullet.obj
 d:\projects c++\sfml-game\assassin's redemption\debug\game.obj
+=======
+d:\projects c++\sfml-game\assassin's redemption\debug\game.obj
+d:\projects c++\sfml-game\assassin's redemption\debug\enemy.obj
+d:\projects c++\sfml-game\assassin's redemption\debug\bullet.obj
+>>>>>>> Stashed changes
 d:\projects c++\sfml-game\assassin's redemption\debug\assassin's redemption.exe
 d:\projects c++\sfml-game\assassin's redemption\debug\assassin's redemption.ilk
 d:\projects c++\sfml-game\assassin's redemption\debug\assassin's redemption.pdb

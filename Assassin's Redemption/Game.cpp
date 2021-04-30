@@ -102,7 +102,10 @@ void Game::collisions()
         }
         else flagE = 0;
     }
-   
+    if (player.getSprite().getGlobalBounds().intersects(enemy.getSprite().getGlobalBounds()))
+    {
+        enemy.stop();   
+    }
 }
 
 
@@ -176,7 +179,7 @@ void Game::pollEvents()
     
     player.updatePlayer(flag);
     player.shoot();
-    enemy.detectPlayer(flagE, player.getPlayerPos());
+    enemy.detectPlayer(flagE, player.getPlayerPos(), player.getSprite().getGlobalBounds().intersects(enemy.getSprite().getGlobalBounds()));
 }
 
 
