@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Wall.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -29,8 +30,10 @@ private:
 	//Game Logic
 		//Data:
 	Player player;
+	Enemy enemy;
 	vector<Wall> walls;
 	bool flag;
+	bool flagE;
 	
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
@@ -38,7 +41,7 @@ private:
 		//Funcs:
 	void pollEvents();
 	void updateMousePositions();
-	int collisions();
+	void collisions();
 	void drawWalls();
 	void windowbounds();
 	void bulletWallColl();
