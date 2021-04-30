@@ -1,5 +1,19 @@
 #include "Player.h"
 
+
+
+
+sf::Vector2f Player::sendbulletPos(int i)
+{
+    
+    return bullets[i].bGetPos();
+}
+
+sf::Sprite Player::send_bSpr(int i)
+{
+    return bullets[i].getSprite();
+}
+
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))
@@ -33,6 +47,7 @@ vector<Bullet>* Player::getBulletsVector() {
 float Player::getAngle() {
     return angle;
 }
+
 void Player::setPtrmousePos(sf::Vector2i& mouse) {
     PtrmousePos = &mouse;
 }
@@ -135,13 +150,22 @@ void Player::updatePlayer(int flag) {
 }
 void Player::shoot() {
     b1.rotateSprite(angle);
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (shoottimer < 10 )
     {
+        shoottimer++;
+    }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= 10)
+    {
+        shoottimer = 0;
         b1.setSpritePos(this->getPlayerPos());
         b1.setcurrentVel(b1.getMaxSpd() * aimDirNorm);
+       
         bullets.push_back(Bullet(b1));
+        
+   
     }
     for (size_t i = 0; i < bullets.size(); i++) {
         bullets[i].moveSprite();
+        
     }
 }

@@ -16,6 +16,7 @@ private:
 	sf::Sprite pSpr;
 	sf::Vector2i *PtrmousePos;
 	sf::Vector2f aimDir;
+	int bsize;
 	float magnitude;
 	float angle;
 	sf::Vector2f aimDirNorm;
@@ -25,8 +26,12 @@ private:
 	//Private funcs:
 	void lookAtMouse();
 	void updatePlayerSprite();
+	int shoottimer=0;
 
 public:
+	sf::Vector2f bPos;
+	sf::Vector2f sendbulletPos(int i);
+	sf::Sprite send_bSpr(int i);
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
 	void setPosition(float x,float y);
@@ -36,7 +41,6 @@ public:
 	sf::Vector2f getAimDirNorm();
 	vector<Bullet>* getBulletsVector();
 	float getAngle();
-
 	void updatePlayer(int flag);
 	void shoot();
 };

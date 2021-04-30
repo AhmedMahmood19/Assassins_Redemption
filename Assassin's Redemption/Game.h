@@ -9,7 +9,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 #include "Player.h"
-#include "Enemy.h"
 #include "Bullet.h"
 #include "Wall.h"
 
@@ -25,14 +24,13 @@ private:
 	void initVariables();
 	void initWindow();
 	void updateView();
+	int j=0;
 
 	//Game Logic
 		//Data:
 	Player player;
-	Enemy enemy;
 	vector<Wall> walls;
 	bool flag;
-	bool flagE;
 	
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
@@ -40,9 +38,10 @@ private:
 		//Funcs:
 	void pollEvents();
 	void updateMousePositions();
-	void collisions();
+	int collisions();
 	void drawWalls();
 	void windowbounds();
+	void bulletWallColl();
 public:
 
 	//Constructors/Destructor

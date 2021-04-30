@@ -7,15 +7,13 @@ void Game::initVariables()
 
     //Game Logic
     flag = 0;
-    flagE = 0;
     player.setSprite("sprPWalkUnarmed2_strip8.png");
-    enemy.setSprite("sprEWalkM16_strip8.png");
-    enemy.setPosition(500.f,800.f);
     if (!bgTex.loadFromFile("beachmap.png"))
         return;
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
+
     //Hardcoding Walls
     walls.push_back(Wall(10, 715, -260, -110));
     walls.push_back(Wall(808, 10, -260, -120));
@@ -85,22 +83,16 @@ const bool Game::running() const
 }
 
 //Functions
-void Game::collisions()
+int Game::collisions()
 {
     for (size_t i = 0; i < walls.size(); i++) {
-        if (walls[i].wallCollision(player.getPlayerPos())) {
+        if (walls[i].wallcoll(player.getSprite())) {
             flag = 1;
             break;
         }
         else flag = 0;
     }
-    for (size_t i = 0; i < walls.size(); i++) {
-        if (walls[i].wallCollision(enemy.getEnemyPos())) {
-            flagE = 1;
-            break;
-        }
-        else flagE = 0;
-    }
+    return flag;
 }
 
 
@@ -114,26 +106,41 @@ void Game::drawWalls()
 
 void Game::windowbounds()
 {
+
+    //player 
+    
     //left
-    if (this->player.getPlayerPos().x <= -415.f)
-        this->player.setPosition(-415,player.getPlayerPos().y);
-    if (this->enemy.getEnemyPos().x <= -415.f)
-        this->enemy.setPosition(-415, enemy.getEnemyPos().y);
+    if (player.getPlayerPos().x <= -415.f)
+        player.setPosition(-415,player.getPlayerPos().y);
     //right
     if (this->player.getPlayerPos().x >= 1825.f)
         this->player.setPosition(1825, player.getPlayerPos().y);
-    if (this->enemy.getEnemyPos().x >= 1825.f)
-        this->enemy.setPosition(1825, enemy.getEnemyPos().y);
     //up
     if (this->player.getPlayerPos().y <= -255.f)
         this->player.setPosition(player.getPlayerPos().x,-255.f);
-    if (this->enemy.getEnemyPos().y <= -255.f)
-        this->enemy.setPosition(enemy.getEnemyPos().x, -255.f);
     //down
     if (this->player.getPlayerPos().y >= 1625.f)
         this->player.setPosition(player.getPlayerPos().x, 1625.f);
-    if (this->enemy.getEnemyPos().y >= 1625.f)
-        this->enemy.setPosition(enemy.getEnemyPos().x, 1625.f);
+   
+
+}
+
+void Game::bulletWallColl()
+{
+    for (size_t i = 0; i < walls.size(); i++) {
+        for (size_t j = 0; j < player.getBulletsVector()->size(); j++)
+        {
+            if (walls[i].wallCollision(player.sendbulletPos(j)) == 1 || walls[i].wallcoll(player.send_bSpr(j)) || collisions()==1 )
+            {
+                
+                player.getBulletsVector()->erase(player.getBulletsVector()->begin()+j);
+                
+            }
+      
+        }
+        
+    }
+
 }
 
 void Game::pollEvents()
@@ -151,25 +158,28 @@ void Game::pollEvents()
             break;
         }
     }
+    
     player.updatePlayer(flag);
     player.shoot();
-    enemy.detectPlayer(flagE,player.getPlayerPos());
 }
 
 
 void Game::updateMousePositions() {
     //Updates the mouse position, relative to window(vector2i)
     this->mousePosWindow = sf::Mouse::getPosition(*this->window);
-    //cout << mousePosWindow.x<<" "<<mousePosWindow.y<<endl;
 }
 
 void Game::update()
 {
     this->windowbounds();
+    this->collisions();
+    this->bulletWallColl();
+
     this->updateView();
     this->updateMousePositions();
+
     this->pollEvents();
-    this->collisions();
+
 }
 
 void Game::render()
@@ -188,14 +198,10 @@ void Game::render()
     drawWalls();
     
     //Draw game objects
-    //Player
     this->window->draw(player.getSprite());
-    //Player Bullets
     for (size_t i = 0; i < player.getBulletsVector()->size(); i++)
         this->window->draw(player.getBulletsVector()->at(i).getSprite());
     
-    //Enemy
-    this->window->draw(enemy.getSprite());
     //Display frame
     this->window->display();
 }

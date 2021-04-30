@@ -12,8 +12,9 @@ void Bullet::setSprite(string file) {
 void Bullet::setSpritePos(sf::Vector2f p) {
 	bSpr.setPosition(p);
 }
-void Bullet::moveSprite() {
+sf::Vector2f Bullet::moveSprite() {
 	bSpr.move(currentVel);
+	return bSpr.getPosition();
 }
 void Bullet::rotateSprite(float a) {
 	bSpr.setRotation(a);
@@ -21,6 +22,7 @@ void Bullet::rotateSprite(float a) {
 void Bullet::setcurrentVel(sf::Vector2f v) {
 	currentVel = v;
 }
+
 sf::Sprite Bullet::getSprite() {
 	return bSpr;
 }
@@ -29,4 +31,9 @@ sf::Texture Bullet::getTexture() {
 }
 float Bullet::getMaxSpd()const {
 	return maxSpd;
+}
+
+sf::Vector2f Bullet::bGetPos()
+{
+	return bSpr.getPosition();
 }
