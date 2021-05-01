@@ -18,36 +18,36 @@ void Game::initVariables()
     bgSpr.setOrigin(170,100);
 
     //Hardcoding Walls
-    walls.push_back(Wall(10, 715, -260, -110));
-    walls.push_back(Wall(808, 10, -260, -120));
-    walls.push_back(Wall(10, 60, 543, -115));
-    walls.push_back(Wall(10, 78, 543, 40));
-    walls.push_back(Wall(1280, 10, 545, 120));
-    walls.push_back(Wall(1358, 12, 465, 1560));
-    walls.push_back(Wall(10, 60, 465, 1320));
-    walls.push_back(Wall(1015, 12, -165, 1320));
-    walls.push_back(Wall(10, 715, -178, 610));
-    walls.push_back(Wall(80, 12, -255, 595));
-    walls.push_back(Wall(60, 12, -170, 1080));
-    walls.push_back(Wall(310, 12, -10, 1080));
-    walls.push_back(Wall(10, 240, 300, 1080));
-    walls.push_back(Wall(540, 12, -15, 605));
-    walls.push_back(Wall(540, 12, -15, 605));
-    walls.push_back(Wall(10, 60, -15, 600));
-    walls.push_back(Wall(10, 75, -15, 845));
-    walls.push_back(Wall(885, 12, -10, 920));
-    walls.push_back(Wall(10, 390, 868, 525));
-    walls.push_back(Wall(220, 12, 715, 520));
-    walls.push_back(Wall(10, 155, 700, 360));
-    walls.push_back(Wall(160, 12, 540, 440));
-    walls.push_back(Wall(10, 60, 545, 440));
-    walls.push_back(Wall(10, 385, 1182, 130));
-    walls.push_back(Wall(160, 12, 1025, 520));
-    walls.push_back(Wall(10, 55, 705, 120));
-    walls.push_back(Wall(10, 205, 1100, 530));
-    walls.push_back(Wall(10, 395, 1100, 920));
-    walls.push_back(Wall(165, 12, 940, 1315));
-    walls.push_back(Wall(10, 230, 1022, 1330));
+    walls.push_back(Wall(20, 715, -260, -110));
+    walls.push_back(Wall(808, 20, -260, -120));
+    walls.push_back(Wall(20, 60, 543, -115));
+    walls.push_back(Wall(20, 78, 543, 40));
+    walls.push_back(Wall(1280, 20, 545, 120));
+    walls.push_back(Wall(1358, 22, 465, 1560));
+    walls.push_back(Wall(20, 60, 465, 1320));
+    walls.push_back(Wall(1015, 22, -165, 1320));
+    walls.push_back(Wall(20, 715, -178, 610));
+    walls.push_back(Wall(80, 22, -255, 595));
+    walls.push_back(Wall(60, 22, -170, 1080));
+    walls.push_back(Wall(310, 22, -10, 1080));
+    walls.push_back(Wall(20, 240, 300, 1080));
+    walls.push_back(Wall(540, 22, -15, 605));
+    walls.push_back(Wall(540, 22, -15, 605));
+    walls.push_back(Wall(20, 60, -15, 600));
+    walls.push_back(Wall(20, 75, -15, 845));
+    walls.push_back(Wall(885, 22, -10, 920));
+    walls.push_back(Wall(20, 390, 868, 525));
+    walls.push_back(Wall(220, 22, 715, 520));
+    walls.push_back(Wall(20, 155, 700, 360));
+    walls.push_back(Wall(160, 22, 540, 440));
+    walls.push_back(Wall(20, 60, 545, 440));
+    walls.push_back(Wall(20, 385, 1182, 130));
+    walls.push_back(Wall(160, 22, 1025, 520));
+    walls.push_back(Wall(20, 55, 705, 120));
+    walls.push_back(Wall(20, 205, 1100, 530));
+    walls.push_back(Wall(20, 395, 1100, 920));
+    walls.push_back(Wall(165, 22, 940, 1315));
+    walls.push_back(Wall(20, 230, 1022, 1330));
 };
 
 void Game::initWindow()
@@ -89,14 +89,14 @@ const bool Game::running() const
 void Game::collisions()
 {
     for (size_t i = 0; i < walls.size(); i++) {
-        if (walls[i].wallcoll(player.getSprite())) {
+        if (walls[i].wallcolCont(player.getPlayerPos())) {
             flag = 1;
             break;
         }
         else flag = 0;
     }
     for (size_t i = 0; i < walls.size(); i++) {
-        if (walls[i].wallCollision(enemy.getEnemyPos())) {
+        if (walls[i].wallcolCont(enemy.getEnemyPos())) {
             flagE = 1;
             break;
         }
@@ -145,9 +145,8 @@ void Game::bulletWallColl()
     for (size_t i = 0; i < walls.size(); i++) {
         for (size_t j = 0; j < player.getBulletsVector()->size(); j++)
         {
-            if (walls[i].wallCollision(player.sendbulletPos(j)) == 1 || walls[i].wallcoll(player.send_bSpr(j))  )
+            if (walls[i].wallcolInter(player.getbulletSpr(j))==1  )
             {
-                
                 player.getBulletsVector()->erase(player.getBulletsVector()->begin()+j);
                 
             }
@@ -177,6 +176,7 @@ void Game::pollEvents()
     player.updatePlayer(flag);
     player.shoot();
     enemy.detectPlayer(flagE, player.getPlayerPos());
+    cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
 }
 
 
