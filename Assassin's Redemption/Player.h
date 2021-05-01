@@ -29,8 +29,9 @@ private:
 	int shoottimer=0;
 
 public:
-	sf::Vector2f getbulletPos(int i);
-	sf::Sprite getbulletSpr(int i);
+	sf::Vector2f bPos;
+	sf::Vector2f sendbulletPos(int i);
+	sf::Sprite send_bSpr(int i);
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
 	void setPosition(float x,float y);

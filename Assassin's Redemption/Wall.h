@@ -13,8 +13,8 @@ private:
 
 public:
 	
-	int wallcolCont(sf::Vector2f Pos);
-	int wallcolInter(sf::Sprite a);
+	int wallCollision(sf::Vector2f Pos);
+	int wallcoll(sf::Sprite a);
 	Wall(float w1 , float w2,float xPos,float yPos);
 	sf::RectangleShape getwall();
 };

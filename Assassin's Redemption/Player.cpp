@@ -3,13 +3,13 @@
 
 
 
-sf::Vector2f Player::getbulletPos(int i)
+sf::Vector2f Player::sendbulletPos(int i)
 {
     
     return bullets[i].bGetPos();
 }
 
-sf::Sprite Player::getbulletSpr(int i)
+sf::Sprite Player::send_bSpr(int i)
 {
     return bullets[i].getSprite();
 }

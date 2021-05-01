@@ -11,7 +11,7 @@ Wall::Wall(float w1, float w2,float xPos,float yPos)
 
 
 
-int Wall::wallcolCont(sf::Vector2f Pos)
+int Wall::wallCollision(sf::Vector2f Pos)
 {
 	 int flag = 0;
 	 if (rect.getGlobalBounds().contains(Pos))
@@ -23,7 +23,7 @@ int Wall::wallcolCont(sf::Vector2f Pos)
 	 return flag;
 }
 
-int Wall::wallcolInter(sf::Sprite a)
+int Wall::wallcoll(sf::Sprite a)
 {
 	int flag = 0;
 	if (rect.getGlobalBounds().intersects(a.getGlobalBounds()))

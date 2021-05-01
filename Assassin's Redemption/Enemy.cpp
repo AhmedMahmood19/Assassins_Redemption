@@ -116,7 +116,7 @@ int Enemy::detectPlayer(int flagE,sf::Vector2f player) {
         stop();
     }
     else {
-        //cout << "Player is not close!\n";
+        cout << "Player is not close!\n";
         return 0;
     }
 }
