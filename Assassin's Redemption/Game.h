@@ -24,17 +24,17 @@ private:
 	sf::View* view;
 	void initVariables();
 	void initWindow();
+	void initWalls();
+	void initEnemies();
 	void updateView();
 	int j=0;
 
 	//Game Logic
 		//Data:
 	Player player;
-	Enemy enemy;
+	vector<Enemy> enemies;
 	vector<Wall> walls;
 	bool flag;
-	bool flagE;
-	
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;

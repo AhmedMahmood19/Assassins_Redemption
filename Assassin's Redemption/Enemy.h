@@ -23,14 +23,18 @@ private:
 	vector<Bullet> bullets;
 	Bullet b1;
 	sf::Vector2f PrevPos;
+	bool collides;
 	//Private funcs:
 	void lookAtPlayer(sf::Vector2f player);
 	void updateEnemySprite();
 
 public:
+	Enemy(sf::Vector2f pos);
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
-	void setPosition(float x, float y);
+	void setEnemyPos(float x, float y);
+	void setCollides(bool);
+	bool getCollides();
 	sf::Sprite getSprite();
 	sf::Texture getTexture();
 	sf::Vector2f getEnemyPos();
@@ -38,8 +42,8 @@ public:
 	vector<Bullet>* getBulletsVector();
 	float getAngle();
 	void calcDir(sf::Vector2f player);
-	void chasePlayer(int flag);
-	int detectPlayer(int flagE, sf::Vector2f player);
+	void chasePlayer();
+	int detectPlayer(sf::Vector2f player);
 	void shoot();
 	void stop();
 };

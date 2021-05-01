@@ -6,18 +6,27 @@ void Game::initVariables()
     this->window = nullptr;
 
     //Game Logic
-    flagE = 0;
     flag = 0;
     player.setSprite("sprPWalkUnarmed2_strip8.png");
     player.setPosition(350.f, 1450.f);
-    enemy.setSprite("sprEWalkM16_strip8.png");
-    enemy.setPosition(500.f, 800.f);
     if (!bgTex.loadFromFile("beachmap.png"))
         return;
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
+    initWalls();
+    initEnemies();
+};
 
+void Game::initWindow()
+{
+    this->videoMode.height = 480;
+    this->videoMode.width = 800;
+
+    this->window = new sf::RenderWindow(this->videoMode, "My game", sf::Style::Titlebar | sf::Style::Close);
+    this->window->setFramerateLimit(60);
+};
+void Game::initWalls() {
     //Hardcoding Walls
     walls.push_back(Wall(20, 715, -260, -110));
     walls.push_back(Wall(808, 20, -260, -120));
@@ -49,16 +58,14 @@ void Game::initVariables()
     walls.push_back(Wall(20, 395, 1100, 920));
     walls.push_back(Wall(165, 22, 940, 1315));
     walls.push_back(Wall(20, 230, 1022, 1330));
-};
+}
 
-void Game::initWindow()
-{
-    this->videoMode.height = 480;
-    this->videoMode.width = 800;
-
-    this->window = new sf::RenderWindow(this->videoMode, "My game", sf::Style::Titlebar | sf::Style::Close);
-    this->window->setFramerateLimit(60);
-};
+void Game::initEnemies() {
+    enemies.push_back(Enemy(sf::Vector2f(500.f, 800.f)));
+    enemies.push_back(Enemy(sf::Vector2f(900.f, 1180.f)));
+    enemies[0].setSprite("sprEWalkM16_strip8.png");
+    enemies[1].setSprite("sprEWalkM16_strip8.png");
+}
 
 void Game::updateView() {
     this->view = new sf::View(sf::Vector2f(player.getPlayerPos()), sf::Vector2f(800.f, 480.f));
@@ -96,12 +103,15 @@ void Game::collisions()
         }
         else flag = 0;
     }
-    for (size_t i = 0; i < walls.size(); i++) {
-        if (walls[i].wallcolCont(enemy.getEnemyPos())) {
-            flagE = 1;
-            break;
+    for (size_t j = 0; j < enemies.size(); j++) {
+        for (size_t i = 0; i < walls.size(); i++)
+        {
+            if (walls[i].wallcolCont(enemies[j].getEnemyPos())) {
+                enemies[j].setCollides(true);
+                break;
+            }
+            else enemies[j].setCollides(false);
         }
-        else flagE = 0;
     }
    
 }
@@ -117,28 +127,36 @@ void Game::drawWalls()
 
 void Game::windowbounds()
 {
-
+    //For Enemies
+    for (size_t j = 0; j < enemies.size(); j++)
+    {
+        //left
+            if (this->enemies[j].getEnemyPos().x <= -415.f)
+                this->enemies[j].setEnemyPos(-415, enemies[j].getEnemyPos().y);
+        //right
+        if (this->enemies[j].getEnemyPos().x >= 1825.f)
+            this->enemies[j].setEnemyPos(1825, enemies[j].getEnemyPos().y);
+        //up
+        if (this->enemies[j].getEnemyPos().y <= -255.f)
+            this->enemies[j].setEnemyPos(enemies[j].getEnemyPos().x, -255.f);
+        // down
+        if (this->enemies[j].getEnemyPos().y >= 1625.f)
+            this->enemies[j].setEnemyPos(enemies[j].getEnemyPos().x, 1625.f);
+    }
+    //For Player
    //left
    if (this->player.getPlayerPos().x <= -415.f)
        this->player.setPosition(-415, player.getPlayerPos().y);
-   if (this->enemy.getEnemyPos().x <= -415.f)
-       this->enemy.setPosition(-415, enemy.getEnemyPos().y);
+   
    //right
    if (this->player.getPlayerPos().x >= 1825.f)
        this->player.setPosition(1825, player.getPlayerPos().y);
-   if (this->enemy.getEnemyPos().x >= 1825.f)
-       this->enemy.setPosition(1825, enemy.getEnemyPos().y);
    //up
    if (this->player.getPlayerPos().y <= -255.f)
        this->player.setPosition(player.getPlayerPos().x, -255.f);
-   if (this->enemy.getEnemyPos().y <= -255.f)
-       this->enemy.setPosition(enemy.getEnemyPos().x, -255.f);
    //down
    if (this->player.getPlayerPos().y >= 1625.f)
        this->player.setPosition(player.getPlayerPos().x, 1625.f);
-   if (this->enemy.getEnemyPos().y >= 1625.f)
-       this->enemy.setPosition(enemy.getEnemyPos().x, 1625.f);
-
 }
 
 void Game::bulletWallColl()
@@ -176,9 +194,11 @@ void Game::pollEvents()
     
     player.updatePlayer(flag);
     player.shoot();
-    enemy.detectPlayer(flagE, player.getPlayerPos());
-    //Testing Dont remove
-    cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
+    //TODO TEsting
+    for (size_t j = 0; j < enemies.size(); j++) {
+        enemies[j].detectPlayer(player.getPlayerPos());
+    }
+    //cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
 }
 
 
@@ -215,13 +235,15 @@ void Game::render()
     //Draw Walls
     drawWalls();
     
-    //Draw game objects
+    //Draw Player and their bullets
     this->window->draw(player.getSprite());
     for (size_t i = 0; i < player.getBulletsVector()->size(); i++)
         this->window->draw(player.getBulletsVector()->at(i).getSprite());
     
-    //Enemy
-    this->window->draw(enemy.getSprite());
+    //Draw Player and their bullets(todo)
+    for (size_t j = 0; j < enemies.size(); j++) {
+        this->window->draw(enemies[j].getSprite());
+    }
     //Display frame
     this->window->display();
     
