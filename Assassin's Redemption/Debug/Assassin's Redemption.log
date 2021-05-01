@@ -1,8 +1,6 @@
-﻿  Bullet.cpp
-  Enemy.cpp
+﻿  Enemy.cpp
   Game.cpp
   main.cpp
-  Player.cpp
-  Wall.cpp
   Generating Code...
+D:\Projects C++\SFML-Game\Assassin's Redemption\Enemy.cpp(122): warning C4715: 'Enemy::detectPlayer': not all control paths return a value
   Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe

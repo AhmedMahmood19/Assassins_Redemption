@@ -96,7 +96,7 @@ void Game::collisions()
         else flag = 0;
     }
     for (size_t i = 0; i < walls.size(); i++) {
-        if (walls[i].wallcoll(enemy.getSprite())) {
+        if (walls[i].wallCollision(enemy.getEnemyPos())) {
             flagE = 1;
             break;
         }
