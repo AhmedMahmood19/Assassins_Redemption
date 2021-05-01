@@ -9,6 +9,7 @@ void Game::initVariables()
     flagE = 0;
     flag = 0;
     player.setSprite("sprPWalkUnarmed2_strip8.png");
+    player.setPosition(350.f, 1450.f);
     enemy.setSprite("sprEWalkM16_strip8.png");
     enemy.setPosition(500.f, 800.f);
     if (!bgTex.loadFromFile("beachmap.png"))
@@ -176,6 +177,7 @@ void Game::pollEvents()
     player.updatePlayer(flag);
     player.shoot();
     enemy.detectPlayer(flagE, player.getPlayerPos());
+    //Testing Dont remove
     cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
 }
 
