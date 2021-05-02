@@ -1,14 +1,14 @@
 #include "Enemy.h"
 
 ///////////////////////     ACCESSORS      ///////////////
-Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false)
+Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false),i(0)
 {
     isWalker = true;
     spawnPos = pos;
     patrolPos = Ppos;
     eSpr.setPosition(pos);
 }
-Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true)
+Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), i(0)
 {
     isWalker = false;
     spawnPos = pos;
@@ -50,7 +50,6 @@ float Enemy::getAngle() {
 //////////////////////////////////////////////////////////
 
 void Enemy::updateEnemySprite() {
-    static int i = 0;
     i += 32;
     if (i == 256)
         i = 0;
@@ -64,17 +63,15 @@ void Enemy::calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vecto
     Norm = sf::Vector2f((Dir.x / Mag), (Dir.y / Mag));
 }
 
-void Enemy::lookAtPlayer(sf::Vector2f player) {
-    // We have both the player position and the Enemy position 
-    // This calculation will make Enemy face the player
-
+void Enemy::lookAt(sf::Vector2f &aimDir) {
+    
     const float PI = 3.14159265f;
 
     angle = static_cast<float> (atan(aimDir.y / aimDir.x) * 180.0 / PI);
-
+ 
     if (aimDir.x < 0)
     {
-        if (aimDir.y < 0)
+        if (aimDir.y <= 0)
         {
             angle += 180;
         }
@@ -83,7 +80,7 @@ void Enemy::lookAtPlayer(sf::Vector2f player) {
             angle += 180;
         }
     }
-    else if (aimDir.x > 0)
+    else if (aimDir.x >= 0)
     {
         if (aimDir.y < 0)
         {
@@ -98,14 +95,17 @@ void Enemy::lookAtPlayer(sf::Vector2f player) {
 }
 
 void Enemy::patrol() {
-    //Enemy walks in a path from spawnPos to end and back, till a player is detected
-    
+    //Enemy walks in a path from spawnPos to patrolPos and back, till a player is detected
     if (getEnemyPos() == spawnPos) {
-        //look at angle
-        //
-        eSpr.move(patrolaimDirNorm);
-        updateEnemySprite();
+        dest = patrolPos;
     }
+    else if (getEnemyPos() == patrolPos) {
+        dest = spawnPos;
+    }
+    calcPath(dest, patrolaimDir,patrolmagnitude, patrolaimDirNorm);
+    lookAt(patrolaimDir);
+    eSpr.move(patrolaimDirNorm);
+    updateEnemySprite();
 }
 
 void Enemy::chasePlayer() {
@@ -126,17 +126,17 @@ void Enemy::chasePlayer() {
 
 void Enemy::detectPlayer(sf::Vector2f player) {
     calcPath(player, aimDir, magnitude, aimDirNorm);
-    if (magnitude <= 200 && magnitude>=70) {
+    if (magnitude <= 200 && magnitude >= 70) {
         stopPatrol = true;
-        lookAtPlayer(player);
+        lookAt(aimDir);
         chasePlayer();
     }
-    else if (magnitude <70 )
+    else if (magnitude < 70)
     {
         stopPatrol = true;
-        lookAtPlayer(player);
+        lookAt(aimDir);
     }
-    else if ((isWalker==true) && (stopPatrol==false)) {
+    else if ((isWalker == true) && (stopPatrol == false)) {
         patrol();
     }
 }

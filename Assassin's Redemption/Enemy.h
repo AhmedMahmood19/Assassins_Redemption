@@ -12,8 +12,10 @@ class Enemy
 {
 private:
 	//Private Data
+	int i;//used in update sprite
 	sf::Texture eTex;
 	sf::Sprite eSpr;
+	sf::Vector2f dest;
 	sf::Vector2f aimDir;
 	sf::Vector2f aimDirNorm;
 	sf::Vector2f patrolaimDir;
@@ -28,7 +30,7 @@ private:
 	bool stopPatrol;
 	bool isWalker;
 	//Private funcs:
-	void lookAtPlayer(sf::Vector2f player);
+	void lookAt(sf::Vector2f& aimDir);
 	void updateEnemySprite();
 
 public:
