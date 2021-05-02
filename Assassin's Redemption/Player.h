@@ -16,7 +16,6 @@ private:
 	sf::Sprite pSpr;
 	sf::Vector2i *PtrmousePos;
 	sf::Vector2f aimDir;
-	int bsize;
 	float magnitude;
 	float angle;
 	sf::Vector2f aimDirNorm;
@@ -29,6 +28,7 @@ private:
 	int shoottimer=0;
 
 public:
+	Player();
 	sf::Vector2f getbulletPos(int i);
 	sf::Sprite getbulletSpr(int i);
 	void setSprite(string file);

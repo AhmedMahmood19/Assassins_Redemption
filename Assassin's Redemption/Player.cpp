@@ -5,7 +5,6 @@
 
 sf::Vector2f Player::getbulletPos(int i)
 {
-    
     return bullets[i].bGetPos();
 }
 
@@ -13,7 +12,8 @@ sf::Sprite Player::getbulletSpr(int i)
 {
     return bullets[i].getSprite();
 }
-
+Player::Player():angle(0), magnitude(0),PtrmousePos(0)
+{}
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))

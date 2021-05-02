@@ -62,7 +62,7 @@ void Game::initWalls() {
 
 void Game::initEnemies() {
     enemies.push_back(Enemy(sf::Vector2f(500.f, 800.f)));
-    enemies.push_back(Enemy(sf::Vector2f(900.f, 1180.f)));
+    enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f)));
     enemies[0].setSprite("sprEWalkM16_strip8.png");
     enemies[1].setSprite("sprEWalkM16_strip8.png");
 }
@@ -116,12 +116,15 @@ void Game::collisions()
    
 }
 
-
-
-void Game::drawWalls()
+void Game::bulletWallColl()
 {
-    for (auto i : walls) {
-        window->draw(i.getwall());
+    for (size_t i = 0; i < walls.size(); i++) {
+        for (size_t j = 0; j < player.getBulletsVector()->size(); j++)
+        {
+            if (walls[i].wallcolInter(player.getbulletSpr(j)) == 1){
+                player.getBulletsVector()->erase(player.getBulletsVector()->begin() + j);
+            }
+        }
     }
 }
 
@@ -159,23 +162,6 @@ void Game::windowbounds()
        this->player.setPosition(player.getPlayerPos().x, 1625.f);
 }
 
-void Game::bulletWallColl()
-{
-    for (size_t i = 0; i < walls.size(); i++) {
-        for (size_t j = 0; j < player.getBulletsVector()->size(); j++)
-        {
-            if (walls[i].wallcolInter(player.getbulletSpr(j))==1  )
-            {
-                player.getBulletsVector()->erase(player.getBulletsVector()->begin()+j);
-                
-            }
-      
-        }
-        
-    }
-
-}
-
 void Game::pollEvents()
 {
     while (this->window->pollEvent(this->ev))
@@ -198,7 +184,7 @@ void Game::pollEvents()
     for (size_t j = 0; j < enemies.size(); j++) {
         enemies[j].detectPlayer(player.getPlayerPos());
     }
-    //cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
+    cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
 }
 
 
@@ -233,13 +219,15 @@ void Game::render()
     this->window->draw(bgSpr);
 
     //Draw Walls
-    drawWalls();
+    for (auto i : walls) {
+        window->draw(i.getwall());
+    }
     
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
     for (size_t i = 0; i < player.getBulletsVector()->size(); i++)
         this->window->draw(player.getBulletsVector()->at(i).getSprite());
-    
+
     //Draw Player and their bullets(todo)
     for (size_t j = 0; j < enemies.size(); j++) {
         this->window->draw(enemies[j].getSprite());

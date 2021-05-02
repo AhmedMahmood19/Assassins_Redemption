@@ -42,7 +42,6 @@ private:
 	void pollEvents();
 	void updateMousePositions();
 	void collisions();
-	void drawWalls();
 	void windowbounds();
 	void bulletWallColl();
 public:
