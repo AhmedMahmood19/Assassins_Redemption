@@ -11,9 +11,19 @@ void Enemy::setSprite(string file) {
     //set sprite for bullet
     b1.setSprite("sprM16Shell.png");
 }
-void Enemy::setPosition(float x, float y)
+Enemy::Enemy(sf::Vector2f pos) {
+    collides = 0;
+    eSpr.setPosition(pos);
+}
+void Enemy::setEnemyPos(float x, float y)
 {
     this->eSpr.setPosition(x, y);
+}
+void Enemy::setCollides(bool c) {
+    collides = c;
+}
+bool Enemy::getCollides(){
+    return collides;
 }
 sf::Sprite Enemy::getSprite() {
     return eSpr;
@@ -84,29 +94,27 @@ void Enemy::lookAtPlayer(sf::Vector2f player) {
     eSpr.setRotation(angle);
 }
 
-void Enemy::chasePlayer(int flagE) {
-    if (flagE != 1)
+void Enemy::chasePlayer() {
+    if (collides==false)
     {
         //If no collision
-        
         PrevPos = eSpr.getPosition();
         eSpr.move(aimDirNorm);
         updateEnemySprite();
     }
-    if (flagE == 1)
+    if (collides == true)
     {
         //If collision
-        
         eSpr.setPosition(PrevPos.x, PrevPos.y);
-        flagE = 0;
+        collides=false;
     }
 }
 
-int Enemy::detectPlayer(int flagE,sf::Vector2f player) {
+int Enemy::detectPlayer(sf::Vector2f player) {
     calcDir(player);
     if (magnitude <= 200 && magnitude>=70) {
         lookAtPlayer(player);
-        chasePlayer(flagE);
+        chasePlayer();
 
         return 1;
     }
@@ -116,7 +124,7 @@ int Enemy::detectPlayer(int flagE,sf::Vector2f player) {
         stop();
     }
     else {
-        cout << "Player is not close!\n";
+        //cout << "Player is not close!\n";
         return 0;
     }
 }
