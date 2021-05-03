@@ -1,12 +1,2 @@
-<<<<<<< Updated upstream
-﻿  Game.cpp
-  Assassin's Redemption.vcxproj -> C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Debug\Assassin's Redemption.exe
-=======
-﻿  Enemy.cpp
-  Game.cpp
-  main.cpp
-  Generating Code...
-D:\Projects C++\SFML-Game\Assassin's Redemption\Enemy.cpp(122): warning C4715: 'Enemy::detectPlayer': not all control paths return a value
-  LINK : D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe not found or not built by the last incremental link; performing full link
+﻿  Player.cpp
   Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe
->>>>>>> Stashed changes

@@ -1,19 +1,5 @@
 #include "Player.h"
 
-
-
-
-sf::Vector2f Player::getbulletPos(int i)
-{
-    
-    return bullets[i].bGetPos();
-}
-
-sf::Sprite Player::getbulletSpr(int i)
-{
-    return bullets[i].getSprite();
-}
-
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))
@@ -22,8 +8,7 @@ void Player::setSprite(string file) {
     pSpr.setTexture(pTex);
     pSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
     pSpr.setOrigin(16.f, 16.f);
-    //set sprite for bullet
-    b1.setSprite("sprM16Shell.png");
+    wep->getbullet().setSprite("sprM16Shell.png");
 }
 void Player::setPosition(float x, float y)
 {
@@ -41,9 +26,12 @@ sf::Vector2f Player::getPlayerPos() {
 sf::Vector2f Player::getAimDirNorm() {
     return aimDirNorm;
 }
-vector<Bullet>* Player::getBulletsVector() {
-    return &bullets;
+
+Weapon* Player::getWeapon()
+{
+    return wep;
 }
+
 float Player::getAngle() {
     return angle;
 }
@@ -149,23 +137,28 @@ void Player::updatePlayer(int flag) {
     }
 }
 void Player::shoot() {
-    b1.rotateSprite(angle);
-    if (shoottimer < 10 )
+    
+    
+    wep->getbullet().rotateSprite(angle);
+    if (shoottimer < wep->getWepTimer() )
     {
         shoottimer++;
     }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= 10)
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= wep->getWepTimer())
     {
         shoottimer = 0;
-        b1.setSpritePos(this->getPlayerPos());
-        b1.setcurrentVel(b1.getMaxSpd() * aimDirNorm);
+        wep->getbullet().setSpritePos(this->getPlayerPos());
+        wep->getbullet().setcurrentVel(wep->getbullet().getMaxSpd() * aimDirNorm);
        
-        bullets.push_back(Bullet(b1));
-        
-   
+        wep->getBulletsVector()->push_back(Bullet(wep->getbullet()));
+
+        //wep->setSprite("sprM16Shell.png");
+
+        cout << "shooting";
     }
-    for (size_t i = 0; i < bullets.size(); i++) {
-        bullets[i].moveSprite();
+    for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
+        wep->getbullet_at_I(i).moveSprite();
+        
         
     }
 }

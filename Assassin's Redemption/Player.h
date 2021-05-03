@@ -6,6 +6,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include "Bullet.h"
+#include "Pistol.h"
+#include "Weapon.h"
+
 using namespace std;
 
 class Player
@@ -16,21 +19,21 @@ private:
 	sf::Sprite pSpr;
 	sf::Vector2i *PtrmousePos;
 	sf::Vector2f aimDir;
-	int bsize;
+	
 	float magnitude;
 	float angle;
 	sf::Vector2f aimDirNorm;
-	vector<Bullet> bullets;
-	Bullet b1;
 	sf::Vector2f PrevPos;
+	
+	Pistol pistol;
 	//Private funcs:
 	void lookAtMouse();
 	void updatePlayerSprite();
 	int shoottimer=0;
 
 public:
-	sf::Vector2f getbulletPos(int i);
-	sf::Sprite getbulletSpr(int i);
+	
+	Weapon *wep=&pistol;
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
 	void setPosition(float x,float y);
@@ -38,7 +41,7 @@ public:
 	sf::Texture getTexture();
 	sf::Vector2f getPlayerPos();
 	sf::Vector2f getAimDirNorm();
-	vector<Bullet>* getBulletsVector();
+	Weapon* getWeapon();
 	float getAngle();
 	void updatePlayer(int flag);
 	void shoot();

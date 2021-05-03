@@ -12,6 +12,8 @@
 #include "Bullet.h"
 #include "Wall.h"
 #include "Enemy.h"
+#include "Weapon.h"
+#include "Pistol.h"
 
 class Game
 {

@@ -5,18 +5,28 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include "Bullet.h"
 class Weapon
 {
 protected:
 	sf::Texture wTex;
 	sf::Sprite wSpr;
-
+	int bsize;
+	vector<Bullet> bullets;
+	Bullet b1;
 
 public:
 	sf::Sprite getSprite();
 	sf::Texture getTexture();
+	sf::Vector2f getbulletPos(int i);
+	sf::Sprite getbulletSpr(int i);
 	void setSprite(std::string file);
-	virtual void shooting()=0;
-	int PWcoll(sf::Sprite);
+	vector<Bullet>* getBulletsVector();
+	int P_WepColl(sf::Sprite);
+	virtual int getWepTimer()=0;
+	Bullet getbullet();
+	Bullet getbullet_at_I(int i);
+	~Weapon();
+	
 };
 
