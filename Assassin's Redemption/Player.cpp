@@ -1,5 +1,25 @@
 #include "Player.h"
 
+<<<<<<< HEAD
+Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
+    wep = &pistol;
+}
+=======
+
+
+
+sf::Vector2f Player::getbulletPos(int i)
+{
+    return bullets[i].bGetPos();
+}
+
+sf::Sprite Player::getbulletSpr(int i)
+{
+    return bullets[i].getSprite();
+}
+Player::Player():angle(0), magnitude(0),PtrmousePos(0)
+{}
+>>>>>>> master
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))
@@ -8,7 +28,7 @@ void Player::setSprite(string file) {
     pSpr.setTexture(pTex);
     pSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
     pSpr.setOrigin(16.f, 16.f);
-    wep->getbullet().setSprite("sprM16Shell.png");
+    wep->getb1ptr()->setSprite("sprM16Shell.png");
 }
 void Player::setPosition(float x, float y)
 {
@@ -139,7 +159,7 @@ void Player::updatePlayer(int flag) {
 void Player::shoot() {
     
     
-    wep->getbullet().rotateSprite(angle);
+    wep->getb1ptr()->rotateSprite(angle);
     if (shoottimer < wep->getWepTimer() )
     {
         shoottimer++;
@@ -147,17 +167,12 @@ void Player::shoot() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= wep->getWepTimer())
     {
         shoottimer = 0;
-        wep->getbullet().setSpritePos(this->getPlayerPos());
-        wep->getbullet().setcurrentVel(wep->getbullet().getMaxSpd() * aimDirNorm);
+        wep->getb1ptr()->setSpritePos(this->getPlayerPos());
+        wep->getb1ptr()->setcurrentVel(wep->getb1ptr()->getMaxSpd() * aimDirNorm);
        
-        wep->getBulletsVector()->push_back(Bullet(wep->getbullet()));
-
-
-        cout << "shooting";
+        wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
     }
     for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
-        wep->getbullet_at_I(i).moveSprite();
-        
-        
+        wep->getBulletsVector()->at(i).moveSprite();
     }
 }
