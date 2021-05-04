@@ -1,6 +1,19 @@
 #include "Enemy.h"
 
 ///////////////////////     ACCESSORS      ///////////////
+Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false),i(0)
+{
+    isWalker = true;
+    spawnPos = pos;
+    patrolPos = Ppos;
+    eSpr.setPosition(pos);
+}
+Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), i(0)
+{
+    isWalker = false;
+    spawnPos = pos;
+    eSpr.setPosition(pos);
+}
 void Enemy::setSprite(string file) {
     if (!eTex.loadFromFile(file))
         return;
@@ -8,12 +21,6 @@ void Enemy::setSprite(string file) {
     eSpr.setTexture(eTex);
     eSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
     eSpr.setOrigin(16.f, 12.f);
-    //set sprite for bullet
-    b1.setSprite("sprM16Shell.png");
-}
-Enemy::Enemy(sf::Vector2f pos) {
-    collides = 0;
-    eSpr.setPosition(pos);
 }
 void Enemy::setEnemyPos(float x, float y)
 {
@@ -37,41 +44,34 @@ sf::Vector2f Enemy::getEnemyPos() {
 sf::Vector2f Enemy::getAimDirNorm() {
     return aimDirNorm;
 }
-vector<Bullet>* Enemy::getBulletsVector() {
-    return &bullets;
-}
 float Enemy::getAngle() {
     return angle;
-}
-void Enemy::setPtrmousePos(sf::Vector2i& mouse) {
-    PtrmousePos = &mouse;
 }
 //////////////////////////////////////////////////////////
 
 void Enemy::updateEnemySprite() {
-    static int i = 0;
     i += 32;
     if (i == 256)
         i = 0;
     eSpr.setTexture(eTex);
     eSpr.setTextureRect(sf::IntRect(i, 0, 32, 24));
 }
-void Enemy::calcDir(sf::Vector2f player) {
-    aimDir = sf::Vector2f((player.x - getEnemyPos().x), (player.y - getEnemyPos().y));
-    magnitude = static_cast<float>(sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2)));
-    aimDirNorm = sf::Vector2f((aimDir.x / magnitude), (aimDir.y / magnitude));
+
+void Enemy::calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vector2f& Norm) {
+    Dir = sf::Vector2f((dest.x - getEnemyPos().x), (dest.y - getEnemyPos().y));
+    Mag = static_cast<float>(sqrt(pow(Dir.x, 2) + pow(Dir.y, 2)));
+    Norm = sf::Vector2f((Dir.x / Mag), (Dir.y / Mag));
 }
-void Enemy::lookAtPlayer(sf::Vector2f player) {
-    // We have both the player position and the Enemy position 
-    // This calculation will make Enemy face the player
 
+void Enemy::lookAt(sf::Vector2f &aimDir) {
+    
     const float PI = 3.14159265f;
-    calcDir(player);
-    angle = static_cast<float> (atan(aimDir.y / aimDir.x) * 180.0 / PI);
 
+    angle = static_cast<float> (atan(aimDir.y / aimDir.x) * 180.0 / PI);
+ 
     if (aimDir.x < 0)
     {
-        if (aimDir.y < 0)
+        if (aimDir.y <= 0)
         {
             angle += 180;
         }
@@ -80,7 +80,7 @@ void Enemy::lookAtPlayer(sf::Vector2f player) {
             angle += 180;
         }
     }
-    else if (aimDir.x > 0)
+    else if (aimDir.x >= 0)
     {
         if (aimDir.y < 0)
         {
@@ -94,55 +94,49 @@ void Enemy::lookAtPlayer(sf::Vector2f player) {
     eSpr.setRotation(angle);
 }
 
+void Enemy::patrol() {
+    //Enemy walks in a path from spawnPos to patrolPos and back, till a player is detected
+    if (getEnemyPos() == spawnPos) {
+        dest = patrolPos;
+    }
+    else if (getEnemyPos() == patrolPos) {
+        dest = spawnPos;
+    }
+    calcPath(dest, patrolaimDir,patrolmagnitude, patrolaimDirNorm);
+    lookAt(patrolaimDir);
+    eSpr.move(patrolaimDirNorm);
+    updateEnemySprite();
+}
+
 void Enemy::chasePlayer() {
     if (collides==false)
     {
         //If no collision
-        PrevPos = eSpr.getPosition();
+        PosBeforeColl = eSpr.getPosition();
         eSpr.move(aimDirNorm);
         updateEnemySprite();
     }
     if (collides == true)
     {
         //If collision
-        eSpr.setPosition(PrevPos.x, PrevPos.y);
+        eSpr.setPosition(PosBeforeColl.x, PosBeforeColl.y);
         collides=false;
     }
 }
 
-int Enemy::detectPlayer(sf::Vector2f player) {
-    calcDir(player);
-    if (magnitude <= 200 && magnitude>=70) {
-        lookAtPlayer(player);
+void Enemy::detectPlayer(sf::Vector2f player) {
+    calcPath(player, aimDir, magnitude, aimDirNorm);
+    if (magnitude <= 200 && magnitude >= 70) {
+        stopPatrol = true;
+        lookAt(aimDir);
         chasePlayer();
-
-        return 1;
     }
-    else if (magnitude <70 )
+    else if (magnitude < 70)
     {
-        lookAtPlayer(player);
-        stop();
+        stopPatrol = true;
+        lookAt(aimDir);
     }
-    else {
-        //cout << "Player is not close!\n";
-        return 0;
+    else if ((isWalker == true) && (stopPatrol == false)) {
+        patrol();
     }
-}
-
-void Enemy::shoot() {
-    b1.rotateSprite(angle);
-    
-
-        b1.setSpritePos(this->getEnemyPos());
-        b1.setcurrentVel(b1.getMaxSpd() * aimDirNorm);
-        bullets.push_back(Bullet(b1));
-    
-    for (size_t i = 0; i < bullets.size(); i++) {
-        bullets[i].moveSprite();
-    }
-}
-
-void Enemy::stop()
-{
-    eSpr.move(oldpos.x, oldpos.y);
 }

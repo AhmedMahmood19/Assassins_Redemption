@@ -12,26 +12,31 @@ class Enemy
 {
 private:
 	//Private Data
+	int i;//used in update sprite
 	sf::Texture eTex;
 	sf::Sprite eSpr;
-	sf::Vector2i* PtrmousePos;
+	sf::Vector2f dest;
 	sf::Vector2f aimDir;
-	sf::Vector2f oldpos;
-	float magnitude;
-	float angle;
 	sf::Vector2f aimDirNorm;
-	vector<Bullet> bullets;
-	Bullet b1;
-	sf::Vector2f PrevPos;
+	sf::Vector2f patrolaimDir;
+	sf::Vector2f patrolaimDirNorm;
+	sf::Vector2f spawnPos; //where enemy is spawned
+	sf::Vector2f patrolPos; //where enemy is supposed to turn back during patrol
+	float magnitude;
+	float patrolmagnitude;
+	float angle;
+	sf::Vector2f PosBeforeColl;
 	bool collides;
+	bool stopPatrol;
+	bool isWalker;
 	//Private funcs:
-	void lookAtPlayer(sf::Vector2f player);
+	void lookAt(sf::Vector2f& aimDir);
 	void updateEnemySprite();
 
 public:
+	Enemy(sf::Vector2f pos, sf::Vector2f Ppos);
 	Enemy(sf::Vector2f pos);
 	void setSprite(string file);
-	void setPtrmousePos(sf::Vector2i& mouse);
 	void setEnemyPos(float x, float y);
 	void setCollides(bool);
 	bool getCollides();
@@ -39,11 +44,9 @@ public:
 	sf::Texture getTexture();
 	sf::Vector2f getEnemyPos();
 	sf::Vector2f getAimDirNorm();
-	vector<Bullet>* getBulletsVector();
 	float getAngle();
-	void calcDir(sf::Vector2f player);
+	void patrol();
+	void detectPlayer(sf::Vector2f player);
 	void chasePlayer();
-	int detectPlayer(sf::Vector2f player);
-	void shoot();
-	void stop();
+	void calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vector2f& Norm);
 };
