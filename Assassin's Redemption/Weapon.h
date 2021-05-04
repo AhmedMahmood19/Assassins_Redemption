@@ -24,9 +24,7 @@ public:
 	vector<Bullet>* getBulletsVector();
 	int P_WepColl(sf::Sprite);
 	virtual int getWepTimer()=0;
-	Bullet getbullet();
-	Bullet getbullet_at_I(int i);
-	~Weapon();
-	
+	Bullet* getb1ptr();
+	Bullet getb1();
 };
 

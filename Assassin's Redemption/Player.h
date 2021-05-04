@@ -32,8 +32,8 @@ private:
 	int shoottimer=0;
 
 public:
-	
-	Weapon *wep=&pistol;
+	Player();
+	Weapon* wep;
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
 	void setPosition(float x,float y);

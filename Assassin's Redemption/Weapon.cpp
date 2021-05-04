@@ -43,16 +43,11 @@ int Weapon::P_WepColl(sf::Sprite)
     return 0;
 }
 
-Bullet Weapon::getbullet()
+Bullet* Weapon::getb1ptr()
 {
+    return &b1;
+}
+
+Bullet Weapon::getb1() {
     return b1;
-}
-
-Bullet Weapon::getbullet_at_I(int i)
-{
-    return bullets[i];
-}
-
-Weapon::~Weapon()
-{
 }
