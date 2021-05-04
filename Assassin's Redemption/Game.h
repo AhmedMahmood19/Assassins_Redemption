@@ -14,6 +14,7 @@
 #include "Enemy.h"
 #include "Weapon.h"
 #include "Pistol.h"
+#include "Doors.h"
 
 class Game
 {
@@ -34,6 +35,7 @@ private:
 	//Game Logic
 		//Data:
 	Player player;
+	Doors door;
 	vector<Enemy> enemies;
 	vector<Wall> walls;
 	bool flag;
@@ -46,6 +48,7 @@ private:
 	void collisions();
 	void windowbounds();
 	void bulletWallColl();
+	void senseDoors();
 public:
 
 	//Constructors/Destructor

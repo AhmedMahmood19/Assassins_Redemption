@@ -12,7 +12,8 @@ private:
 	sf::RectangleShape rect;
 
 public:
-	
+	void disappear();
+	void appear(float w1, float w2);
 	int wallcolCont(sf::Vector2f Pos);
 	int wallcolInter(sf::Sprite a);
 	Wall(float w1 , float w2,float xPos,float yPos);

@@ -1,11 +1,2 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(77,5): warning : The process cannot access the file 'c:\users\ahmed\source\repos\test repo\assassin's redemption\debug\vc142.idb' because it is being used by another process.
-  Bullet.cpp
-  Enemy.cpp
-  Game.cpp
-  main.cpp
-  Pistol.cpp
-  Player.cpp
-  Wall.cpp
-  Weapon.cpp
-  Generating Code...
+﻿  Wall.cpp
   Assassin's Redemption.vcxproj -> C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Debug\Assassin's Redemption.exe
