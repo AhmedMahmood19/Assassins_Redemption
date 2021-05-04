@@ -252,10 +252,16 @@ void Game::render()
     
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
+<<<<<<< HEAD
     for (size_t i = 0; i < player.getWeapon()->getBulletsVector()->size(); i++) {
         this->window->draw(player.getWeapon()->getBulletsVector()->at(i).getSprite());
     }
     
+=======
+    for (size_t i = 0; i < player.getBulletsVector()->size(); i++)
+        this->window->draw(player.getBulletsVector()->at(i).getSprite());
+
+>>>>>>> master
     //Draw Player and their bullets(todo)
     for (size_t j = 0; j < enemies.size(); j++) {
         this->window->draw(enemies[j].getSprite());

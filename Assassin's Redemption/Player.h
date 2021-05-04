@@ -19,7 +19,10 @@ private:
 	sf::Sprite pSpr;
 	sf::Vector2i *PtrmousePos;
 	sf::Vector2f aimDir;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> master
 	float magnitude;
 	float angle;
 	sf::Vector2f aimDirNorm;
@@ -33,7 +36,12 @@ private:
 
 public:
 	Player();
+<<<<<<< HEAD
 	Weapon* wep;
+=======
+	sf::Vector2f getbulletPos(int i);
+	sf::Sprite getbulletSpr(int i);
+>>>>>>> master
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
 	void setPosition(float x,float y);
