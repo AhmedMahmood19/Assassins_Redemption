@@ -158,6 +158,7 @@ void Game::windowbounds()
        this->player.setPosition(player.getPlayerPos().x, 1625.f);
 }
 
+//<<<<<<< HEAD
 void Game::bulletWallColl()
 {
     for (size_t i = 0; i < walls.size(); i++) {

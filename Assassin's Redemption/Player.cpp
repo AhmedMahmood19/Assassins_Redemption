@@ -1,8 +1,14 @@
 #include "Player.h"
 
+//<<<<<<< Updated upstream
 Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
     wep = &pistol;
 }
+//=======
+//<<<<<<< HEAD
+
+//>>>>>>> master
+//>>>>>>> Stashed changes
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))
