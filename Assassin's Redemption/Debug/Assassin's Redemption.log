@@ -1,10 +1,6 @@
-﻿  Bullet.cpp
-  Enemy.cpp
-  Game.cpp
-  main.cpp
+﻿  Game.cpp
   Pistol.cpp
   Player.cpp
-  Wall.cpp
-  Weapon.cpp
+  main.cpp
   Generating Code...
   Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe
