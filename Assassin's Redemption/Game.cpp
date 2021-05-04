@@ -16,6 +16,7 @@ void Game::initVariables()
     bgSpr.setOrigin(170,100);
     initWalls();
     initEnemies();
+    door.initDoor("doors.png");
 };
 
 void Game::initWindow()
@@ -58,6 +59,9 @@ void Game::initWalls() {
     walls.push_back(Wall(20, 395, 1100, 920));
     walls.push_back(Wall(165, 22, 940, 1315));
     walls.push_back(Wall(20, 230, 1022, 1330));
+    //Pushback a door 30 and 31 index
+    walls.push_back(Wall(12, 90, 460, 1380));//Upper door
+    walls.push_back(Wall(12, 90, 460, 1470));//Lower door
 }
 
 void Game::initEnemies() {
@@ -158,7 +162,7 @@ void Game::windowbounds()
        this->player.setPosition(player.getPlayerPos().x, 1625.f);
 }
 
-//<<<<<<< HEAD
+
 void Game::bulletWallColl()
 {
     for (size_t i = 0; i < walls.size(); i++) {
@@ -166,10 +170,8 @@ void Game::bulletWallColl()
         {
             if (walls[i].wallcolInter(player.getWeapon()->getbulletSpr(j))==1  )
             {
-                player.getWeapon()->getBulletsVector()->erase(player.getWeapon()->getBulletsVector()->begin()+j);
-                
+                player.getWeapon()->getBulletsVector()->erase(player.getWeapon()->getBulletsVector()->begin()+j);   
             }
-      
         }
         
     }
@@ -213,7 +215,7 @@ void Game::update()
 
     this->updateView();
     this->updateMousePositions();
-
+    this->senseDoors();
     this->pollEvents();
 
 }
@@ -235,6 +237,9 @@ void Game::render()
         window->draw(i.getwall());
     }
     
+    //Draw Doors
+    this->window->draw(door.getSprite());
+
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
     for (size_t i = 0; i < player.getWeapon()->getBulletsVector()->size(); i++) {
@@ -244,7 +249,25 @@ void Game::render()
     for (size_t j = 0; j < enemies.size(); j++) {
         this->window->draw(enemies[j].getSprite());
     }
+
     //Display frame
     this->window->display();
     
+}
+void Game::senseDoors(){
+    sf::Vector2f sensor;
+    if (player.getPlayerPos().x >= 377 && player.getPlayerPos().x <= 600) {
+        if (player.getPlayerPos().y >= 1345 && player.getPlayerPos().y <= 1625) {
+            door.setisOpen(true);
+            walls[30].disappear();
+            walls[31].disappear();
+            door.moveDoors();
+        }
+    }
+    else {
+        door.setisOpen(false);
+        walls[30].appear(12,90);
+        walls[31].appear(12,90);
+        door.moveDoors();
+    }
 }
