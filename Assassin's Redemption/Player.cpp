@@ -1,19 +1,14 @@
 #include "Player.h"
 
-
-
-
-sf::Vector2f Player::getbulletPos(int i)
-{
-    return bullets[i].bGetPos();
+//<<<<<<< Updated upstream
+Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
+    wep = &pistol;
 }
+//=======
+//<<<<<<< HEAD
 
-sf::Sprite Player::getbulletSpr(int i)
-{
-    return bullets[i].getSprite();
-}
-Player::Player():angle(0), magnitude(0),PtrmousePos(0)
-{}
+//>>>>>>> master
+//>>>>>>> Stashed changes
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))
@@ -22,8 +17,7 @@ void Player::setSprite(string file) {
     pSpr.setTexture(pTex);
     pSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
     pSpr.setOrigin(16.f, 16.f);
-    //set sprite for bullet
-    b1.setSprite("sprM16Shell.png");
+    wep->getb1ptr()->setSprite("sprM16Shell.png");
 }
 void Player::setPosition(float x, float y)
 {
@@ -41,9 +35,12 @@ sf::Vector2f Player::getPlayerPos() {
 sf::Vector2f Player::getAimDirNorm() {
     return aimDirNorm;
 }
-vector<Bullet>* Player::getBulletsVector() {
-    return &bullets;
+
+Weapon* Player::getWeapon()
+{
+    return wep;
 }
+
 float Player::getAngle() {
     return angle;
 }
@@ -149,23 +146,22 @@ void Player::updatePlayer(int flag) {
     }
 }
 void Player::shoot() {
-    b1.rotateSprite(angle);
-    if (shoottimer < 10 )
+    
+    
+    wep->getb1ptr()->rotateSprite(angle);
+    if (shoottimer < wep->getWepTimer() )
     {
         shoottimer++;
     }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= 10)
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= wep->getWepTimer())
     {
         shoottimer = 0;
-        b1.setSpritePos(this->getPlayerPos());
-        b1.setcurrentVel(b1.getMaxSpd() * aimDirNorm);
+        wep->getb1ptr()->setSpritePos(this->getPlayerPos());
+        wep->getb1ptr()->setcurrentVel(wep->getb1ptr()->getMaxSpd() * aimDirNorm);
        
-        bullets.push_back(Bullet(b1));
-        
-   
+        wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
     }
-    for (size_t i = 0; i < bullets.size(); i++) {
-        bullets[i].moveSprite();
-        
+    for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
+        wep->getBulletsVector()->at(i).moveSprite();
     }
 }
