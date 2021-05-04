@@ -152,7 +152,6 @@ void Player::shoot() {
        
         wep->getBulletsVector()->push_back(Bullet(wep->getbullet()));
 
-        //wep->setSprite("sprM16Shell.png");
 
         cout << "shooting";
     }
