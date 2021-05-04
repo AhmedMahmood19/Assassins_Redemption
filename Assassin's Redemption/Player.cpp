@@ -1,25 +1,8 @@
 #include "Player.h"
 
-<<<<<<< HEAD
 Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
     wep = &pistol;
 }
-=======
-
-
-
-sf::Vector2f Player::getbulletPos(int i)
-{
-    return bullets[i].bGetPos();
-}
-
-sf::Sprite Player::getbulletSpr(int i)
-{
-    return bullets[i].getSprite();
-}
-Player::Player():angle(0), magnitude(0),PtrmousePos(0)
-{}
->>>>>>> master
 ///////////////////////     ACCESSORS      ///////////////
 void Player::setSprite(string file) {
     if (!pTex.loadFromFile(file))

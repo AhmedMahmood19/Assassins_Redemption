@@ -124,18 +124,6 @@ void Game::collisions()
    
 }
 
-void Game::bulletWallColl()
-{
-    for (size_t i = 0; i < walls.size(); i++) {
-        for (size_t j = 0; j < player.getBulletsVector()->size(); j++)
-        {
-            if (walls[i].wallcolInter(player.getbulletSpr(j)) == 1){
-                player.getBulletsVector()->erase(player.getBulletsVector()->begin() + j);
-            }
-        }
-    }
-}
-
 void Game::windowbounds()
 {
     //For Enemies
@@ -170,7 +158,6 @@ void Game::windowbounds()
        this->player.setPosition(player.getPlayerPos().x, 1625.f);
 }
 
-<<<<<<< HEAD
 void Game::bulletWallColl()
 {
     for (size_t i = 0; i < walls.size(); i++) {
@@ -187,9 +174,6 @@ void Game::bulletWallColl()
     }
 
 }
-
-=======
->>>>>>> master
 void Game::pollEvents()
 {
     while (this->window->pollEvent(this->ev))
@@ -252,17 +236,10 @@ void Game::render()
     
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
-<<<<<<< HEAD
     for (size_t i = 0; i < player.getWeapon()->getBulletsVector()->size(); i++) {
         this->window->draw(player.getWeapon()->getBulletsVector()->at(i).getSprite());
     }
-    
-=======
-    for (size_t i = 0; i < player.getBulletsVector()->size(); i++)
-        this->window->draw(player.getBulletsVector()->at(i).getSprite());
-
->>>>>>> master
-    //Draw Player and their bullets(todo)
+    //Draw Enemy and their bullets(todo)
     for (size_t j = 0; j < enemies.size(); j++) {
         this->window->draw(enemies[j].getSprite());
     }

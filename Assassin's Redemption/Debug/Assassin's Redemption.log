@@ -1,2 +1,10 @@
-﻿  Player.cpp
+﻿  Bullet.cpp
+  Enemy.cpp
+  Game.cpp
+  main.cpp
+  Pistol.cpp
+  Player.cpp
+  Wall.cpp
+  Weapon.cpp
+  Generating Code...
   Assassin's Redemption.vcxproj -> C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Debug\Assassin's Redemption.exe
