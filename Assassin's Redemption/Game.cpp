@@ -14,8 +14,10 @@ void Game::initVariables()
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
+    //test
     player.wep->setSprite("sprBossgun.png");
     player.wep->getSprite().setOrigin(350.f, 1450.f);
+    //
     initWalls();
     initEnemies();
     door.initDoor("doors.png");
