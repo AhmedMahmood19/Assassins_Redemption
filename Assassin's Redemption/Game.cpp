@@ -275,7 +275,7 @@ void Game::senseDoors(){
 
 int Game::wepCheck()
 {
-    //see game.h for a and b
+    //see game.h for a, b and c
     if (player.playerWeaponColl(uzi.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
     {
         if (ev.key.code == sf::Keyboard::Space);
@@ -295,6 +295,17 @@ int Game::wepCheck()
             player.setWeapon(&pistol);
             player.setSprite(b);
             player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
+        }
+    }
+    else if (player.playerWeaponColl(shotgun.getSprite()) == 1 && ev.type == sf::Event::KeyPressed)
+    {
+        if (ev.key.code == sf::Keyboard::Space);
+        {
+            //sets weapon and updates playersprite with the player sprite containing this gun 
+            player.setWeapon(&shotgun);
+            player.setSprite(c);
+            player.getWeaponptr()->getb1ptr()->setSprite("sprShotgunShell.png");
+
         }
     }
     return 0;

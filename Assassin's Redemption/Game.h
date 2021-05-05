@@ -16,7 +16,7 @@
 #include "Pistol.h"
 #include "Doors.h"
 #include "Uzi.h"
-
+#include "Shotgun.h"
 class Game
 {
 	//Class that acts as the game engine/Wrapper class
@@ -37,10 +37,12 @@ private:
 		//Data:
 	string a = "sprPWalkUzi_strip8.png";
 	string b = "sprPWalkScorpion_strip8.png";
+	string c = "sprPWalkDoubleBarrel_strip8.png";
 	Player player;
 	Doors door;
 	Uzi uzi;
 	Pistol pistol;
+	Shotgun shotgun;
 	vector<Enemy> enemies;
 	vector<Wall> walls;
 	bool flag;

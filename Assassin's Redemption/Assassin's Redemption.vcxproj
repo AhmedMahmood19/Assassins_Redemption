@@ -26,6 +26,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pistol.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="Uzi.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Pistol.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shotgun.h" />
     <ClInclude Include="Uzi.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
