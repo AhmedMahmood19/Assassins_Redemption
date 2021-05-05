@@ -9,7 +9,13 @@ Wall::Wall(float w1, float w2,float xPos,float yPos)
 	rect.setOutlineThickness(1.f);
 }
 
+void Wall::disappear(){
+	rect.setSize(sf::Vector2f(1, 1));
+}
 
+void Wall::appear(float w1, float w2) {
+	rect.setSize(sf::Vector2f(w1,w2));
+}
 
 int Wall::wallcolCont(sf::Vector2f Pos)
 {
