@@ -15,6 +15,7 @@
 #include "Weapon.h"
 #include "Pistol.h"
 #include "Doors.h"
+#include "Uzi.h"
 
 class Game
 {
@@ -34,8 +35,12 @@ private:
 
 	//Game Logic
 		//Data:
+	string a = "sprPWalkUzi_strip8";
+	string b = "sprPWalkScorpion_strip8";
 	Player player;
 	Doors door;
+	Uzi uzi;
+	Pistol pistol;
 	vector<Enemy> enemies;
 	vector<Wall> walls;
 	bool flag;
@@ -49,6 +54,7 @@ private:
 	void windowbounds();
 	void bulletWallColl();
 	void senseDoors();
+	int wepCheck();
 public:
 
 	//Constructors/Destructor

@@ -32,7 +32,7 @@ sf::Vector2f Player::getAimDirNorm() {
     return aimDirNorm;
 }
 
-Weapon* Player::getWeapon()
+Weapon* Player::getWeaponptr()
 {
     return wep;
 }
@@ -160,4 +160,19 @@ void Player::shoot() {
     for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
         wep->getBulletsVector()->at(i).moveSprite();
     }
+}
+
+void Player::setWeapon(Weapon* a)
+{
+    wep = a;
+}
+
+int Player::playerWeaponColl(sf::Sprite x)
+{
+    int flag;
+    if (pSpr.getGlobalBounds().intersects(x.getGlobalBounds()) == 1)
+        flag = 1;
+    else
+        flag = 0;
+    return flag;
 }

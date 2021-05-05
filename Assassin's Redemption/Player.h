@@ -40,8 +40,10 @@ public:
 	sf::Texture getTexture();
 	sf::Vector2f getPlayerPos();
 	sf::Vector2f getAimDirNorm();
-	Weapon* getWeapon();
+	Weapon* getWeaponptr();
 	float getAngle();
 	void updatePlayer(int flag);
 	void shoot();
+	void setWeapon(Weapon* a);
+	int playerWeaponColl(sf::Sprite x);
 };

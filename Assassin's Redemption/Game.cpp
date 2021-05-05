@@ -166,11 +166,11 @@ void Game::windowbounds()
 void Game::bulletWallColl()
 {
     for (size_t i = 0; i < walls.size(); i++) {
-        for (size_t j = 0; j < player.getWeapon()->getBulletsVector()->size(); j++)
+        for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
         {
-            if (walls[i].wallcolInter(player.getWeapon()->getbulletSpr(j))==1  )
+            if (walls[i].wallcolInter(player.getWeaponptr()->getbulletSpr(j))==1  )
             {
-                player.getWeapon()->getBulletsVector()->erase(player.getWeapon()->getBulletsVector()->begin()+j);   
+                player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin()+j);   
             }
         }
         
@@ -212,7 +212,7 @@ void Game::update()
     this->windowbounds();
     this->collisions();
     this->bulletWallColl();
-
+    this->wepCheck();
     this->updateView();
     this->updateMousePositions();
     this->senseDoors();
@@ -242,14 +242,13 @@ void Game::render()
 
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
-    for (size_t i = 0; i < player.getWeapon()->getBulletsVector()->size(); i++) {
-        this->window->draw(player.getWeapon()->getBulletsVector()->at(i).getSprite());
+    for (size_t i = 0; i < player.getWeaponptr()->getBulletsVector()->size(); i++) {
+        this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
     }
     //Draw Enemy and their bullets(todo)
     for (size_t j = 0; j < enemies.size(); j++) {
         this->window->draw(enemies[j].getSprite());
     }
-
     //Display frame
     this->window->display();
     
@@ -270,4 +269,28 @@ void Game::senseDoors(){
         walls[31].appear(12,90);
         door.moveDoors();
     }
+}
+
+int Game::wepCheck()
+{
+    if (player.playerWeaponColl(uzi.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
+    {
+        if (ev.key.code == sf::Keyboard::E);
+        {
+
+            player.setWeapon(&uzi);
+            player.setSprite(a);
+
+        }
+    }
+    else if (player.playerWeaponColl(pistol.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
+    {
+        if (ev.key.code == sf::Keyboard::E)
+        {
+
+            player.setWeapon(&pistol);
+            player.setSprite(b);
+        }
+    }
+    return 0;
 }
