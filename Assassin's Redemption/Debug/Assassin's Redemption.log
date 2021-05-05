@@ -1,1 +1,5 @@
-﻿  Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe
+﻿  Game.cpp
+D:\Projects C++\SFML-Game\Assassin's Redemption\Game.cpp(281,48): warning C4390: ';': empty controlled statement found; is this the intent?
+  main.cpp
+  Generating Code...
+  Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe

@@ -14,8 +14,8 @@ void Game::initVariables()
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
-    player.wep->setSprite("sprBossgun");
-    player.wep->getSprite().setOrigin(170, 100);
+    player.wep->setSprite("sprBossgun.png");
+    player.wep->getSprite().setOrigin(350.f, 1450.f);
     initWalls();
     initEnemies();
     door.initDoor("doors.png");
@@ -283,7 +283,7 @@ int Game::wepCheck()
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&uzi);
             player.setSprite(a);
-            player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell");
+            player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell.png");
 
         }
     }
