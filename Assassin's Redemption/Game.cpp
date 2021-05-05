@@ -14,6 +14,8 @@ void Game::initVariables()
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
+    player.wep->setSprite("sprBossgun");
+    player.wep->getSprite().setOrigin(170, 100);
     initWalls();
     initEnemies();
     door.initDoor("doors.png");
@@ -273,23 +275,26 @@ void Game::senseDoors(){
 
 int Game::wepCheck()
 {
+    //see game.h for a and b
     if (player.playerWeaponColl(uzi.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
     {
-        if (ev.key.code == sf::Keyboard::E);
+        if (ev.key.code == sf::Keyboard::Space);
         {
-
+            //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&uzi);
             player.setSprite(a);
+            player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell");
 
         }
     }
     else if (player.playerWeaponColl(pistol.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
     {
-        if (ev.key.code == sf::Keyboard::E)
+        if (ev.key.code == sf::Keyboard::Space)
         {
-
+            //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&pistol);
             player.setSprite(b);
+            player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
         }
     }
     return 0;
