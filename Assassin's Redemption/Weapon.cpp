@@ -5,6 +5,11 @@ sf::Sprite Weapon::getSprite()
     return wSpr;
 }
 
+sf::Sprite* Weapon::getSpritePtr()
+{
+    return &wSpr;
+}
+
 sf::Texture Weapon::getTexture()
 {
     return wTex;

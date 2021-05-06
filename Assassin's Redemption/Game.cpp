@@ -14,9 +14,10 @@ void Game::initVariables()
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
-    //test
-    player.wep->setSprite("sprBossgun.png");
-    player.wep->getSprite().setOrigin(350.f, 1450.f);
+    //Todo: Hardcoding a pistol
+    pistol.setSprite("sprBossgun.png");
+    pistol.getSpritePtr()->setPosition(370.f, 1450.f);
+    pistol.getSpritePtr()->setScale(3,3);
     //
     initWalls();
     initEnemies();
@@ -243,6 +244,9 @@ void Game::render()
     
     //Draw Doors
     this->window->draw(door.getSprite());
+
+    //Todo: Hardcoding pistol for Qasim
+    this->window->draw(pistol.getSprite());
 
     //Draw Player and their bullets
     this->window->draw(player.getSprite());

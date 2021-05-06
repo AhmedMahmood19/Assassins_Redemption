@@ -35,9 +35,9 @@ private:
 
 	//Game Logic
 		//Data:
-	string a = "sprPWalkUzi_strip8.png";
-	string b = "sprPWalkScorpion_strip8.png";
-	string c = "sprPWalkDoubleBarrel_strip8.png";
+	const string a = "sprPWalkUzi_strip8.png";
+	const string b = "sprPWalkScorpion_strip8.png";
+	const string c = "sprPWalkDoubleBarrel_strip8.png";
 	Player player;
 	Doors door;
 	Uzi uzi;
