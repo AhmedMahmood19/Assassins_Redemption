@@ -284,7 +284,7 @@ int Game::wepCheck()
     //see game.h for a, b and c
     if (player.playerWeaponColl(uzi.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
     {
-        if (ev.key.code == sf::Keyboard::Space);
+        if (ev.key.code == sf::Keyboard::Space)
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&uzi);
@@ -305,7 +305,7 @@ int Game::wepCheck()
     }
     else if (player.playerWeaponColl(shotgun.getSprite()) == 1 && ev.type == sf::Event::KeyPressed)
     {
-        if (ev.key.code == sf::Keyboard::Space);
+        if (ev.key.code == sf::Keyboard::Space)
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&shotgun);
