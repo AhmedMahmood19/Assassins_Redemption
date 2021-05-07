@@ -23,7 +23,10 @@ private:
 	float angle;
 	sf::Vector2f aimDirNorm;
 	sf::Vector2f PrevPos;
-	
+	//for changing playersprites
+	int a = 320;
+	int b = a / 8;
+
 	Pistol pistol;
 	//Private funcs:
 	void lookAtMouse();
@@ -31,6 +34,8 @@ private:
 	int shoottimer=0;
 
 public:
+
+	void setAandB(int x);
 	Player();
 	Weapon* wep;
 	void setSprite(string file);

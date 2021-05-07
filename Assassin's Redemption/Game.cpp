@@ -7,7 +7,7 @@ void Game::initVariables()
 
     //Game Logic
     flag = 0;
-    player.setSprite("sprPWalkUnarmed2_strip8.png");
+    player.setSprite("sprPWalkScorpion_strip8.png");
     player.setPosition(350.f, 1450.f);
     if (!bgTex.loadFromFile("beachmap.png"))
         return;
@@ -15,9 +15,9 @@ void Game::initVariables()
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
     //Todo: Hardcoding a pistol
-    pistol.setSprite("sprBossgun.png");
-    pistol.getSpritePtr()->setPosition(370.f, 1450.f);
-    pistol.getSpritePtr()->setScale(3,3);
+    shotgun.setSprite("sprBossgun.png");
+    shotgun.getSpritePtr()->setPosition(370.f, 1450.f);
+    shotgun.getSpritePtr()->setScale(3,3);
     //
     initWalls();
     initEnemies();
@@ -203,7 +203,6 @@ void Game::pollEvents()
     for (size_t j = 0; j < enemies.size(); j++) {
         enemies[j].detectPlayer(player.getPlayerPos());
     }
-    //cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
 }
 
 
@@ -246,7 +245,7 @@ void Game::render()
     this->window->draw(door.getSprite());
 
     //Todo: Hardcoding pistol for Qasim
-    this->window->draw(pistol.getSprite());
+    this->window->draw(shotgun.getSprite());
 
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
@@ -282,36 +281,40 @@ void Game::senseDoors(){
 int Game::wepCheck()
 {
     //see game.h for a, b and c
-    if (player.playerWeaponColl(uzi.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
+    if (player.playerWeaponColl(uzi.getSprite()) == 1 || ev.type==sf::Event::KeyPressed)
     {
         if (ev.key.code == sf::Keyboard::Space)
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&uzi);
             player.setSprite(a);
+            player.setAandB(352);
             player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell.png");
+            
 
         }
     }
-    else if (player.playerWeaponColl(pistol.getSprite()) == 1 && ev.type==sf::Event::KeyPressed)
+    if (player.playerWeaponColl(pistol.getSprite()) == 1 || ev.type==sf::Event::KeyPressed)
     {
         if (ev.key.code == sf::Keyboard::Space)
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&pistol);
             player.setSprite(b);
+            player.setAandB(320);
             player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
         }
     }
-    else if (player.playerWeaponColl(shotgun.getSprite()) == 1 && ev.type == sf::Event::KeyPressed)
+    if (player.playerWeaponColl(shotgun.getSprite()) == 1 || ev.type == sf::Event::KeyPressed)
     {
+        
         if (ev.key.code == sf::Keyboard::Space)
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&shotgun);
+            player.setAandB(352);
             player.setSprite(c);
             player.getWeaponptr()->getb1ptr()->setSprite("sprShotgunShell.png");
-
         }
     }
     return 0;

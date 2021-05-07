@@ -1,6 +1,12 @@
 #include "Player.h"
 
 
+void Player::setAandB(int x)
+{
+    a = x;
+    b = a / 8;
+}
+
 Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
     wep = &pistol;
 }
@@ -11,7 +17,7 @@ void Player::setSprite(string file) {
         return;
     pSpr.setScale(2, 2);
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    pSpr.setTextureRect(sf::IntRect(0, 0, b, 32));
     pSpr.setOrigin(16.f, 16.f);
     wep->getb1ptr()->setSprite("sprM16Shell.png");
 }
@@ -48,11 +54,11 @@ void Player::setPtrmousePos(sf::Vector2i& mouse) {
 
 void Player::updatePlayerSprite() {
     static int i = 0;
-    i += 32;
-    if (i == 256)
+    i += b;
+    if (i == a)
         i = 0;
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(i, 0, 32, 32));
+    pSpr.setTextureRect(sf::IntRect(i, 0, b, 32));
 }
 void Player::lookAtMouse() {
     // We have both the mouse position and the player position 
@@ -170,8 +176,11 @@ void Player::setWeapon(Weapon* a)
 int Player::playerWeaponColl(sf::Sprite x)
 {
     int flag;
-    if (pSpr.getGlobalBounds().intersects(x.getGlobalBounds()) == 1)
+    if (pSpr.getGlobalBounds().contains(x.getPosition()) == 1)
+    {
         flag = 1;
+        cout << "collided\n";
+    }
     else
         flag = 0;
     return flag;

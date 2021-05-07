@@ -3,7 +3,7 @@
 class Shotgun :
     public Weapon
 {
-    int wep_timer = 40;
+    int wep_timer = 50;
     void ab_class();
     virtual int getWepTimer();
 

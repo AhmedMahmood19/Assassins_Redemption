@@ -6,7 +6,7 @@ class Pistol :
 private:
 
 public:
-    int wep_timer=30;
+    int wep_timer=22;
     void ab_class();
     virtual int getWepTimer();
     

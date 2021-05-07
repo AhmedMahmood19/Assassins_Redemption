@@ -1,4 +1,5 @@
 ﻿  Game.cpp
-C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Game.cpp(287,48): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Game.cpp(308,48): warning C4390: ';': empty controlled statement found; is this the intent?
-  Assassin's Redemption.vcxproj -> C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Debug\Assassin's Redemption.exe
+  Shotgun.cpp
+  main.cpp
+  Generating Code...
+  Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe
