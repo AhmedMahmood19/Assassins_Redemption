@@ -24,8 +24,8 @@ private:
 	sf::Vector2f aimDirNorm;
 	sf::Vector2f PrevPos;
 	//for changing playersprites
-	int a = 320;
-	int b = a / 8;
+	int a;
+	int b;
 
 	Pistol pistol;
 	//Private funcs:

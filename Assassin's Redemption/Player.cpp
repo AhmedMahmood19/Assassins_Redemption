@@ -7,7 +7,7 @@ void Player::setAandB(int x)
     b = a / 8;
 }
 
-Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
+Player::Player():PtrmousePos(0),angle(0),magnitude(0),a(320),b(a/8) {
     wep = &pistol;
 }
 

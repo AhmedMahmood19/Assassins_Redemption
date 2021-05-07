@@ -18,6 +18,14 @@ void Game::initVariables()
     shotgun.setSprite("sprBossgun.png");
     shotgun.getSpritePtr()->setPosition(370.f, 1450.f);
     shotgun.getSpritePtr()->setScale(3,3);
+
+    uzi.setSprite("sprBossgun.png");
+    uzi.getSpritePtr()->setPosition(450.f, 1450.f);
+    uzi.getSpritePtr()->setScale(3, 3);
+
+    pistol.setSprite("sprBossgun.png");
+    pistol.getSpritePtr()->setPosition(330.f, 1450.f);
+    pistol.getSpritePtr()->setScale(3, 3);
     //
     initWalls();
     initEnemies();
@@ -246,6 +254,9 @@ void Game::render()
 
     //Todo: Hardcoding pistol for Qasim
     this->window->draw(shotgun.getSprite());
+    this->window->draw(uzi.getSprite());
+    this->window->draw(pistol.getSprite());
+
 
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
