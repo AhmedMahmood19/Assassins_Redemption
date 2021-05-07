@@ -54,11 +54,13 @@ void Player::setPtrmousePos(sf::Vector2i& mouse) {
 
 void Player::updatePlayerSprite() {
     static int i = 0;
-    i += b;
-    if (i == a)
+    //i += b;
+    i += 44;
+    //if (i == a)
+    if (i == 352)
         i = 0;
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(i, 0, b, 32));
+    pSpr.setTextureRect(sf::IntRect(i, 0, 44, 32));
 }
 void Player::lookAtMouse() {
     // We have both the mouse position and the player position 
@@ -176,10 +178,10 @@ void Player::setWeapon(Weapon* a)
 int Player::playerWeaponColl(sf::Sprite x)
 {
     int flag;
-    if (pSpr.getGlobalBounds().contains(x.getPosition()) == 1)
+    if (pSpr.getGlobalBounds().contains(x.getPosition()))
     {
         flag = 1;
-        cout << "collided\n";
+        //cout << "collided\n";
     }
     else
         flag = 0;

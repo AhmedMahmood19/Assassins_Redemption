@@ -17,7 +17,7 @@ private:
 	//Private Data
 	sf::Texture pTex;
 	sf::Sprite pSpr;
-	sf::Vector2i *PtrmousePos;
+	sf::Vector2i* PtrmousePos;
 	sf::Vector2f aimDir;
 	float magnitude;
 	float angle;
@@ -31,7 +31,7 @@ private:
 	//Private funcs:
 	void lookAtMouse();
 	void updatePlayerSprite();
-	int shoottimer=0;
+	int shoottimer = 0;
 
 public:
 
@@ -40,7 +40,7 @@ public:
 	Weapon* wep;
 	void setSprite(string file);
 	void setPtrmousePos(sf::Vector2i& mouse);
-	void setPosition(float x,float y);
+	void setPosition(float x, float y);
 	sf::Sprite getSprite();
 	sf::Texture getTexture();
 	sf::Vector2f getPlayerPos();

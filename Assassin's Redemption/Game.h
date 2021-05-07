@@ -31,13 +31,13 @@ private:
 	void initWalls();
 	void initEnemies();
 	void updateView();
-	int j=0;
 
 	//Game Logic
 		//Data:
-	const string a = "sprPWalkUzi_strip8.png";
-	const string b = "sprPWalkScorpion_strip8.png";
-	const string c = "sprPWalkDoubleBarrel_strip8.png";
+	//const string a = "sprPWalkUzi_strip8.png";
+	const string uziTex = "sprPWalkUzi_strip8.png";
+	const string pistolTex = "sprPWalkMagnum_strip8.png";
+	const string shotgunTex = "sprPWalkDoubleBarrel_strip8.png";
 	Player player;
 	Doors door;
 	Uzi uzi;

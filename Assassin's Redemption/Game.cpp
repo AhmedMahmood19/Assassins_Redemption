@@ -7,7 +7,7 @@ void Game::initVariables()
 
     //Game Logic
     flag = 0;
-    player.setSprite("sprPWalkScorpion_strip8.png");
+    player.setSprite("sprPWalkMagnum_strip8.png");
     player.setPosition(350.f, 1450.f);
     if (!bgTex.loadFromFile("beachmap.png"))
         return;
@@ -15,17 +15,14 @@ void Game::initVariables()
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
     //Todo: Hardcoding a pistol
-    shotgun.setSprite("sprBossgun.png");
-    shotgun.getSpritePtr()->setPosition(370.f, 1450.f);
-    shotgun.getSpritePtr()->setScale(3,3);
+    shotgun.setSprite("sprShotgun.png");
+    shotgun.getSpritePtr()->setPosition(370.f, 1390.f);
 
-    uzi.setSprite("sprBossgun.png");
-    uzi.getSpritePtr()->setPosition(450.f, 1450.f);
-    uzi.getSpritePtr()->setScale(3, 3);
+    uzi.setSprite("sprUzi.png");
+    uzi.getSpritePtr()->setPosition(420.f, 1480.f);
 
-    pistol.setSprite("sprBossgun.png");
-    pistol.getSpritePtr()->setPosition(330.f, 1450.f);
-    pistol.getSpritePtr()->setScale(3, 3);
+    pistol.setSprite("sprMagnum.png");
+    pistol.getSpritePtr()->setPosition(270.f, 1480.f);
     //
     initWalls();
     initEnemies();
@@ -252,7 +249,7 @@ void Game::render()
     //Draw Doors
     this->window->draw(door.getSprite());
 
-    //Todo: Hardcoding pistol for Qasim
+    //Todo: Hardcoding Guns
     this->window->draw(shotgun.getSprite());
     this->window->draw(uzi.getSprite());
     this->window->draw(pistol.getSprite());
@@ -291,14 +288,13 @@ void Game::senseDoors(){
 
 int Game::wepCheck()
 {
-    //see game.h for a, b and c
     if (player.playerWeaponColl(uzi.getSprite()) == 1 || ev.type==sf::Event::KeyPressed)
     {
         if (ev.key.code == sf::Keyboard::Space)
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&uzi);
-            player.setSprite(a);
+            player.setSprite(uziTex);
             player.setAandB(352);
             player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell.png");
             
@@ -311,7 +307,7 @@ int Game::wepCheck()
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&pistol);
-            player.setSprite(b);
+            player.setSprite(pistolTex);
             player.setAandB(320);
             player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
         }
@@ -324,7 +320,7 @@ int Game::wepCheck()
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&shotgun);
             player.setAandB(352);
-            player.setSprite(c);
+            player.setSprite(shotgunTex);
             player.getWeaponptr()->getb1ptr()->setSprite("sprShotgunShell.png");
         }
     }
