@@ -5,8 +5,9 @@ void Game::initVariables()
 {
     this->window = nullptr;
 
+    initStartScreen();
     //Game Logic
-    flag = 0;
+    playerCollide = 0;
     player.setSprite("sprPWalkMagnum_strip8.png");
     player.setPosition(350.f, 1450.f);
     if (!bgTex.loadFromFile("beachmap.png"))
@@ -27,7 +28,29 @@ void Game::initVariables()
     initWalls();
     initEnemies();
     door.initDoor("doors.png");
-};
+}
+void Game::initStartScreen()
+{
+    blink = 255;
+    isStarted = false;
+    if (!Titlefont.loadFromFile("Fonts\\Doctor Glitch.otf"))
+        return;
+    if (!Startfont.loadFromFile("Fonts\\Distortion Dos Analogue.otf"))
+        return;
+    if (!TitleBGtex.loadFromFile("screen/WaterP.png"))
+        return;
+    Titletext.setPosition(40, 20);
+    Starttext.setPosition(220, 270);
+    Titletext.setFont(Titlefont);
+    Starttext.setFont(Startfont);
+    Titletext.setString("Assassin's Redemption");
+    Starttext.setString("Press  X  to Start");
+    Titletext.setCharacterSize(52);
+    Starttext.setCharacterSize(42);
+    Titletext.setFillColor(sf::Color::Black);
+    Starttext.setFillColor(sf::Color(255, 255, 255, 200));
+    TitleBGspr.setTexture(TitleBGtex);
+}
 
 void Game::initWindow()
 {
@@ -89,6 +112,10 @@ void Game::initEnemies() {
     //enemies[i].setSprite("sprEWalkM16_strip8.png");
 }
 
+void Game::GameOver() {
+    cout << "Gameover";
+}
+
 void Game::updateView() {
     this->view = new sf::View(sf::Vector2f(player.getPlayerPos()), sf::Vector2f(800.f, 480.f));
     window->setView(*view);
@@ -120,10 +147,10 @@ void Game::collisions()
 {
     for (size_t i = 0; i < walls.size(); i++) {
         if (walls[i].wallcolCont(player.getPlayerPos())) {
-            flag = 1;
+            playerCollide = 1;
             break;
         }
-        else flag = 0;
+        else playerCollide = 0;
     }
     for (size_t j = 0; j < enemies.size(); j++) {
         for (size_t i = 0; i < walls.size(); i++)
@@ -171,8 +198,6 @@ void Game::windowbounds()
    if (this->player.getPlayerPos().y >= 1625.f)
        this->player.setPosition(player.getPlayerPos().x, 1625.f);
 }
-
-
 void Game::bulletWallColl()
 {
     for (size_t i = 0; i < walls.size(); i++) {
@@ -197,36 +222,55 @@ void Game::pollEvents()
             this->window->close();
             break;
         case sf::Event::KeyPressed:
-            if (this->ev.key.code == sf::Keyboard::Escape)
+            if (this->ev.key.code == sf::Keyboard::Escape) {
                 this->window->close();
+                break;
+            }
+            if (this->ev.key.code == sf::Keyboard::X){
+                isStarted = true;
             break;
+            }
+            //Player dying todo
+            if (this->ev.key.code == sf::Keyboard::P) {
+                player.playerDies();
+                break;
+            }
         }
-    }
-    
-    player.updatePlayer(flag);
-    player.shoot();
-    for (size_t j = 0; j < enemies.size(); j++) {
-        enemies[j].detectPlayer(player.getPlayerPos());
     }
 }
 
 
 void Game::updateMousePositions() {
-    //Updates the mouse position, relative to window(vector2i)
-    this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+        //Updates the mouse position, relative to window(vector2i)
+        this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 }
-
+void Game::updateCharacters() {
+    player.updatePlayer(playerCollide);
+    player.shoot();
+    for (size_t j = 0; j < enemies.size(); j++) {
+        enemies[j].detectPlayer(player.getPlayerPos());
+    }
+}
 void Game::update()
 {
-    this->windowbounds();
-    this->collisions();
-    this->bulletWallColl();
-    this->wepCheck();
-    this->updateView();
-    this->updateMousePositions();
-    this->senseDoors();
     this->pollEvents();
-
+    //Player dying todo
+    if (isStarted) {
+        if (player.getpDead()) {
+            this->GameOver();
+        }
+        else
+        {
+            this->updateView();
+            this->updateMousePositions();
+            this->updateCharacters();
+            this->windowbounds();
+            this->collisions();
+            this->bulletWallColl();
+            this->wepCheck();
+            this->senseDoors();
+        }
+    }
 }
 
 void Game::render()
@@ -238,31 +282,48 @@ void Game::render()
         Renders the game objects
     */
     this->window->clear();
-    //Draw Background
-    this->window->draw(bgSpr);
 
-    //Draw Walls
-    for (auto i : walls) {
-        window->draw(i.getwall());
+    if (!isStarted) {
+        if (blink < 0) {
+            blink = 255;
+        }
+        Starttext.setFillColor(sf::Color(255, 255, 255, blink));
+        blink -= 10;
+        this->window->draw(TitleBGspr);
+        this->window->draw(Titletext);
+        this->window->draw(Starttext);
     }
-    
-    //Draw Doors
-    this->window->draw(door.getSprite());
+    else{
+        //Draw Background
+        this->window->draw(bgSpr);
 
-    //Todo: Hardcoding Guns
-    this->window->draw(shotgun.getSprite());
-    this->window->draw(uzi.getSprite());
-    this->window->draw(pistol.getSprite());
+        //Draw Walls
+        for (auto i : walls) {
+            window->draw(i.getwall());
+        }
+
+        //Draw Doors
+        this->window->draw(door.getSprite());
+
+        //Todo: Hardcoding Guns
+        this->window->draw(shotgun.getSprite());
+        this->window->draw(uzi.getSprite());
+        this->window->draw(pistol.getSprite());
 
 
-    //Draw Player and their bullets
-    this->window->draw(player.getSprite());
-    for (size_t i = 0; i < player.getWeaponptr()->getBulletsVector()->size(); i++) {
-        this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
-    }
-    //Draw Enemy and their bullets(todo)
-    for (size_t j = 0; j < enemies.size(); j++) {
-        this->window->draw(enemies[j].getSprite());
+        //Draw Player and their bullets
+        this->window->draw(player.getSprite());
+        for (size_t i = 0; i < player.getWeaponptr()->getBulletsVector()->size(); i++) {
+            this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
+        }
+        //Draw Enemy and their bullets(todo)
+        for (size_t j = 0; j < enemies.size(); j++) {
+            this->window->draw(enemies[j].getSprite());
+        }
+        //TODO 
+        if (player.getpDead()) {
+            //Draw Gameover Screen
+        }
     }
     //Display frame
     this->window->display();
@@ -295,7 +356,6 @@ int Game::wepCheck()
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&uzi);
             player.setSprite(uziTex);
-            player.setAandB(352);
             player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell.png");
             
 
@@ -308,7 +368,6 @@ int Game::wepCheck()
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&pistol);
             player.setSprite(pistolTex);
-            player.setAandB(320);
             player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
         }
     }
@@ -319,7 +378,6 @@ int Game::wepCheck()
         {
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&shotgun);
-            player.setAandB(352);
             player.setSprite(shotgunTex);
             player.getWeaponptr()->getb1ptr()->setSprite("sprShotgunShell.png");
         }

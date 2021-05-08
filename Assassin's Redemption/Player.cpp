@@ -1,13 +1,7 @@
 #include "Player.h"
 
 
-void Player::setAandB(int x)
-{
-    a = x;
-    b = a / 8;
-}
-
-Player::Player():PtrmousePos(0),angle(0),magnitude(0),a(320),b(a/8) {
+Player::Player():PtrmousePos(0),angle(0),magnitude(0),pDead(0){
     wep = &pistol;
 }
 
@@ -17,7 +11,7 @@ void Player::setSprite(string file) {
         return;
     pSpr.setScale(2, 2);
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(0, 0, b, 32));
+    pSpr.setTextureRect(sf::IntRect(0, 0, 44, 32));
     pSpr.setOrigin(16.f, 16.f);
     wep->getb1ptr()->setSprite("sprM16Shell.png");
 }
@@ -54,9 +48,7 @@ void Player::setPtrmousePos(sf::Vector2i& mouse) {
 
 void Player::updatePlayerSprite() {
     static int i = 0;
-    //i += b;
     i += 44;
-    //if (i == a)
     if (i == 352)
         i = 0;
     pSpr.setTexture(pTex);
@@ -181,9 +173,17 @@ int Player::playerWeaponColl(sf::Sprite x)
     if (pSpr.getGlobalBounds().contains(x.getPosition()))
     {
         flag = 1;
-        //cout << "collided\n";
     }
     else
         flag = 0;
     return flag;
+}
+
+bool Player::getpDead() {
+    return pDead;
+}
+
+void Player::playerDies() {
+    setSprite("sprPDead.png");
+    pDead=true;
 }

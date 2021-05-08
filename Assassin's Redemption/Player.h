@@ -23,10 +23,7 @@ private:
 	float angle;
 	sf::Vector2f aimDirNorm;
 	sf::Vector2f PrevPos;
-	//for changing playersprites
-	int a;
-	int b;
-
+	bool pDead;
 	Pistol pistol;
 	//Private funcs:
 	void lookAtMouse();
@@ -35,7 +32,6 @@ private:
 
 public:
 
-	void setAandB(int x);
 	Player();
 	Weapon* wep;
 	void setSprite(string file);
@@ -51,4 +47,6 @@ public:
 	void shoot();
 	void setWeapon(Weapon* a);
 	int playerWeaponColl(sf::Sprite x);
+	bool getpDead();
+	void playerDies();
 };

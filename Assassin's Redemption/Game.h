@@ -27,6 +27,7 @@ private:
 	sf::Event ev;
 	sf::View* view;
 	void initVariables();
+	void initStartScreen();
 	void initWindow();
 	void initWalls();
 	void initEnemies();
@@ -34,7 +35,6 @@ private:
 
 	//Game Logic
 		//Data:
-	//const string a = "sprPWalkUzi_strip8.png";
 	const string uziTex = "sprPWalkUzi_strip8.png";
 	const string pistolTex = "sprPWalkMagnum_strip8.png";
 	const string shotgunTex = "sprPWalkDoubleBarrel_strip8.png";
@@ -45,13 +45,24 @@ private:
 	Shotgun shotgun;
 	vector<Enemy> enemies;
 	vector<Wall> walls;
-	bool flag;
+	bool playerCollide;
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;
+	//TitleScreen
+	int blink;
+	sf::Sprite TitleBGspr;
+	sf::Texture TitleBGtex;
+	sf::Font Titlefont;
+	sf::Font Startfont;
+	sf::Text Titletext;
+	sf::Text Starttext;
+	bool isStarted;
 		//Funcs:
+	void GameOver();
 	void pollEvents();
 	void updateMousePositions();
+	void updateCharacters();
 	void collisions();
 	void windowbounds();
 	void bulletWallColl();
