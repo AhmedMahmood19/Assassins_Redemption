@@ -1,7 +1,13 @@
 #include "Player.h"
 
 
-Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
+void Player::setAandB(int x)
+{
+    a = x;
+    b = a / 8;
+}
+
+Player::Player():PtrmousePos(0),angle(0),magnitude(0),a(320),b(a/8) {
     wep = &pistol;
 }
 
@@ -11,7 +17,7 @@ void Player::setSprite(string file) {
         return;
     pSpr.setScale(2, 2);
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    pSpr.setTextureRect(sf::IntRect(0, 0, b, 32));
     pSpr.setOrigin(16.f, 16.f);
     wep->getb1ptr()->setSprite("sprM16Shell.png");
 }
@@ -32,7 +38,7 @@ sf::Vector2f Player::getAimDirNorm() {
     return aimDirNorm;
 }
 
-Weapon* Player::getWeapon()
+Weapon* Player::getWeaponptr()
 {
     return wep;
 }
@@ -48,11 +54,13 @@ void Player::setPtrmousePos(sf::Vector2i& mouse) {
 
 void Player::updatePlayerSprite() {
     static int i = 0;
-    i += 32;
-    if (i == 256)
+    //i += b;
+    i += 44;
+    //if (i == a)
+    if (i == 352)
         i = 0;
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(i, 0, 32, 32));
+    pSpr.setTextureRect(sf::IntRect(i, 0, 44, 32));
 }
 void Player::lookAtMouse() {
     // We have both the mouse position and the player position 
@@ -160,4 +168,22 @@ void Player::shoot() {
     for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
         wep->getBulletsVector()->at(i).moveSprite();
     }
+}
+
+void Player::setWeapon(Weapon* a)
+{
+    wep = a;
+}
+
+int Player::playerWeaponColl(sf::Sprite x)
+{
+    int flag;
+    if (pSpr.getGlobalBounds().contains(x.getPosition()))
+    {
+        flag = 1;
+        //cout << "collided\n";
+    }
+    else
+        flag = 0;
+    return flag;
 }

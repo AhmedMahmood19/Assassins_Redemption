@@ -15,7 +15,8 @@
 #include "Weapon.h"
 #include "Pistol.h"
 #include "Doors.h"
-
+#include "Uzi.h"
+#include "Shotgun.h"
 class Game
 {
 	//Class that acts as the game engine/Wrapper class
@@ -30,12 +31,18 @@ private:
 	void initWalls();
 	void initEnemies();
 	void updateView();
-	int j=0;
 
 	//Game Logic
 		//Data:
+	//const string a = "sprPWalkUzi_strip8.png";
+	const string uziTex = "sprPWalkUzi_strip8.png";
+	const string pistolTex = "sprPWalkMagnum_strip8.png";
+	const string shotgunTex = "sprPWalkDoubleBarrel_strip8.png";
 	Player player;
 	Doors door;
+	Uzi uzi;
+	Pistol pistol;
+	Shotgun shotgun;
 	vector<Enemy> enemies;
 	vector<Wall> walls;
 	bool flag;
@@ -49,6 +56,7 @@ private:
 	void windowbounds();
 	void bulletWallColl();
 	void senseDoors();
+	int wepCheck();
 public:
 
 	//Constructors/Destructor
