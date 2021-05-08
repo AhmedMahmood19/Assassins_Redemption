@@ -7,13 +7,23 @@ void Game::initVariables()
 
     //Game Logic
     flag = 0;
-    player.setSprite("sprPWalkUnarmed2_strip8.png");
+    player.setSprite("sprPWalkMagnum_strip8.png");
     player.setPosition(350.f, 1450.f);
     if (!bgTex.loadFromFile("beachmap.png"))
         return;
     bgSpr.setTexture(bgTex);
     bgSpr.setScale(2.5,2.5);
     bgSpr.setOrigin(170,100);
+    //Todo: Hardcoding a pistol
+    shotgun.setSprite("sprShotgun.png");
+    shotgun.getSpritePtr()->setPosition(370.f, 1390.f);
+
+    uzi.setSprite("sprUzi.png");
+    uzi.getSpritePtr()->setPosition(420.f, 1480.f);
+
+    pistol.setSprite("sprMagnum.png");
+    pistol.getSpritePtr()->setPosition(270.f, 1480.f);
+    //
     initWalls();
     initEnemies();
     door.initDoor("doors.png");
@@ -166,11 +176,11 @@ void Game::windowbounds()
 void Game::bulletWallColl()
 {
     for (size_t i = 0; i < walls.size(); i++) {
-        for (size_t j = 0; j < player.getWeapon()->getBulletsVector()->size(); j++)
+        for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
         {
-            if (walls[i].wallcolInter(player.getWeapon()->getbulletSpr(j))==1  )
+            if (walls[i].wallcolInter(player.getWeaponptr()->getbulletSpr(j))==1  )
             {
-                player.getWeapon()->getBulletsVector()->erase(player.getWeapon()->getBulletsVector()->begin()+j);   
+                player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin()+j);   
             }
         }
         
@@ -198,7 +208,6 @@ void Game::pollEvents()
     for (size_t j = 0; j < enemies.size(); j++) {
         enemies[j].detectPlayer(player.getPlayerPos());
     }
-    //cout << player.getPlayerPos().x<<"  "<<player.getPlayerPos().y<<endl;
 }
 
 
@@ -212,7 +221,7 @@ void Game::update()
     this->windowbounds();
     this->collisions();
     this->bulletWallColl();
-
+    this->wepCheck();
     this->updateView();
     this->updateMousePositions();
     this->senseDoors();
@@ -240,16 +249,21 @@ void Game::render()
     //Draw Doors
     this->window->draw(door.getSprite());
 
+    //Todo: Hardcoding Guns
+    this->window->draw(shotgun.getSprite());
+    this->window->draw(uzi.getSprite());
+    this->window->draw(pistol.getSprite());
+
+
     //Draw Player and their bullets
     this->window->draw(player.getSprite());
-    for (size_t i = 0; i < player.getWeapon()->getBulletsVector()->size(); i++) {
-        this->window->draw(player.getWeapon()->getBulletsVector()->at(i).getSprite());
+    for (size_t i = 0; i < player.getWeaponptr()->getBulletsVector()->size(); i++) {
+        this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
     }
     //Draw Enemy and their bullets(todo)
     for (size_t j = 0; j < enemies.size(); j++) {
         this->window->draw(enemies[j].getSprite());
     }
-
     //Display frame
     this->window->display();
     
@@ -270,4 +284,45 @@ void Game::senseDoors(){
         walls[31].appear(12,90);
         door.moveDoors();
     }
+}
+
+int Game::wepCheck()
+{
+    if (player.playerWeaponColl(uzi.getSprite()) == 1 || ev.type==sf::Event::KeyPressed)
+    {
+        if (ev.key.code == sf::Keyboard::Space)
+        {
+            //sets weapon and updates playersprite with the player sprite containing this gun 
+            player.setWeapon(&uzi);
+            player.setSprite(uziTex);
+            player.setAandB(352);
+            player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell.png");
+            
+
+        }
+    }
+    if (player.playerWeaponColl(pistol.getSprite()) == 1 || ev.type==sf::Event::KeyPressed)
+    {
+        if (ev.key.code == sf::Keyboard::Space)
+        {
+            //sets weapon and updates playersprite with the player sprite containing this gun 
+            player.setWeapon(&pistol);
+            player.setSprite(pistolTex);
+            player.setAandB(320);
+            player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
+        }
+    }
+    if (player.playerWeaponColl(shotgun.getSprite()) == 1 || ev.type == sf::Event::KeyPressed)
+    {
+        
+        if (ev.key.code == sf::Keyboard::Space)
+        {
+            //sets weapon and updates playersprite with the player sprite containing this gun 
+            player.setWeapon(&shotgun);
+            player.setAandB(352);
+            player.setSprite(shotgunTex);
+            player.getWeaponptr()->getb1ptr()->setSprite("sprShotgunShell.png");
+        }
+    }
+    return 0;
 }

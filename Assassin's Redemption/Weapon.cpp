@@ -5,6 +5,11 @@ sf::Sprite Weapon::getSprite()
     return wSpr;
 }
 
+sf::Sprite* Weapon::getSpritePtr()
+{
+    return &wSpr;
+}
+
 sf::Texture Weapon::getTexture()
 {
     return wTex;
@@ -14,9 +19,9 @@ void Weapon::setSprite(std::string file)
 {
     if (!wTex.loadFromFile(file))
         return;
-    wSpr.setScale(2, 2);
+    wSpr.setScale(1, 1);
     wSpr.setTexture(wTex);
-    wSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    wSpr.setTextureRect(sf::IntRect(0, 0, 72, 32));
     wSpr.setOrigin(16.f, 16.f);
 
     //bullet sprite;
