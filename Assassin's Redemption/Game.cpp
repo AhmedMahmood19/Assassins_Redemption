@@ -394,6 +394,7 @@ void Game::enembullColl()
             if (enemies[i].enemy_bulletColl(player.getWeaponptr()->getbulletSpr(j).getPosition()) == 1)
             {
                 enemies.erase(enemies.begin() + i);
+                player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
             }
         }
 
