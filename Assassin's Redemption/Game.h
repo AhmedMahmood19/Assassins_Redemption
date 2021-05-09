@@ -68,6 +68,7 @@ private:
 	void bulletWallColl();
 	void senseDoors();
 	int wepCheck();
+	void enembullColl();
 public:
 
 	//Constructors/Destructor

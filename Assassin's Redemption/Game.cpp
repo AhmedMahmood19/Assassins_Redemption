@@ -266,6 +266,7 @@ void Game::update()
             this->updateCharacters();
             this->windowbounds();
             this->collisions();
+            this->enembullColl();
             this->bulletWallColl();
             this->wepCheck();
             this->senseDoors();
@@ -383,4 +384,18 @@ int Game::wepCheck()
         }
     }
     return 0;
+}
+
+void Game::enembullColl()
+{
+    for (size_t i = 0; i < enemies.size(); i++) {
+        for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
+        {
+            if (enemies[i].enemy_bulletColl(player.getWeaponptr()->getbulletSpr(j).getPosition()) == 1)
+            {
+                enemies.erase(enemies.begin() + i);
+            }
+        }
+
+    }
 }
