@@ -63,6 +63,17 @@ void Enemy::calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vecto
     Norm = sf::Vector2f((Dir.x / Mag), (Dir.y / Mag));
 }
 
+int Enemy::enemy_bulletColl(sf::Vector2f Pos)
+{
+    int flag = 0;
+    if (eSpr.getGlobalBounds().contains(Pos))
+    {
+        flag = 1;
+    }
+
+    return flag;
+}
+
 void Enemy::lookAt(sf::Vector2f &aimDir) {
     
     const float PI = 3.14159265f;

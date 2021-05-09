@@ -49,4 +49,5 @@ public:
 	void detectPlayer(sf::Vector2f player);
 	void chasePlayer();
 	void calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vector2f& Norm);
+	int enemy_bulletColl(sf::Vector2f Pos);
 };
