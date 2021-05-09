@@ -17,6 +17,7 @@ protected:
 
 public:
 	sf::Sprite getSprite();
+	sf::Sprite* getSpritePtr();
 	sf::Texture getTexture();
 	sf::Vector2f getbulletPos(int i);
 	sf::Sprite getbulletSpr(int i);

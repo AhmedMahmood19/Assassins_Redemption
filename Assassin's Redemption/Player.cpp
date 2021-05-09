@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player():PtrmousePos(0),angle(0),magnitude(0) {
+Player::Player():PtrmousePos(0),angle(0),magnitude(0),pDead(0){
     wep = &pistol;
 }
 
@@ -11,7 +11,7 @@ void Player::setSprite(string file) {
         return;
     pSpr.setScale(2, 2);
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    pSpr.setTextureRect(sf::IntRect(0, 0, 44, 32));
     pSpr.setOrigin(16.f, 16.f);
     wep->getb1ptr()->setSprite("sprM16Shell.png");
 }
@@ -32,7 +32,7 @@ sf::Vector2f Player::getAimDirNorm() {
     return aimDirNorm;
 }
 
-Weapon* Player::getWeapon()
+Weapon* Player::getWeaponptr()
 {
     return wep;
 }
@@ -48,11 +48,11 @@ void Player::setPtrmousePos(sf::Vector2i& mouse) {
 
 void Player::updatePlayerSprite() {
     static int i = 0;
-    i += 32;
-    if (i == 256)
+    i += 44;
+    if (i == 352)
         i = 0;
     pSpr.setTexture(pTex);
-    pSpr.setTextureRect(sf::IntRect(i, 0, 32, 32));
+    pSpr.setTextureRect(sf::IntRect(i, 0, 44, 32));
 }
 void Player::lookAtMouse() {
     // We have both the mouse position and the player position 
@@ -160,4 +160,30 @@ void Player::shoot() {
     for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
         wep->getBulletsVector()->at(i).moveSprite();
     }
+}
+
+void Player::setWeapon(Weapon* a)
+{
+    wep = a;
+}
+
+int Player::playerWeaponColl(sf::Sprite x)
+{
+    int flag;
+    if (pSpr.getGlobalBounds().contains(x.getPosition()))
+    {
+        flag = 1;
+    }
+    else
+        flag = 0;
+    return flag;
+}
+
+bool Player::getpDead() {
+    return pDead;
+}
+
+void Player::playerDies() {
+    setSprite("sprPDead.png");
+    pDead=true;
 }
