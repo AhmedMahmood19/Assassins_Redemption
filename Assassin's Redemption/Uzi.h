@@ -1,13 +1,9 @@
 #pragma once
 #include "Weapon.h"
-class Uzi :
-    public Weapon
+class Uzi : public Weapon
 {
 private:
-
-public:
     int wep_timer = 10;
-    void ab_class();
+public:
     virtual int getWepTimer();
-
 };

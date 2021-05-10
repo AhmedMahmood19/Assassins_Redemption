@@ -20,22 +20,20 @@
 #include "Shotgun.h"
 class Game
 {
-	//Class that acts as the game engine/Wrapper class
 private:
 	//window
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
 	sf::View* view;
+	//init and update
 	void initVariables();
 	void initStartScreen();
 	void initWindow();
 	void initWalls();
 	void initEnemies();
 	void updateView();
-
-	//Game Logic
-		//Data:
+	//Data:
 	const string uziTex = "sprPWalkUzi_strip8.png";
 	const string pistolTex = "sprPWalkMagnum_strip8.png";
 	const string shotgunTex = "sprPWalkDoubleBarrel_strip8.png";
@@ -50,7 +48,6 @@ private:
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;
-	//TitleScreen
 	int blink;
 	sf::Sprite TitleBGspr;
 	sf::Texture TitleBGtex;
@@ -61,28 +58,24 @@ private:
 	sf::Text GameoverText;
 	sf::Text EscText;
 	bool isStarted;
-		//Funcs:
+	//Funcs:
 	void GameOver();
 	void pollEvents();
 	void updateMousePositions();
 	void updateCharacters();
-	void collisions();
+	void wallColl();
 	void windowbounds();
 	void bulletWallColl();
 	void senseDoors();
-	int wepCheck();
-	void enembullColl();
+	int weaponPickup();
+	void enemybulletColl();
+	void playerbulletColl();
 	//void floatWeapons();//Floating Weapons Prototype
 public:
-
-	//Constructors/Destructor
 	Game();
 	virtual ~Game();
-
-	//Accessors
+	
 	const bool running() const;
-
-	//Functions
 	void update();
 	void render();
 };

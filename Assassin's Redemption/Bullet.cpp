@@ -9,7 +9,7 @@ void Bullet::setSprite(string file) {
 	bSpr.setScale(4, 4);
 	bSpr.setTexture(bTex);
 }
-void Bullet::setShotgunBulletSprite(string file) {
+void Bullet::setShotgunBulletSprite(string file){
 	if (!bTex.loadFromFile(file))
 		return;
 	bSpr.setScale(1, 1);
@@ -43,4 +43,14 @@ float Bullet::getMaxSpd()const {
 sf::Vector2f Bullet::bGetPos()
 {
 	return bSpr.getPosition();
+}
+
+int Bullet::bulletColl(sf::Sprite Spr)
+{
+	int flag = 0;
+	if (Spr.getGlobalBounds().contains(bSpr.getPosition()))
+	{
+		flag = 1;
+	}
+	return flag;
 }

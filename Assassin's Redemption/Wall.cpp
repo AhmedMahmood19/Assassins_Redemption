@@ -37,7 +37,6 @@ int Wall::wallcolInter(sf::Sprite a)
 		flag = 1;
 		
 	}
-
 	return flag;
 }
 

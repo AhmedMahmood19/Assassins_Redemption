@@ -33,7 +33,6 @@ private:
 	int shoottimer = 0;
 
 public:
-
 	Player();
 	Weapon* wep;
 	void setSprite(string file);

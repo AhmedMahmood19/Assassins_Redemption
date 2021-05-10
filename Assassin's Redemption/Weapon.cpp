@@ -1,5 +1,15 @@
 #include "Weapon.h"
 
+void Weapon::setisDropped(bool a)
+{
+    isDropped = a;
+}
+
+bool Weapon::getisDropped()
+{
+    return isDropped;
+}
+
 sf::Sprite Weapon::getSprite()
 {
     return wSpr;
@@ -17,15 +27,13 @@ sf::Texture Weapon::getTexture()
 
 void Weapon::setSprite(std::string file)
 {
+    //Sets Sprite of Weapon, used for pick and drop
     if (!wTex.loadFromFile(file))
         return;
     wSpr.setScale(1, 1);
     wSpr.setTexture(wTex);
     wSpr.setTextureRect(sf::IntRect(0, 0, 72, 32));
     wSpr.setOrigin(16.f, 16.f);
-
-    //bullet sprite;
-    b1.setSprite("sprM16Shell.png");
 }
 
 sf::Sprite Weapon::getbulletSpr(int i)
@@ -37,7 +45,7 @@ vector<Bullet>* Weapon::getBulletsVector() {
     return &bullets;
 }
 
-int Weapon::P_WepColl(sf::Sprite)
+int Weapon::PlayerWepColl(sf::Sprite)
 {
     return 0;
 }
@@ -45,8 +53,4 @@ int Weapon::P_WepColl(sf::Sprite)
 Bullet* Weapon::getb1ptr()
 {
     return &b1;
-}
-
-Bullet Weapon::getb1() {
-    return b1;
 }

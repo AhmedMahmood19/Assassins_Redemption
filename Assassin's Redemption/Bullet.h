@@ -25,4 +25,5 @@ public:
 	sf::Texture getTexture();
 	float getMaxSpd()const;
 	sf::Vector2f bGetPos();
+	int bulletColl(sf::Sprite Spr);
 };
