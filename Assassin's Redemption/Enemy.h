@@ -6,6 +6,10 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include "Bullet.h"
+#include "Pistol.h"
+#include "Shotgun.h"
+#include "Uzi.h"
+
 using namespace std;
 
 class Enemy
@@ -32,10 +36,15 @@ private:
 	//Private funcs:
 	void lookAt(sf::Vector2f& aimDir);
 	void updateEnemySprite();
-
+	Pistol pistol;
+	Shotgun shotgun;
+	Uzi uzi;
+	Weapon* enemywep;
+	int shoottimer;
 public:
-	Enemy(sf::Vector2f pos, sf::Vector2f Ppos);
-	Enemy(sf::Vector2f pos);
+	Weapon* getEnemyWepPtr();
+	Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a);
+	Enemy(sf::Vector2f pos,int a);
 	void setSprite(string file);
 	void setEnemyPos(float x, float y);
 	void setCollides(bool);
@@ -50,4 +59,5 @@ public:
 	void chasePlayer();
 	void calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vector2f& Norm);
 	int enemy_bulletColl(sf::Vector2f Pos);
+	void enemyshoot();
 };

@@ -98,10 +98,10 @@ void Game::initWalls() {
 }
 
 void Game::initEnemies() {
-    enemies.push_back(Enemy(sf::Vector2f(500.f, 700.f)));
-    enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f)));
-    enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f)));
-    enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f)));
+    enemies.push_back(Enemy(sf::Vector2f(500.f, 700.f),rand() % 3 + 1));
+    enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
+    enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
+    enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
     enemies[0].setSprite("sprEWalkM16_strip8.png");
     enemies[1].setSprite("sprEWalkM16_strip8.png");
     enemies[2].setSprite("sprEWalkM16_strip8.png");
@@ -319,8 +319,21 @@ void Game::render()
         }
         //Draw Enemy and their bullets(todo)
         for (size_t j = 0; j < enemies.size(); j++) {
+
             this->window->draw(enemies[j].getSprite());
+          
         }
+        //for (size_t j = 0; j < enemies.size(); j++) {
+
+        //    //this->window->draw(enemies[j].getSprite());
+        //    for (size_t k = 0; k <= enemies[j].getEnemyWepPtr()->getBulletsVector()->size(); k++)
+        //    {
+        //        this->window->draw(enemies[j].getEnemyWepPtr()->getBulletsVector()->at(k).getSprite());
+        //        cout << "Error here";
+
+        //    }
+        //}
+      
         //TODO 
         if (player.getpDead()) {
             //Draw Gameover Screen

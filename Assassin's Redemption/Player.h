@@ -8,6 +8,7 @@
 #include "Bullet.h"
 #include "Pistol.h"
 #include "Weapon.h"
+#include "Shotgun.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ private:
 	sf::Vector2f PrevPos;
 	bool pDead;
 	Pistol pistol;
+	Shotgun shotgun;
 	//Private funcs:
 	void lookAtMouse();
 	void updatePlayerSprite();

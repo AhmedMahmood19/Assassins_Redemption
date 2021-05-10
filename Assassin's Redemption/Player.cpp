@@ -143,22 +143,47 @@ void Player::updatePlayer(int flag) {
 }
 void Player::shoot() {
     
-    
-    wep->getb1ptr()->rotateSprite(angle);
-    if (shoottimer < wep->getWepTimer() )
+    if (wep->getWepTimer()==50)
     {
-        shoottimer++;
+        cout << "Shotgun shooting";
+        wep->getb1ptr()->rotateSprite(angle);
+        if (shoottimer < wep->getWepTimer())
+        {
+            shoottimer++;
+        }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= wep->getWepTimer())
+        {
+            shoottimer = 0;
+            wep->getb1ptr()->setSpritePos(this->getPlayerPos());
+            wep->getb1ptr()->setcurrentVel(wep->getb1ptr()->getMaxSpd() * aimDirNorm);
+            wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
+
+            wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
+
+            wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
+        }
+        for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
+            wep->getBulletsVector()->at(i).moveSprite();
+        }
     }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= wep->getWepTimer())
+    else
     {
-        shoottimer = 0;
-        wep->getb1ptr()->setSpritePos(this->getPlayerPos());
-        wep->getb1ptr()->setcurrentVel(wep->getb1ptr()->getMaxSpd() * aimDirNorm);
-       
-        wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
-    }
-    for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
-        wep->getBulletsVector()->at(i).moveSprite();
+        wep->getb1ptr()->rotateSprite(angle);
+        if (shoottimer < wep->getWepTimer())
+        {
+            shoottimer++;
+        }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && shoottimer >= wep->getWepTimer())
+        {
+            shoottimer = 0;
+            wep->getb1ptr()->setSpritePos(this->getPlayerPos());
+            wep->getb1ptr()->setcurrentVel(wep->getb1ptr()->getMaxSpd() * aimDirNorm);
+
+            wep->getBulletsVector()->push_back(Bullet(wep->getb1()));
+        }
+        for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
+            wep->getBulletsVector()->at(i).moveSprite();
+        }
     }
 }
 

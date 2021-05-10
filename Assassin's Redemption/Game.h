@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
 #include <ctime>
 
 #include <SFML/Graphics.hpp>
