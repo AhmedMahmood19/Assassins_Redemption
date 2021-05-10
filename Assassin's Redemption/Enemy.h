@@ -33,6 +33,7 @@ private:
 	bool collides;
 	bool stopPatrol;
 	bool isWalker;
+	bool eDead;
 	//Private funcs:
 	void lookAt(sf::Vector2f& aimDir);
 	void updateEnemySprite();
@@ -52,6 +53,8 @@ public:
 	sf::Sprite getSprite();
 	sf::Texture getTexture();
 	sf::Vector2f getEnemyPos();
+	bool geteDead();
+	void enemyDies();
 	sf::Vector2f getAimDirNorm();
 	float getAngle();
 	void patrol();

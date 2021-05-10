@@ -113,7 +113,22 @@ void Game::initEnemies() {
 }
 
 void Game::GameOver() {
-    cout << "Gameover";
+    sf::Vector2f offset(-320,-200);
+    GameoverText.setPosition(player.getPlayerPos()+offset);
+    GameoverText.setFont(Titlefont);
+    GameoverText.setString("GAME OVER");
+    GameoverText.setCharacterSize(100);
+    GameoverText.setFillColor(sf::Color(255, 26, 255, 220));
+    GameoverText.setOutlineColor(sf::Color(0, 204, 255));
+    GameoverText.setOutlineThickness(3);
+    sf::Vector2f offsetEsc(-120, 100);
+    EscText.setPosition(player.getPlayerPos() + offsetEsc);
+    EscText.setFont(Titlefont);
+    EscText.setString("Press Esc to Exit");
+    EscText.setCharacterSize(25);
+    EscText.setFillColor(sf::Color(255, 26, 255, 220));
+    EscText.setOutlineColor(sf::Color(0, 204, 255));
+    EscText.setOutlineThickness(1);
 }
 
 void Game::updateView() {
@@ -136,7 +151,6 @@ Game::~Game()
     delete this->view;
 }
 
-//Accessors
 const bool Game::running() const
 {
     return this->window->isOpen();
@@ -248,7 +262,8 @@ void Game::updateCharacters() {
     player.updatePlayer(playerCollide);
     player.shoot();
     for (size_t j = 0; j < enemies.size(); j++) {
-        enemies[j].detectPlayer(player.getPlayerPos());
+        if(!enemies[j].geteDead())
+            enemies[j].detectPlayer(player.getPlayerPos());
     }
 }
 void Game::update()
@@ -306,11 +321,16 @@ void Game::render()
         //Draw Doors
         this->window->draw(door.getSprite());
 
+        //Draw Enemy and their bullets(todo)
+        for (size_t j = 0; j < enemies.size(); j++) {
+            this->window->draw(enemies[j].getSprite());
+        }
+
         //Todo: Hardcoding Guns
+        //floatWeapons(); //Floating Weapons Prototype
         this->window->draw(shotgun.getSprite());
         this->window->draw(uzi.getSprite());
         this->window->draw(pistol.getSprite());
-
 
         //Draw Player and their bullets
         this->window->draw(player.getSprite());
@@ -336,7 +356,8 @@ void Game::render()
       
         //TODO 
         if (player.getpDead()) {
-            //Draw Gameover Screen
+            this->window->draw(GameoverText);
+            this->window->draw(EscText);
         }
     }
     //Display frame
@@ -393,7 +414,7 @@ int Game::wepCheck()
             //sets weapon and updates playersprite with the player sprite containing this gun 
             player.setWeapon(&shotgun);
             player.setSprite(shotgunTex);
-            player.getWeaponptr()->getb1ptr()->setSprite("sprShotgunShell.png");
+            player.getWeaponptr()->getb1ptr()->setShotgunBulletSprite("sprShot.png");
         }
     }
     return 0;
@@ -404,12 +425,30 @@ void Game::enembullColl()
     for (size_t i = 0; i < enemies.size(); i++) {
         for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
         {
-            if (enemies[i].enemy_bulletColl(player.getWeaponptr()->getbulletSpr(j).getPosition()) == 1)
+            if (enemies[i].enemy_bulletColl(player.getWeaponptr()->getbulletSpr(j).getPosition()) == 1 && !enemies[i].geteDead())
             {
-                enemies.erase(enemies.begin() + i);
-                player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
+                if (1) {
+                    enemies[i].enemyDies();
+                    player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
+                }
             }
         }
 
     }
 }
+//Floating Weapons Prototype
+//void Game::floatWeapons()
+//{
+//    static int i = 0;
+//    if (i < 10) {
+//        shotgun.getSpritePtr()->move(0, 0.5);
+//        i++;
+//    }
+//    else if (i >= 10 && i < 20) {
+//        shotgun.getSpritePtr()->move(0,-0.5);
+//        i++;
+//    }
+//    else if (i == 20) {
+//        i = 0;
+//    }
+//}

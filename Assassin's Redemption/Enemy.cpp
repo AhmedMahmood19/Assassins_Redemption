@@ -6,7 +6,11 @@ Weapon* Enemy::getEnemyWepPtr()
 }
 
 ///////////////////////     ACCESSORS      ///////////////
+<<<<<<< HEAD
 Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos,int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false),i(0)
+=======
+Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false), eDead(false),i(0)
+>>>>>>> master
 {
     isWalker = true;
     spawnPos = pos;
@@ -23,7 +27,11 @@ Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos,int a) :angle(0), patrolmagnitu
         enemywep = &pistol;
     }
 }
+<<<<<<< HEAD
 Enemy::Enemy(sf::Vector2f pos, int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), i(0)
+=======
+Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), eDead(false),i(0)
+>>>>>>> master
 {
     isWalker = false;
     spawnPos = pos;
@@ -192,4 +200,12 @@ void Enemy::detectPlayer(sf::Vector2f player) {
     else if ((isWalker == true) && (stopPatrol == false)) {
         patrol();
     }
+}
+bool Enemy::geteDead() {
+    return eDead;
+}
+
+void Enemy::enemyDies() {
+    setSprite("sprEDead.png");
+    eDead = true;
 }
