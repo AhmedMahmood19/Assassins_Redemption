@@ -57,6 +57,8 @@ private:
 	sf::Font Startfont;
 	sf::Text Titletext;
 	sf::Text Starttext;
+	sf::Text GameoverText;
+	sf::Text EscText;
 	bool isStarted;
 		//Funcs:
 	void GameOver();

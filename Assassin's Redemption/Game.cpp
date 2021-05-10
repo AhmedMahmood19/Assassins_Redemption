@@ -113,7 +113,22 @@ void Game::initEnemies() {
 }
 
 void Game::GameOver() {
-    cout << "Gameover";
+    sf::Vector2f offset(-320,-200);
+    GameoverText.setPosition(player.getPlayerPos()+offset);
+    GameoverText.setFont(Titlefont);
+    GameoverText.setString("GAME OVER");
+    GameoverText.setCharacterSize(100);
+    GameoverText.setFillColor(sf::Color(255, 26, 255, 220));
+    GameoverText.setOutlineColor(sf::Color(0, 204, 255));
+    GameoverText.setOutlineThickness(3);
+    sf::Vector2f offsetEsc(-120, 100);
+    EscText.setPosition(player.getPlayerPos() + offsetEsc);
+    EscText.setFont(Titlefont);
+    EscText.setString("Press Esc to Exit");
+    EscText.setCharacterSize(25);
+    EscText.setFillColor(sf::Color(255, 26, 255, 220));
+    EscText.setOutlineColor(sf::Color(0, 204, 255));
+    EscText.setOutlineThickness(1);
 }
 
 void Game::updateView() {
@@ -136,7 +151,6 @@ Game::~Game()
     delete this->view;
 }
 
-//Accessors
 const bool Game::running() const
 {
     return this->window->isOpen();
@@ -325,7 +339,8 @@ void Game::render()
         }
         //TODO 
         if (player.getpDead()) {
-            //Draw Gameover Screen
+            this->window->draw(GameoverText);
+            this->window->draw(EscText);
         }
     }
     //Display frame
