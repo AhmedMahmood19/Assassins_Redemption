@@ -57,6 +57,8 @@ private:
 	sf::Font Startfont;
 	sf::Text Titletext;
 	sf::Text Starttext;
+	sf::Text GameoverText;
+	sf::Text EscText;
 	bool isStarted;
 		//Funcs:
 	void GameOver();
@@ -68,6 +70,8 @@ private:
 	void bulletWallColl();
 	void senseDoors();
 	int wepCheck();
+	void enembullColl();
+	//void floatWeapons();//Floating Weapons Prototype
 public:
 
 	//Constructors/Destructor

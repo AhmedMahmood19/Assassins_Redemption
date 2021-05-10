@@ -29,6 +29,7 @@ private:
 	bool collides;
 	bool stopPatrol;
 	bool isWalker;
+	bool eDead;
 	//Private funcs:
 	void lookAt(sf::Vector2f& aimDir);
 	void updateEnemySprite();
@@ -43,10 +44,13 @@ public:
 	sf::Sprite getSprite();
 	sf::Texture getTexture();
 	sf::Vector2f getEnemyPos();
+	bool geteDead();
+	void enemyDies();
 	sf::Vector2f getAimDirNorm();
 	float getAngle();
 	void patrol();
 	void detectPlayer(sf::Vector2f player);
 	void chasePlayer();
 	void calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vector2f& Norm);
+	int enemy_bulletColl(sf::Vector2f Pos);
 };

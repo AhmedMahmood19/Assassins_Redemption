@@ -28,12 +28,6 @@ void Weapon::setSprite(std::string file)
     b1.setSprite("sprM16Shell.png");
 }
 
-sf::Vector2f Weapon::getbulletPos(int i)
-{
-
-    return bullets[i].bGetPos();
-}
-
 sf::Sprite Weapon::getbulletSpr(int i)
 {
     return bullets[i].getSprite();

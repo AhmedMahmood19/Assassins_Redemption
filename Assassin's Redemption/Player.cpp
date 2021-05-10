@@ -141,8 +141,7 @@ void Player::updatePlayer(int flag) {
         flag = 0;
     }
 }
-void Player::shoot() {
-    
+void Player::shoot() {   
     
     wep->getb1ptr()->rotateSprite(angle);
     if (shoottimer < wep->getWepTimer() )

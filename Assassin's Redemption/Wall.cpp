@@ -10,7 +10,7 @@ Wall::Wall(float w1, float w2,float xPos,float yPos)
 }
 
 void Wall::disappear(){
-	rect.setSize(sf::Vector2f(1, 1));
+	rect.setSize(sf::Vector2f(0, 0));
 }
 
 void Wall::appear(float w1, float w2) {
