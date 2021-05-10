@@ -337,6 +337,7 @@ void Game::render()
         for (size_t i = 0; i < player.getWeaponptr()->getBulletsVector()->size(); i++) {
             this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
         }
+<<<<<<< HEAD
         //Draw Enemy and their bullets(todo)
         for (size_t j = 0; j < enemies.size(); j++) {
 
@@ -354,6 +355,8 @@ void Game::render()
         //    }
         //}
       
+=======
+>>>>>>> master
         //TODO 
         if (player.getpDead()) {
             this->window->draw(GameoverText);
