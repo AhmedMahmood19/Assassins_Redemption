@@ -141,18 +141,11 @@ void Player::updatePlayer(int flag) {
         flag = 0;
     }
 }
-<<<<<<< HEAD
-void Player::shoot() {
-    
-    if (wep->getWepTimer()==50)
-=======
 void Player::shoot() {   
     
     wep->getb1ptr()->rotateSprite(angle);
     if (shoottimer < wep->getWepTimer() )
->>>>>>> master
-    {
-        cout << "Shotgun shooting";
+{
         wep->getb1ptr()->rotateSprite(angle);
         if (shoottimer < wep->getWepTimer())
         {

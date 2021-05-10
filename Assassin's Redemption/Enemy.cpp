@@ -6,11 +6,7 @@ Weapon* Enemy::getEnemyWepPtr()
 }
 
 ///////////////////////     ACCESSORS      ///////////////
-<<<<<<< HEAD
-Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos,int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false),i(0)
-=======
-Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false), eDead(false),i(0)
->>>>>>> master
+Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false), eDead(false),i(0)
 {
     isWalker = true;
     spawnPos = pos;
@@ -18,34 +14,22 @@ Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0),
     eSpr.setPosition(pos);
     if (a == 1)
         enemywep = &pistol;
-    if (a==2)
+    else if (a == 2)
         enemywep = &uzi;
-    if (a == 3)
+    else if (a == 3)
         enemywep = &shotgun;
-    else
-    {
-        enemywep = &pistol;
-    }
 }
-<<<<<<< HEAD
-Enemy::Enemy(sf::Vector2f pos, int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), i(0)
-=======
-Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), eDead(false),i(0)
->>>>>>> master
+Enemy::Enemy(sf::Vector2f pos, int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), eDead(false),i(0)
 {
     isWalker = false;
     spawnPos = pos;
     eSpr.setPosition(pos);
     if (a == 1)
         enemywep = &pistol;
-    if (a == 2)
+    else if (a == 2)
         enemywep = &uzi;
-    if (a == 3)
+    else if (a == 3)
         enemywep = &shotgun;
-    else
-    {
-        enemywep = &pistol;
-    }
 }
 void Enemy::setSprite(string file) {
     if (!eTex.loadFromFile(file))
