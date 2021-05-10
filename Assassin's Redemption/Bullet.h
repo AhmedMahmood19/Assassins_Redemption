@@ -16,6 +16,7 @@ private:
 public:
 	Bullet();
 	void setSprite(string file);
+	void setShotgunBulletSprite(string file);
 	void setSpritePos(sf::Vector2f p);
 	sf::Vector2f moveSprite();
 	void rotateSprite(float a);

@@ -1,14 +1,14 @@
 #include "Enemy.h"
 
 ///////////////////////     ACCESSORS      ///////////////
-Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false),i(0)
+Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false), eDead(false),i(0)
 {
     isWalker = true;
     spawnPos = pos;
     patrolPos = Ppos;
     eSpr.setPosition(pos);
 }
-Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), i(0)
+Enemy::Enemy(sf::Vector2f pos) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), eDead(false),i(0)
 {
     isWalker = false;
     spawnPos = pos;
@@ -150,4 +150,12 @@ void Enemy::detectPlayer(sf::Vector2f player) {
     else if ((isWalker == true) && (stopPatrol == false)) {
         patrol();
     }
+}
+bool Enemy::geteDead() {
+    return eDead;
+}
+
+void Enemy::enemyDies() {
+    setSprite("sprEDead.png");
+    eDead = true;
 }

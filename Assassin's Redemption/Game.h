@@ -69,6 +69,7 @@ private:
 	void senseDoors();
 	int wepCheck();
 	void enembullColl();
+	//void floatWeapons();//Floating Weapons Prototype
 public:
 
 	//Constructors/Destructor
