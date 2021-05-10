@@ -1,35 +1,36 @@
 #include "Enemy.h"
 
-Weapon* Enemy::getEnemyWepPtr()
-{
-    return enemywep;
-}
+
 
 ///////////////////////     ACCESSORS      ///////////////
-Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(false), eDead(false),i(0)
+Enemy::Enemy(sf::Vector2f pos, int a) :angle(0), patrolmagnitude(0), magnitude(0), shoottimer(0), collides(false), stopPatrol(true), eDead(false), i(0)
+{
+    isWalker = false;
+    spawnPos = pos;
+    eSpr.setPosition(pos);
+    cout << a;
+    if (a == 1)
+        hasPistol = true;
+    else if (a == 2)
+        hasUzi = true;
+    else if (a == 3)
+        hasShotgun = true;
+
+}
+Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) : angle(0), patrolmagnitude(0), magnitude(0), shoottimer(0), collides(false), stopPatrol(false), eDead(false), i(0)
 {
     isWalker = true;
     spawnPos = pos;
     patrolPos = Ppos;
     eSpr.setPosition(pos);
+    cout << a;
     if (a == 1)
-        enemywep = &pistol;
+        hasPistol = true;
     else if (a == 2)
-        enemywep = &uzi;
+        hasUzi = true;
     else if (a == 3)
-        enemywep = &shotgun;
-}
-Enemy::Enemy(sf::Vector2f pos, int a) :angle(0), patrolmagnitude(0), magnitude(0), collides(false), stopPatrol(true), eDead(false),i(0)
-{
-    isWalker = false;
-    spawnPos = pos;
-    eSpr.setPosition(pos);
-    if (a == 1)
-        enemywep = &pistol;
-    else if (a == 2)
-        enemywep = &uzi;
-    else if (a == 3)
-        enemywep = &shotgun;
+        hasShotgun = true;
+    
 }
 void Enemy::setSprite(string file) {
     if (!eTex.loadFromFile(file))
@@ -93,16 +94,61 @@ int Enemy::enemy_bulletColl(sf::Vector2f Pos)
 
 void Enemy::enemyshoot()
 {
-    enemywep = &pistol;
-    enemywep->getb1ptr()->rotateSprite(angle);
-        shoottimer = 0;
-        enemywep->getb1ptr()->setSpritePos(this->getEnemyPos());
-        enemywep->getb1ptr()->setcurrentVel(enemywep->getb1ptr()->getMaxSpd() * aimDirNorm);
-        enemywep->getBulletsVector()->push_back(Bullet(enemywep->getb1()));
-       
-    for (size_t i = 0; i < enemywep->getBulletsVector()->size(); i++) {
-        enemywep->getBulletsVector()->at(i).moveSprite();
-       
+    if (hasPistol)
+    {
+
+        b2.rotateSprite(angle);
+        if (shoottimer < 22)
+            shoottimer++;
+        if (shoottimer >= 22)
+        {
+            shoottimer = 0;
+            b2.setSpritePos(this->getEnemyPos());
+            b2.setcurrentVel(b2.getMaxSpd() * aimDirNorm);
+            bullets.push_back(Bullet(b2));
+            cout << "Shooting Pistol";
+        }
+        for (size_t i = 0; i < bullets.size(); i++) {
+            bullets[i].moveSprite();
+
+        }
+    }
+    else if (hasUzi)
+    {
+        b2.rotateSprite(angle);
+        if (shoottimer < 10)
+            shoottimer++;
+        if (shoottimer >= 10)
+        {
+            shoottimer = 0;
+            b2.setSpritePos(this->getEnemyPos());
+            b2.setcurrentVel(b2.getMaxSpd() * aimDirNorm);
+            bullets.push_back(Bullet(b2));
+            cout << "Shooting Uzi";
+        }
+        for (size_t i = 0; i < bullets.size(); i++) {
+            bullets[i].moveSprite();
+
+        }
+    }
+    else if (hasShotgun)
+    {
+            b2.rotateSprite(angle);
+            if (shoottimer < 50)
+                shoottimer++;
+            if (shoottimer >= 50)
+            {
+                shoottimer = 0;
+                b2.setSpritePos(this->getEnemyPos());
+                b2.setcurrentVel(b2.getMaxSpd() * aimDirNorm);
+                bullets.push_back(Bullet(b2));
+                cout << "Shooting Shotgun";
+            }
+            for (size_t i = 0; i < bullets.size(); i++) 
+            {
+                bullets[i].moveSprite();
+
+            }
     }
 }
 

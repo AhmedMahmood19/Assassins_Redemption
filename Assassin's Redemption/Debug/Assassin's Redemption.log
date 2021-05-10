@@ -1,2 +1,6 @@
-﻿  Game.cpp
-  Assassin's Redemption.vcxproj -> C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Debug\Assassin's Redemption.exe
+﻿  Enemy.cpp
+  Game.cpp
+D:\Projects C++\SFML-Game\Assassin's Redemption\Game.cpp(7,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.cpp
+  Generating Code...
+  Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe

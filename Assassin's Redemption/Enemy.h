@@ -34,16 +34,18 @@ private:
 	bool stopPatrol;
 	bool isWalker;
 	bool eDead;
+	int shoottimer;
+	bool hasUzi = false;
+	bool hasPistol = false;
+	bool hasShotgun = false;
+	vector<Bullet> bullets;
+	Bullet b2;
 	//Private funcs:
 	void lookAt(sf::Vector2f& aimDir);
 	void updateEnemySprite();
-	Pistol pistol;
-	Shotgun shotgun;
-	Uzi uzi;
-	Weapon* enemywep;
-	int shoottimer;
+	
 public:
-	Weapon* getEnemyWepPtr();
+	
 	Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a);
 	Enemy(sf::Vector2f pos,int a);
 	void setSprite(string file);

@@ -4,7 +4,7 @@ using namespace std;
 void Game::initVariables()
 {
     this->window = nullptr;
-
+    srand(time(0));
     initStartScreen();
     //Game Logic
     playerCollide = 0;
