@@ -202,8 +202,8 @@ void Game::playerbulletColl()
 		{
 			if (enemies[i].getWeapon()->getBulletsVector()->at(j).bulletColl(player.getSprite()) == 1)
 			{
-				//For developing purposes i've commented out player dies
-				//player.playerDies();
+			
+				player.playerDies();
 				cout << "Oof\n";
 				enemies[i].getWeapon()->getBulletsVector()->erase(enemies[i].getWeapon()->getBulletsVector()->begin() + j);
 			}

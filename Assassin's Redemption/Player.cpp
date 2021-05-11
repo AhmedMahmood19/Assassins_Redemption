@@ -5,6 +5,8 @@ Player::Player() :PtrmousePos(0), angle(0), magnitude(0), pDead(0) {
 	wep = &pistol;
 }
 
+
+
 void Player::setSprite(string file) {
 	if (!pTex.loadFromFile(file))
 		return;
