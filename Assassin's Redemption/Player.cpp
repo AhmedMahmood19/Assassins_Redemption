@@ -96,6 +96,7 @@ void Player::lookAtMouse() {
 }
 
 void Player::updatePlayer(int flag) {
+	updatehealthSpr();
 	lookAtMouse();
 	if (flag != 1)
 	{
@@ -187,6 +188,35 @@ bool Player::getpDead() {
 }
 
 void Player::playerDies() {
-	setSprite("sprPDead.png");
 	pDead = true;
+}
+
+void Player::inithealthBar(){
+	if (!healthTex.loadFromFile("sprHealthBar1.png"))
+		return;
+	healthSpr.setScale(0.5, 0.5);
+	healthSpr.setTexture(healthTex);
+	healthSpr.setTextureRect(sf::IntRect(0, 0, 367, 80));
+}
+
+sf::Sprite Player::getHealthSprite()
+{
+	return healthSpr;
+}
+
+void Player::updatehealthSpr() {
+	sf::Vector2f offsetHealth(-400, 200);
+	healthSpr.setPosition(getPlayerPos() + offsetHealth);
+}
+
+void Player::takeDamage()
+{
+	static int x = 0;
+	health--;
+	x += 80;
+	healthSpr.setTextureRect(sf::IntRect(0, x, 367, 80));
+	if (health == 0) {
+		setSprite("sprPDead.png");
+		pDead = true;
+	}
 }
