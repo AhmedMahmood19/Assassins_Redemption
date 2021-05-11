@@ -57,12 +57,14 @@ private:
 	sf::Text Starttext;
 	sf::Text GameoverText;
 	sf::Text EscText;
+	sf::Text ProgressText;
 	bool isStarted;
 	//Funcs:
 	void GameOver();
 	void pollEvents();
 	void updateMousePositions();
 	void updateCharacters();
+	void updateProgress();
 	void wallColl();
 	void windowbounds();
 	void bulletWallColl();

@@ -28,11 +28,19 @@ void Game::initVariables()
 	playerCollide = 0;
 	player.setSprite("sprPWalkMagnum_strip8.png");
 	player.setPosition(350.f, 1450.f);
+	player.inithealthBar();
 	if (!bgTex.loadFromFile("beachmap.png"))
 		return;
 	bgSpr.setTexture(bgTex);
 	bgSpr.setScale(2.5, 2.5);
 	bgSpr.setOrigin(170, 100);
+
+	//Enemies left progress
+	ProgressText.setFont(Startfont);
+	ProgressText.setCharacterSize(25);
+	ProgressText.setFillColor(sf::Color::White);
+	ProgressText.setOutlineColor(sf::Color(0, 204, 255));
+	ProgressText.setOutlineThickness(.5);
 
 	//Todo: Hardcoding a pistol
 	shotgun.setSprite("sprShotgun.png");
@@ -202,8 +210,8 @@ void Game::playerbulletColl()
 		{
 			if (enemies[i].getWeapon()->getBulletsVector()->at(j).bulletColl(player.getSprite()) == 1)
 			{
-				//For developing purposes i've commented out player dies
-				//player.playerDies();
+				//For developing purposes i've commented out takedamage
+				player.takeDamage();
 				cout << "Oof\n";
 				enemies[i].getWeapon()->getBulletsVector()->erase(enemies[i].getWeapon()->getBulletsVector()->begin() + j);
 			}
@@ -325,6 +333,13 @@ void Game::updateCharacters() {
 	}
 }
 
+void Game::updateProgress() {
+	sf::Vector2f offsetProgress(180, 200);
+	string str=to_string(enemies.size());
+	ProgressText.setString("Enemies Left: "+str);
+	ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
+}
+
 void Game::update()
 {
 	this->pollEvents();
@@ -342,6 +357,7 @@ void Game::update()
 			this->enemybulletColl();
 			this->playerbulletColl();
 			this->bulletWallColl();
+			this->updateProgress();
 			this->weaponPickup();
 			this->senseDoors();
 		}
@@ -455,6 +471,10 @@ void Game::render()
 			this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
 		}
 
+		this->window->draw(this->ProgressText);
+
+		if (!player.getpDead())
+			this->window->draw(player.getHealthSprite());
 		//TODO 
 		if (player.getpDead()) {
 			this->window->draw(GameoverText);

@@ -16,12 +16,15 @@ class Player
 {
 private:
 	//Private Data
+	sf::Texture healthTex;
+	sf::Sprite healthSpr;
 	sf::Texture pTex;
 	sf::Sprite pSpr;
 	sf::Vector2i* PtrmousePos;
 	sf::Vector2f aimDir;
 	float magnitude;
 	float angle;
+	int health = 5;
 	sf::Vector2f aimDirNorm;
 	sf::Vector2f PrevPos;
 	bool pDead;
@@ -50,4 +53,8 @@ public:
 	int playerWeaponColl(sf::Sprite x);
 	bool getpDead();
 	void playerDies();
+	void inithealthBar();
+	sf::Sprite getHealthSprite();
+	void updatehealthSpr();
+	void takeDamage();
 };
