@@ -9,13 +9,13 @@ void Bullet::setSprite(string file) {
 	bSpr.setScale(4, 4);
 	bSpr.setTexture(bTex);
 }
-//void Bullet::setShotgunBulletSprite(string file){
-//	if (!bTex.loadFromFile(file))
-//		return;
-//	bSpr.setScale(1, 1);
-//	bSpr.setTexture(bTex);
-//	bSpr.setTextureRect(sf::IntRect(0, 0, 33, 26));
-//}
+void Bullet::setShotgunBulletSprite(string file){
+	if (!bTex.loadFromFile(file))
+		return;
+	bSpr.setScale(1.5, 1.5);
+	bSpr.setTexture(bTex);
+	bSpr.setTextureRect(sf::IntRect(0, 0, 4, 12));
+}
 void Bullet::setSpritePos(sf::Vector2f p) {
 	bSpr.setPosition(p);
 }
