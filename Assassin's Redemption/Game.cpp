@@ -130,7 +130,7 @@ void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(500.f, 700.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
-	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
 	
 	enemies[0].setSprite("sprEWalkM16_strip8.png");
 	enemies[1].setSprite("sprEWalkM16_strip8.png");
@@ -420,7 +420,7 @@ int Game::weaponPickup()
 			//sets weapon and updates playersprite with the player sprite containing this gun 
 			player.setWeapon(&shotgun);
 			player.setSprite(shotgunTex);
-			player.getWeaponptr()->getb1ptr()->setShotgunBulletSprite("sprShot.png");
+			player.getWeaponptr()->getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
 		}
 	}
 	return 0;

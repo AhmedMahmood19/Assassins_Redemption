@@ -44,7 +44,7 @@ void Enemy::setSprite(string file) {
 		uzi.setSprite("sprUzi.png");
 	}
 	else if (hasShotgun) {
-		shotgun.getb1ptr()->setShotgunBulletSprite("sprShot.png");
+		shotgun.getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
 		shotgun.setSprite("sprShotgun.png");
 	}
 }
