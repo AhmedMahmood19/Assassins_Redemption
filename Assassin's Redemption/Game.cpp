@@ -420,7 +420,7 @@ int Game::weaponPickup()
 			//sets weapon and updates playersprite with the player sprite containing this gun 
 			player.setWeapon(&shotgun);
 			player.setSprite(shotgunTex);
-			player.getWeaponptr()->getb1ptr()->setShotgunBulletSprite("sprShot.png");
+			player.getWeaponptr()->getb1ptr()->setSprite("sprShot.png");
 		}
 	}
 	return 0;
