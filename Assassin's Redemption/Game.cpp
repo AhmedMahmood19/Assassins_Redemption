@@ -179,7 +179,7 @@ void Game::wallColl()
 	for (size_t j = 0; j < enemies.size(); j++) {
 		for (size_t i = 0; i < walls.size(); i++)
 		{
-			if (walls[i].wallcolCont(enemies[j].getEnemyPos())) {
+			if (walls[i].wallcolInter(enemies[j].getSprite())) {
 				enemies[j].setCollides(true);
 				break;
 			}

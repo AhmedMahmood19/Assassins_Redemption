@@ -3,7 +3,7 @@
 class Uzi : public Weapon
 {
 private:
-    int wep_timer = 10;
+    int wep_timer = 22;
 public:
     virtual int getWepTimer();
 };

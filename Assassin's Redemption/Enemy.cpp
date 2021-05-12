@@ -185,13 +185,13 @@ void Enemy::chasePlayer() {
 
 void Enemy::detectPlayer(sf::Vector2f player) {
 	calcPath(player, aimDir, magnitude, aimDirNorm);
-	if (magnitude <= 200 && magnitude >= 70) {
+	if (magnitude <= 200 && magnitude >= 120) {
 		stopPatrol = true;
 		lookAt(aimDir);
 		chasePlayer();
 		startShooting = true;
 	}
-	else if (magnitude < 70)
+	else if (magnitude < 120)
 	{
 		stopPatrol = true;
 		lookAt(aimDir);
