@@ -29,6 +29,7 @@ private:
 	float magnitude=0;
 	float patrolmagnitude=0;
 	float angle=0;
+	int Spriteflag;
 	sf::Vector2f PosBeforeColl;
 	bool collides= false;
 	bool stopPatrol;
@@ -50,6 +51,7 @@ private:
 	void calcPath(sf::Vector2f dest, sf::Vector2f& Dir, float& Mag, sf::Vector2f& Norm);
 public:
 	
+	int SpriteCheck();
 	Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a);
 	Enemy(sf::Vector2f pos,int a);
 	void setSprite(string file);

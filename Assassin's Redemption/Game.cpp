@@ -128,14 +128,51 @@ void Game::initWalls() {
 
 void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(500.f, 700.f), rand() % 3 + 1));
+	//bathroom
+	enemies.push_back(Enemy(sf::Vector2f(-88.f, 1246.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(191.f, 1246.f), rand() % 3 + 1));
+
+	//drawing room
+	enemies.push_back(Enemy(sf::Vector2f(1271.f, 331.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(1671.f, 331.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(1256.f, 1456.f), sf::Vector2f(1631.f, 1456.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(1337.f, 1234.f), sf::Vector2f(1337.f, 462.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(1517.f, 466.f), sf::Vector2f(1517.f, 1234.f), rand() % 3 + 1));
+
+	//office
+	enemies.push_back(Enemy(sf::Vector2f(968.f, 187.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(740.f, 283.f), sf::Vector2f(998.f, 283.f), rand() % 3 + 1));
+
+	//lounge
+	enemies.push_back(Enemy(sf::Vector2f(461.f, 295.f), sf::Vector2f(-124.f, 295.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(-169.f, -26.f), sf::Vector2f(290.f, -26.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(-82.f, 762.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(242.f, 160.f), rand() % 3 + 1));
+
+	enemies.push_back(Enemy(sf::Vector2f(650.f, 490.f), sf::Vector2f(650.f, 871.f), rand() % 3 + 1));
+
+
 	enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(900.f, 1050.f), sf::Vector2f(420.f, 1050.f), rand() % 3 + 1));
+
 	enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
+	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
+
+	/*enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
 	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
+	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
+	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
+	*/
+	for (int  i = 0; i < enemies.size(); i++)
+	{
+		if(enemies[i].SpriteCheck()==1)
+		enemies[i].setSprite("sprESearchShotgun_strip10.png");
+		else if(enemies[i].SpriteCheck() == 2)
+		enemies[i].setSprite("sprEWaiterWalkUzi_strip8.png");
+		else if (enemies[i].SpriteCheck() == 3)
+		enemies[i].setSprite("sprESearchSilencer_strip10.png");
+	}
 	
-	enemies[0].setSprite("sprEWalkM16_strip8.png");
-	enemies[1].setSprite("sprEWalkM16_strip8.png");
-	enemies[2].setSprite("sprEWalkM16_strip8.png");
-	enemies[3].setSprite("sprEWalkM16_strip8.png");
 
 	//TODO Hardcode more enemies
 	//enemies.push_back(Enemy(sf::Vector2f( x , y )));
@@ -470,7 +507,7 @@ void Game::render()
 		for (auto i : walls) {
 			window->draw(i.getwall());
 		}
-
+		cout << player.getPlayerPos().x << "," << player.getPlayerPos().y << endl;
 		//Draw Doors
 		this->window->draw(door.getSprite());
 
