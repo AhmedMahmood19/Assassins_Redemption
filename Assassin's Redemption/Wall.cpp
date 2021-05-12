@@ -5,7 +5,7 @@ Wall::Wall(float w1, float w2,float xPos,float yPos)
 	rect.setPosition(xPos,yPos);
 	rect.setSize(sf::Vector2f(w1, w2));
 	rect.setFillColor(sf::Color::Transparent);
-	rect.setOutlineColor(sf::Color::Transparent);
+	rect.setOutlineColor(sf::Color::Green);
 	rect.setOutlineThickness(1.f);
 }
 

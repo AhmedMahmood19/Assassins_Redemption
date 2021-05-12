@@ -131,6 +131,7 @@ void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
+	
 	enemies[0].setSprite("sprEWalkM16_strip8.png");
 	enemies[1].setSprite("sprEWalkM16_strip8.png");
 	enemies[2].setSprite("sprEWalkM16_strip8.png");
@@ -197,6 +198,7 @@ void Game::enemybulletColl()
 			{
 				enemies[i].enemyDies();
 				player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
+				break;
 			}
 		}
 	}
@@ -211,7 +213,7 @@ void Game::playerbulletColl()
 			if (enemies[i].getWeapon()->getBulletsVector()->at(j).bulletColl(player.getSprite()) == 1)
 			{
 				//For developing purposes i've commented out takedamage
-				player.takeDamage();
+				//player.takeDamage();
 				cout << "Oof\n";
 				enemies[i].getWeapon()->getBulletsVector()->erase(enemies[i].getWeapon()->getBulletsVector()->begin() + j);
 			}
@@ -221,9 +223,10 @@ void Game::playerbulletColl()
 
 void Game::bulletWallColl()
 {
-	/*for (size_t i = 0; i < walls.size(); i++) {
+	//Enemy's Bullets
+	for (size_t i = 0; i < walls.size(); i++) {
 		for (size_t j = 0; j < enemies.size(); j++) {
-			for (size_t k = 0; k < player.getWeaponptr()->getBulletsVector()->size(); k++)
+			for (size_t k = 0; k < enemies[j].getWeapon()->getBulletsVector()->size(); k++)
 			{
 				if (walls[i].wallcolInter(enemies[j].getWeapon()->getBulletsVector()->at(k).getSprite()) == 1)
 				{
@@ -231,7 +234,8 @@ void Game::bulletWallColl()
 				}
 			}
 		}
-	}*/
+	}
+	//Player's Bullets
 	for (size_t i = 0; i < walls.size(); i++) {
 		for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
 		{
@@ -275,24 +279,44 @@ void Game::windowbounds()
 	//down
 	if (this->player.getPlayerPos().y >= 1625.f)
 		this->player.setPosition(player.getPlayerPos().x, 1625.f);
+	//Player's Bullets
+	for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
+	{
+		if (player.getWeaponptr()->getBulletsVector()->at(j).bGetPos().x >= 1825.f || player.getWeaponptr()->getBulletsVector()->at(j).bGetPos().x <= -415.f)
+		{
+			player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
+		}
+		else if (player.getWeaponptr()->getBulletsVector()->at(j).bGetPos().y >= 1625.f || player.getWeaponptr()->getBulletsVector()->at(j).bGetPos().y <= -255.f)
+		{
+			player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
+		}
+	}
 }
 
 void Game::senseDoors() {
-	sf::Vector2f sensor;
-	if (player.getPlayerPos().x >= 377 && player.getPlayerPos().x <= 600) {
-		if (player.getPlayerPos().y >= 1345 && player.getPlayerPos().y <= 1625) {
-			door.setisOpen(true);
-			walls[30].disappear();
-			walls[31].disappear();
-			door.moveDoors();
+	for (size_t i = 0; i < enemies.size(); i++) {
+		if (enemies[i].getEnemyPos().x >= 377 && enemies[i].getEnemyPos().x <= 600) {
+			if (enemies[i].getEnemyPos().y >= 1345 && enemies[i].getEnemyPos().y <= 1625) {
+				door.setisOpen(true);
+				walls[30].disappear();
+				walls[31].disappear();
+				door.moveDoors();
+				return;
+			}
 		}
 	}
-	else {
-		door.setisOpen(false);
-		walls[30].appear(12, 90);
-		walls[31].appear(12, 90);
+	if (player.getPlayerPos().x >= 377 && player.getPlayerPos().x <= 600 && player.getPlayerPos().y >= 1345 && player.getPlayerPos().y <= 1625) {
+		door.setisOpen(true);
+		walls[30].disappear();
+		walls[31].disappear();
 		door.moveDoors();
+		return;
 	}
+	door.setisOpen(false);
+	walls[30].appear(12, 90);
+	walls[31].appear(12, 90);
+	door.moveDoors();
+	return;
 }
 
 //Update Functions
@@ -366,14 +390,14 @@ void Game::update()
 
 int Game::weaponPickup()
 {
-	if (player.playerWeaponColl(uzi.getSprite()) == 1 || ev.type == sf::Event::KeyPressed)
+	if (player.playerWeaponColl(uzi.getSprite()) == 1 || ev.type == sf::Event::KeyReleased)
 	{
 		if (ev.key.code == sf::Keyboard::Space)
 		{
 			//sets weapon and updates playersprite with the player sprite containing this gun 
 			player.setWeapon(&uzi);
 			player.setSprite(uziTex);
-			player.getWeaponptr()->getb1ptr()->setSprite("sprUziShell.png");
+			player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
 
 
 		}
