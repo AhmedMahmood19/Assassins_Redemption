@@ -1,6 +1,3 @@
-﻿  Enemy.cpp
-  Game.cpp
-D:\Projects C++\SFML-Game\Assassin's Redemption\Game.cpp(166,21): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-  Generating Code...
+﻿  Game.cpp
+D:\Projects C++\SFML-Game\Assassin's Redemption\Game.cpp(170,21): warning C4018: '<': signed/unsigned mismatch
   Assassin's Redemption.vcxproj -> D:\Projects C++\SFML-Game\Assassin's Redemption\Debug\Assassin's Redemption.exe

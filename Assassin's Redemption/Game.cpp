@@ -34,7 +34,10 @@ void Game::initVariables()
 	bgSpr.setTexture(bgTex);
 	bgSpr.setScale(2.5, 2.5);
 	bgSpr.setOrigin(170, 100);
-
+	//music
+	music.openFromFile("03. M.O.O.N. - Paris.wav");
+	music.play();
+	music.setLoop(true);
 	//Enemies left progress
 	ProgressText.setFont(Startfont);
 	ProgressText.setCharacterSize(25);
@@ -410,6 +413,7 @@ void Game::update()
 		}
 		else
 		{
+			
 			this->updateView();
 			this->updateMousePositions();
 			this->updateCharacters();
@@ -507,7 +511,6 @@ void Game::render()
 		for (auto i : walls) {
 			window->draw(i.getwall());
 		}
-		cout << player.getPlayerPos().x << "," << player.getPlayerPos().y << endl;
 		//Draw Doors
 		this->window->draw(door.getSprite());
 

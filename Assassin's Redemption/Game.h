@@ -58,6 +58,7 @@ private:
 	sf::Text GameoverText;
 	sf::Text EscText;
 	sf::Text ProgressText;
+	sf::Music music;
 	bool isStarted;
 	//Funcs:
 	void GameOver();
