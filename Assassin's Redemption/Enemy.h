@@ -16,7 +16,8 @@ class Enemy
 {
 private:
 	//Private Data
-	int i=0;//used in update sprite
+	int updateTimer=0;//used in update sprite
+	int floatTimer = 0;
 	sf::Texture eTex;
 	sf::Sprite eSpr;
 	sf::Vector2f dest;
@@ -26,6 +27,7 @@ private:
 	sf::Vector2f patrolaimDirNorm;
 	sf::Vector2f spawnPos; //where enemy is spawned
 	sf::Vector2f patrolPos; //where enemy is supposed to turn back during patrol
+	sf::Vector2f dropPos;
 	float magnitude=0;
 	float patrolmagnitude=0;
 	float angle=0;
@@ -63,5 +65,6 @@ public:
 	void detectPlayer(sf::Vector2f player);
 	void enemyshoot();
 	Weapon* getWeapon();
-	void dropWeapon(sf::Vector2f);
+	int gethasWeapon();
+	void floatWeapons();
 };

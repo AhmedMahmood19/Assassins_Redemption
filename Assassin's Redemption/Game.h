@@ -34,20 +34,15 @@ private:
 	void initEnemies();
 	void updateView();
 	//Data:
-	const string uziTex = "sprPWalkUzi_strip8.png";
-	const string pistolTex = "sprPWalkMagnum_strip8.png";
-	const string shotgunTex = "sprPWalkDoubleBarrel_strip8.png";
 	Player player;
 	Doors door;
-	Uzi uzi;
-	Pistol pistol;
-	Shotgun shotgun;
 	vector<Enemy> enemies;
 	vector<Wall> walls;
 	bool playerCollide;
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;
+	int enemiesleft;
 	int blink;
 	sf::Sprite TitleBGspr;
 	sf::Texture TitleBGtex;
@@ -58,9 +53,11 @@ private:
 	sf::Text GameoverText;
 	sf::Text EscText;
 	sf::Text ProgressText;
+	sf::Text BikeText;
 	bool isStarted;
 	//Funcs:
 	void GameOver();
+	void GameWon();
 	void pollEvents();
 	void updateMousePositions();
 	void updateCharacters();

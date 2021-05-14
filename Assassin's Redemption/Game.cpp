@@ -27,7 +27,8 @@ void Game::initVariables()
 	//Game Logic
 	playerCollide = 0;
 	player.setSprite("sprPWalkMagnum_strip8.png");
-	player.setPosition(350.f, 1450.f);
+	//player.setPosition(350.f, 1450.f);
+	player.setPosition(570.f, 212.f);
 	player.inithealthBar();
 	if (!bgTex.loadFromFile("beachmap.png"))
 		return;
@@ -41,17 +42,15 @@ void Game::initVariables()
 	ProgressText.setFillColor(sf::Color::White);
 	ProgressText.setOutlineColor(sf::Color(0, 204, 255));
 	ProgressText.setOutlineThickness(.5);
+	//Get to the Car
+	BikeText.setFont(Titlefont);
+	BikeText.setCharacterSize(20);
+	BikeText.setFillColor(sf::Color::White);
+	BikeText.setOutlineColor(sf::Color(0, 204, 255));
+	BikeText.setOutlineThickness(.5);
+	BikeText.setString("Press Space to Drive");
+	BikeText.setPosition(700.f, -88.f);
 
-	//Todo: Hardcoding a pistol
-	shotgun.setSprite("sprShotgun.png");
-	shotgun.getSpritePtr()->setPosition(370.f, 1390.f);
-
-	uzi.setSprite("sprUzi.png");
-	uzi.getSpritePtr()->setPosition(420.f, 1480.f);
-
-	pistol.setSprite("sprMagnum.png");
-	pistol.getSpritePtr()->setPosition(270.f, 1480.f);
-	//
 	initWalls();
 	initEnemies();
 	door.initDoor("doors.png");
@@ -130,7 +129,7 @@ void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(500.f, 700.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
-	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
+	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
 	
 	enemies[0].setSprite("sprEWalkM16_strip8.png");
 	enemies[1].setSprite("sprEWalkM16_strip8.png");
@@ -140,6 +139,7 @@ void Game::initEnemies() {
 	//TODO Hardcode more enemies
 	//enemies.push_back(Enemy(sf::Vector2f( x , y )));
 	//enemies[i].setSprite("sprEWalkM16_strip8.png");
+	enemiesleft = enemies.size();
 }
 
 void Game::GameOver() {
@@ -159,6 +159,15 @@ void Game::GameOver() {
 	EscText.setFillColor(sf::Color(255, 26, 255, 220));
 	EscText.setOutlineColor(sf::Color(0, 204, 255));
 	EscText.setOutlineThickness(1);
+}
+
+void Game::GameWon() {
+	static bool inBike=false;
+	if (player.getPlayerPos().x >= 750.f && player.getPlayerPos().x <= 950.f && player.getPlayerPos().y >= -80.f && player.getPlayerPos().y <= 11.f)
+		inBike = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && inBike)
+		cout<<"won";
+	//Show winning Screen
 }
 
 void Game::updateView() {
@@ -196,6 +205,7 @@ void Game::enemybulletColl()
 		{
 			if (player.getWeaponptr()->getBulletsVector()->at(j).bulletColl(enemies[i].getSprite()) == 1 && !enemies[i].geteDead())
 			{
+				enemiesleft--;
 				enemies[i].enemyDies();
 				player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
 				break;
@@ -354,14 +364,25 @@ void Game::updateCharacters() {
 		enemies[j].enemyshoot();
 		if (!enemies[j].geteDead())
 			enemies[j].detectPlayer(player.getPlayerPos());
+		else
+			enemies[j].floatWeapons();
 	}
 }
 
 void Game::updateProgress() {
 	sf::Vector2f offsetProgress(180, 200);
-	string str=to_string(enemies.size());
-	ProgressText.setString("Enemies Left: "+str);
-	ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
+	if (enemiesleft > 0) {
+		ProgressText.setString("Enemies Left: " + to_string(enemiesleft));
+		ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
+	}
+	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+	//	enemiesleft = 0;
+	if(enemiesleft == 0){
+		offsetProgress.x -= 20;
+		ProgressText.setString("Get to the Bike");
+		ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
+		GameWon();
+	}
 }
 
 void Game::update()
@@ -390,58 +411,20 @@ void Game::update()
 
 int Game::weaponPickup()
 {
-	if (player.playerWeaponColl(uzi.getSprite()) == 1 || ev.type == sf::Event::KeyReleased)
+	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		if (ev.key.code == sf::Keyboard::Space)
-		{
-			//sets weapon and updates playersprite with the player sprite containing this gun 
-			player.setWeapon(&uzi);
-			player.setSprite(uziTex);
-			player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
-
-
+		if (!enemies[i].geteDead() || !enemies[i].getWeapon()->getisDropped()) {
+			continue;
 		}
-	}
-	if (player.playerWeaponColl(pistol.getSprite()) == 1 || ev.type == sf::Event::KeyPressed)
-	{
-		if (ev.key.code == sf::Keyboard::Space)
+		if (player.playerWeaponColl(enemies[i].getSprite()) == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			//sets weapon and updates playersprite with the player sprite containing this gun 
-			player.setWeapon(&pistol);
-			player.setSprite(pistolTex);
-			player.getWeaponptr()->getb1ptr()->setSprite("sprM16Shell.png");
-		}
-	}
-	if (player.playerWeaponColl(shotgun.getSprite()) == 1 || ev.type == sf::Event::KeyPressed)
-	{
-
-		if (ev.key.code == sf::Keyboard::Space)
-		{
-			//sets weapon and updates playersprite with the player sprite containing this gun 
-			player.setWeapon(&shotgun);
-			player.setSprite(shotgunTex);
-			player.getWeaponptr()->getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
+				player.pickWeapon(enemies[i].gethasWeapon());
+				enemies[i].getWeapon()->setisDropped(false);
 		}
 	}
 	return 0;
 }
 
-//Floating Weapons Prototype
-//void Game::floatWeapons()
-//{
-//    static int i = 0;
-//    if (i < 10) {
-//        shotgun.getSpritePtr()->move(0, 0.5);
-//        i++;
-//    }
-//    else if (i >= 10 && i < 20) {
-//        shotgun.getSpritePtr()->move(0,-0.5);
-//        i++;
-//    }
-//    else if (i == 20) {
-//        i = 0;
-//    }
-//}
 void Game::render()
 {
 	/*
@@ -474,20 +457,18 @@ void Game::render()
 		//Draw Doors
 		this->window->draw(door.getSprite());
 
-		//Draw Enemy and their bullets(todo)
+		//Draw Enemy,their bullets and dropped weapons
 		for (size_t i = 0; i < enemies.size(); i++) {
 			this->window->draw(enemies[i].getSprite());
+
+			if (enemies[i].getWeapon()->getisDropped())
+				this->window->draw(enemies[i].getWeapon()->getSprite());
+			
 			for (size_t j = 0; j < enemies[i].getWeapon()->getBulletsVector()->size(); j++)
 			{
 				this->window->draw(enemies[i].getWeapon()->getBulletsVector()->at(j).getSprite());
 			}
 		}
-
-		//Todo: Hardcoding Guns
-		//floatWeapons(); //Floating Weapons Prototype
-		this->window->draw(shotgun.getSprite());
-		this->window->draw(uzi.getSprite());
-		this->window->draw(pistol.getSprite());
 
 		//Draw Player and their bullets
 		this->window->draw(player.getSprite());
@@ -495,11 +476,18 @@ void Game::render()
 			this->window->draw(player.getWeaponptr()->getBulletsVector()->at(i).getSprite());
 		}
 
+		//Draw Progress Text
 		this->window->draw(this->ProgressText);
 
+		//Draw Bike Text
+		if(enemiesleft==0)
+			this->window->draw(this->BikeText);
+
+		//Draw Health
 		if (!player.getpDead())
 			this->window->draw(player.getHealthSprite());
-		//TODO 
+
+		//Draw Gameover screen
 		if (player.getpDead()) {
 			this->window->draw(GameoverText);
 			this->window->draw(EscText);

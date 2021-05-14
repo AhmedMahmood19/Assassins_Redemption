@@ -166,9 +166,21 @@ void Player::shoot() {
 	}
 }
 
-void Player::setWeapon(Weapon* a)
+void Player::pickWeapon(int hasWeapon)
 {
-	wep = a;
+	if (hasWeapon == 1) {
+		wep = &pistol;
+		setSprite("sprPWalkMagnum_strip8.png");
+	}
+	else if (hasWeapon == 2) {
+		wep = &uzi;
+		setSprite("sprPWalkUzi_strip8.png");
+	}
+	else if (hasWeapon == 3) {
+		wep = &shotgun;
+		setSprite("sprPWalkDoubleBarrel_strip8.png");
+		wep->getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
+	}
 }
 
 int Player::playerWeaponColl(sf::Sprite x)

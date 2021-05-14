@@ -9,6 +9,7 @@
 #include "Pistol.h"
 #include "Weapon.h"
 #include "Shotgun.h"
+#include "Uzi.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ private:
 	bool pDead;
 	Pistol pistol;
 	Shotgun shotgun;
+	Uzi uzi;
 	//Private funcs:
 	void lookAtMouse();
 	void updatePlayerSprite();
@@ -49,7 +51,7 @@ public:
 	float getAngle();
 	void updatePlayer(int flag);
 	void shoot();
-	void setWeapon(Weapon* a);
+	void pickWeapon(int hasWeapon);
 	int playerWeaponColl(sf::Sprite x);
 	bool getpDead();
 	void playerDies();

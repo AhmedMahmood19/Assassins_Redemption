@@ -87,12 +87,25 @@ Weapon* Enemy::getWeapon() {
 	}
 }
 
+int Enemy::gethasWeapon() {
+	if (hasPistol)
+		return 1;
+	else if (hasUzi)
+		return 2;
+	else if (hasShotgun)
+		return 3;
+	else {
+		cout << "\nError in Enemy::gethasWeapon";
+		return NULL;
+	}
+}
+
 void Enemy::updateEnemySprite() {
-	i += 32;
-	if (i == 256)
-		i = 0;
+	updateTimer += 32;
+	if (updateTimer == 256)
+		updateTimer = 0;
 	eSpr.setTexture(eTex);
-	eSpr.setTextureRect(sf::IntRect(i, 0, 32, 24));
+	eSpr.setTextureRect(sf::IntRect(updateTimer, 0, 32, 24));
 }
 
 ///////////////////////////////////////////
@@ -211,14 +224,27 @@ void Enemy::enemyDies() {
 	startShooting = false;
 
 	setSprite("sprEDead.png");
-	dropWeapon(getEnemyPos());
+	getWeapon()->setisDropped(true);
+	getWeapon()->getSpritePtr()->setPosition(getEnemyPos());
 	eDead = true;
 }
 
-void Enemy::dropWeapon(sf::Vector2f dropPos) {
-	getWeapon()->getSpritePtr()->setPosition(dropPos);
-	getWeapon()->setisDropped(true);
-	//Todo when user picks up the gun setisDropped(false) and make the sprite disappear
-	//Also check in wepPickup when user collides with weapon if getisDropped==true
-	//Also while drawing check if each enemy's weapon is dropped or not
+//getWeapon()->getSpritePtr()->setPosition(dropPos);
+//getWeapon()->setisDropped(true);
+//Todo when user picks up the gun setisDropped(false) and make the sprite disappear
+//Also check in wepPickup when user collides with weapon if getisDropped==true
+//Also while drawing check if each enemy's weapon is dropped or not
+void Enemy::floatWeapons()
+{
+	if (floatTimer < 10) {
+		getWeapon()->getSpritePtr()->move(0, 0.5);
+		floatTimer++;
+	}
+	else if (floatTimer >= 10 && floatTimer < 20) {
+		getWeapon()->getSpritePtr()->move(0, -0.5);
+		floatTimer++;
+	}
+	else if (floatTimer == 20) {
+		floatTimer = 0;
+	}
 }
