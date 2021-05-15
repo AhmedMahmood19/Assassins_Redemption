@@ -100,42 +100,42 @@ void Player::updatePlayer(int flag) {
 	lookAtMouse();
 	if (flag != 1)
 	{
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && (sf::Keyboard::isKeyPressed(sf::Keyboard::A)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(-3.f, -3.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(3.f, -3.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(-3.f, 3.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(3.f, 3.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A))) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(-3.f, 0.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D))) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(3.f, 0.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W))) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(0.f, -3.f);
 			updatePlayerSprite();
 		}
-		else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S))) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			PrevPos = pSpr.getPosition();
 			pSpr.move(0.f, 3.f);
 			updatePlayerSprite();

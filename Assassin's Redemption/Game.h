@@ -42,6 +42,10 @@ private:
 	sf::Vector2i mousePosWindow;
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;
+	sf::Texture winTex;
+	sf::Sprite winSpr;
+	sf::Texture creditsTex;
+	sf::Sprite creditsSpr;
 	int enemiesleft;
 	int blink;
 	sf::Sprite TitleBGspr;
@@ -54,7 +58,8 @@ private:
 	sf::Text EscText;
 	sf::Text ProgressText;
 	sf::Text BikeText;
-	bool isStarted;
+	bool isStarted = false;
+	bool hasWon = false;
 	//Funcs:
 	void GameOver();
 	void GameWon();

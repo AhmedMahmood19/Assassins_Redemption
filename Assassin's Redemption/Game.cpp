@@ -39,17 +39,26 @@ void Game::initVariables()
 	//Enemies left progress
 	ProgressText.setFont(Startfont);
 	ProgressText.setCharacterSize(25);
-	ProgressText.setFillColor(sf::Color::White);
-	ProgressText.setOutlineColor(sf::Color(0, 204, 255));
-	ProgressText.setOutlineThickness(.5);
+	ProgressText.setFillColor(sf::Color(216, 0, 0));
+	ProgressText.setOutlineColor(sf::Color::White);
+	ProgressText.setOutlineThickness(.75);
 	//Get to the Car
 	BikeText.setFont(Titlefont);
 	BikeText.setCharacterSize(20);
 	BikeText.setFillColor(sf::Color::White);
-	BikeText.setOutlineColor(sf::Color(0, 204, 255));
-	BikeText.setOutlineThickness(.5);
+	BikeText.setOutlineColor(sf::Color::Black);
+	BikeText.setOutlineThickness(1);
 	BikeText.setString("Press Space to Drive");
 	BikeText.setPosition(700.f, -88.f);
+	//You win
+	if (!winTex.loadFromFile("WinScreen.png"))
+		return;
+	winSpr.setTexture(winTex);
+	//Credits
+	if (!creditsTex.loadFromFile("sprCredits.png"))
+		return;
+	creditsSpr.setTexture(creditsTex);
+	creditsSpr.setScale(0.8f, 0.8f);
 
 	initWalls();
 	initEnemies();
@@ -130,7 +139,7 @@ void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
-	
+
 	enemies[0].setSprite("sprEWalkM16_strip8.png");
 	enemies[1].setSprite("sprEWalkM16_strip8.png");
 	enemies[2].setSprite("sprEWalkM16_strip8.png");
@@ -162,17 +171,40 @@ void Game::GameOver() {
 }
 
 void Game::GameWon() {
-	static bool inBike=false;
-	if (player.getPlayerPos().x >= 750.f && player.getPlayerPos().x <= 950.f && player.getPlayerPos().y >= -80.f && player.getPlayerPos().y <= 11.f)
-		inBike = true;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && inBike)
-		cout<<"won";
-	//Show winning Screen
+	static int i = 0;
+	static int j = 0;
+	//Winning Screen
+	if (i == 3360)
+		i = 0;
+	winSpr.setTextureRect(sf::IntRect(0, i, 800, 480));
+	i += 480;
+	//Credits
+	if (j <= 15)
+		creditsSpr.setTextureRect(sf::IntRect(0, 0, 1000, 100));
+	else if (j <= 30)
+		creditsSpr.setTextureRect(sf::IntRect(0, 100, 1000, 100));
+	else if (j <= 45)
+		creditsSpr.setTextureRect(sf::IntRect(0, 200, 1000, 100));
+	else if (j <= 60)
+		creditsSpr.setTextureRect(sf::IntRect(0, 300, 1000, 100));
+	else if (j <= 75)
+		creditsSpr.setTextureRect(sf::IntRect(0, 400, 1000, 100));
+	else
+		creditsSpr.setTextureRect(sf::IntRect(0, 500, 1000, 100));
+	j += 1;
 }
 
 void Game::updateView() {
-	this->view = new sf::View(sf::Vector2f(player.getPlayerPos()), sf::Vector2f(800.f, 480.f));
-	window->setView(*view);
+	if (this->hasWon) {
+		this->view = new sf::View(sf::Vector2f(400, 240), sf::Vector2f(800.f, 480.f));
+		window->setView(*view);
+		this->window->setFramerateLimit(10);
+	}
+	else
+	{
+		this->view = new sf::View(sf::Vector2f(player.getPlayerPos()), sf::Vector2f(800.f, 480.f));
+		window->setView(*view);
+	}
 }
 
 //Collision Functions
@@ -329,6 +361,22 @@ void Game::senseDoors() {
 	return;
 }
 
+int Game::weaponPickup()
+{
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		if (!enemies[i].geteDead() || !enemies[i].getWeapon()->getisDropped()) {
+			continue;
+		}
+		if (player.playerWeaponColl(enemies[i].getSprite()) == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			player.pickWeapon(enemies[i].gethasWeapon());
+			enemies[i].getWeapon()->setisDropped(false);
+		}
+	}
+	return 0;
+}
+
 //Update Functions
 void Game::pollEvents()
 {
@@ -375,13 +423,13 @@ void Game::updateProgress() {
 		ProgressText.setString("Enemies Left: " + to_string(enemiesleft));
 		ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
 	}
-	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::P))
-	//	enemiesleft = 0;
-	if(enemiesleft == 0){
+	else if (enemiesleft == 0) {
 		offsetProgress.x -= 20;
 		ProgressText.setString("Get to the Bike");
 		ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
-		GameWon();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.getPlayerPos().x >= 750.f && player.getPlayerPos().x <= 950.f && player.getPlayerPos().y >= -80.f && player.getPlayerPos().y <= 11.f) {
+			hasWon = true;
+		}
 	}
 }
 
@@ -392,37 +440,25 @@ void Game::update()
 		if (player.getpDead()) {
 			this->GameOver();
 		}
+		else if (this->hasWon) {
+			this->updateView();
+			this->GameWon();
+		}
 		else
 		{
 			this->updateView();
 			this->updateMousePositions();
+			this->updateProgress();
 			this->updateCharacters();
 			this->windowbounds();
 			this->wallColl();
 			this->enemybulletColl();
 			this->playerbulletColl();
 			this->bulletWallColl();
-			this->updateProgress();
 			this->weaponPickup();
 			this->senseDoors();
 		}
 	}
-}
-
-int Game::weaponPickup()
-{
-	for (size_t i = 0; i < enemies.size(); i++)
-	{
-		if (!enemies[i].geteDead() || !enemies[i].getWeapon()->getisDropped()) {
-			continue;
-		}
-		if (player.playerWeaponColl(enemies[i].getSprite()) == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-				player.pickWeapon(enemies[i].gethasWeapon());
-				enemies[i].getWeapon()->setisDropped(false);
-		}
-	}
-	return 0;
 }
 
 void Game::render()
@@ -445,6 +481,10 @@ void Game::render()
 		this->window->draw(Titletext);
 		this->window->draw(Starttext);
 	}
+	else if (hasWon) {
+		this->window->draw(winSpr);
+		this->window->draw(creditsSpr);
+	}
 	else {
 		//Draw Background
 		this->window->draw(bgSpr);
@@ -463,7 +503,7 @@ void Game::render()
 
 			if (enemies[i].getWeapon()->getisDropped())
 				this->window->draw(enemies[i].getWeapon()->getSprite());
-			
+
 			for (size_t j = 0; j < enemies[i].getWeapon()->getBulletsVector()->size(); j++)
 			{
 				this->window->draw(enemies[i].getWeapon()->getBulletsVector()->at(j).getSprite());
@@ -480,8 +520,14 @@ void Game::render()
 		this->window->draw(this->ProgressText);
 
 		//Draw Bike Text
-		if(enemiesleft==0)
+		if (enemiesleft == 0) {
+			if (blink < 0) {
+				blink = 255;
+			}
+			BikeText.setFillColor(sf::Color(255, 255, 255, blink));
+			blink -= 10;
 			this->window->draw(this->BikeText);
+		}
 
 		//Draw Health
 		if (!player.getpDead())
