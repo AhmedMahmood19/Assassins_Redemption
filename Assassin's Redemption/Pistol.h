@@ -3,7 +3,7 @@
 class Pistol : public Weapon
 {
 private:
-    int wep_timer = 22;
+    int wep_timer = 32;
 public:
     virtual int getWepTimer();  
 };

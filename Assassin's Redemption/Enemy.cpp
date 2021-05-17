@@ -6,12 +6,24 @@ Enemy::Enemy(sf::Vector2f pos, int a) : stopPatrol(true)
 	spawnPos = pos;
 	eSpr.setPosition(pos);
 	if (a == 1)
+	{
 		hasPistol = true;
+		Spriteflag = a;
+	}	
 	else if (a == 2)
+	{
+		Spriteflag = a;
 		hasUzi = true;
+	}
 	else if (a == 3)
+	{
 		hasShotgun = true;
-
+		Spriteflag = a;
+	}
+}
+int Enemy::SpriteCheck()
+{
+	return Spriteflag;
 }
 Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) : stopPatrol(false)
 {
@@ -20,12 +32,20 @@ Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) : stopPatrol(false)
 	patrolPos = Ppos;
 	eSpr.setPosition(pos);
 	if (a == 1)
+	{
 		hasPistol = true;
+		Spriteflag = a;
+	}
 	else if (a == 2)
+	{
+		Spriteflag = a;
 		hasUzi = true;
+	}
 	else if (a == 3)
+	{
 		hasShotgun = true;
-
+		Spriteflag = a;
+	}
 }
 
 void Enemy::setSprite(string file) {
@@ -198,13 +218,13 @@ void Enemy::chasePlayer() {
 
 void Enemy::detectPlayer(sf::Vector2f player) {
 	calcPath(player, aimDir, magnitude, aimDirNorm);
-	if (magnitude <= 200 && magnitude >= 70) {
+	if (magnitude <= 200 && magnitude >= 150) {
 		stopPatrol = true;
 		lookAt(aimDir);
 		chasePlayer();
 		startShooting = true;
 	}
-	else if (magnitude < 70)
+	else if (magnitude < 150)
 	{
 		stopPatrol = true;
 		lookAt(aimDir);
