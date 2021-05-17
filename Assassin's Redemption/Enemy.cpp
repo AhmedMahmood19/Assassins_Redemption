@@ -8,23 +8,17 @@ Enemy::Enemy(sf::Vector2f pos, int a) : stopPatrol(true)
 	if (a == 1)
 	{
 		hasPistol = true;
-		Spriteflag = a;
 	}	
 	else if (a == 2)
 	{
-		Spriteflag = a;
 		hasUzi = true;
 	}
 	else if (a == 3)
 	{
 		hasShotgun = true;
-		Spriteflag = a;
 	}
 }
-int Enemy::SpriteCheck()
-{
-	return Spriteflag;
-}
+
 Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) : stopPatrol(false)
 {
 	isWalker = true;
@@ -34,17 +28,14 @@ Enemy::Enemy(sf::Vector2f pos, sf::Vector2f Ppos, int a) : stopPatrol(false)
 	if (a == 1)
 	{
 		hasPistol = true;
-		Spriteflag = a;
 	}
 	else if (a == 2)
 	{
-		Spriteflag = a;
 		hasUzi = true;
 	}
 	else if (a == 3)
 	{
 		hasShotgun = true;
-		Spriteflag = a;
 	}
 }
 
@@ -53,7 +44,7 @@ void Enemy::setSprite(string file) {
 		return;
 	eSpr.setScale(2, 2);
 	eSpr.setTexture(eTex);
-	eSpr.setTextureRect(sf::IntRect(0, 0, 32, 32));
+	eSpr.setTextureRect(sf::IntRect(0, 0, 44, 24));
 	eSpr.setOrigin(16.f, 16.f);
 	if (hasPistol) {
 		pistol.getb1ptr()->setSprite("sprM16Shell.png");
@@ -121,11 +112,11 @@ int Enemy::gethasWeapon() {
 }
 
 void Enemy::updateEnemySprite() {
-	updateTimer += 32;
-	if (updateTimer == 256)
+	updateTimer += 44;
+	if (updateTimer == 352)
 		updateTimer = 0;
 	eSpr.setTexture(eTex);
-	eSpr.setTextureRect(sf::IntRect(updateTimer, 0, 32, 24));
+	eSpr.setTextureRect(sf::IntRect(updateTimer, 0, 44, 24));
 }
 
 ///////////////////////////////////////////
@@ -242,8 +233,16 @@ void Enemy::detectPlayer(sf::Vector2f player) {
 
 void Enemy::enemyDies() {
 	startShooting = false;
-
-	setSprite("sprEDead.png");
+	if(hasUzi)
+	{
+		setSprite("sprEDeadUzi.png");
+		eSpr.setTextureRect(sf::IntRect(0, 0, 51, 28));
+	}
+	else
+	{
+		setSprite("sprEDead.png");
+		eSpr.setTextureRect(sf::IntRect(0, 0, 49, 25));
+	}
 	getWeapon()->setisDropped(true);
 	getWeapon()->getSpritePtr()->setPosition(getEnemyPos());
 	eDead = true;

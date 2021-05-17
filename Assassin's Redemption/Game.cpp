@@ -39,9 +39,6 @@ void Game::initVariables()
 	music.play();
 	music.setLoop(true);
 	//sfx
-	//if (!shootbuff.loadFromFile("Pistol.wav"))
-	//	return;
-	//shootsfx.setBuffer(shootbuff);
 	if (!pickupbuff.loadFromFile("PickupWeapon.wav"))
 		return;
 	pickupsfx.setBuffer(pickupbuff);
@@ -171,35 +168,21 @@ void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(-169.f, -26.f), sf::Vector2f(290.f, -26.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(-82.f, 762.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(242.f, 160.f), rand() % 3 + 1));
-
 	enemies.push_back(Enemy(sf::Vector2f(650.f, 490.f), sf::Vector2f(650.f, 871.f), rand() % 3 + 1));
-
-
 	enemies.push_back(Enemy(sf::Vector2f(420.f, 1130.f), sf::Vector2f(900.f, 1130.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(900.f, 1050.f), sf::Vector2f(420.f, 1050.f), rand() % 3 + 1));
-
 	enemies.push_back(Enemy(sf::Vector2f(977.f, 577.f), sf::Vector2f(977.f, 1111.f), rand() % 3 + 1));
 	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), rand() % 3 + 1));
 
-	/*enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
-	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
-	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
-	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
-	*/
 	for (size_t  i = 0; i < enemies.size(); i++)
 	{
-		if(enemies[i].SpriteCheck()==1)
-		enemies[i].setSprite("sprESearchShotgun_strip10.png");
-		else if(enemies[i].SpriteCheck() == 2)
-		enemies[i].setSprite("sprEWaiterWalkUzi_strip8.png");
-		else if (enemies[i].SpriteCheck() == 3)
-		enemies[i].setSprite("sprESearchSilencer_strip10.png");
+		if(enemies[i].gethasWeapon()==1)
+		enemies[i].setSprite("sprEPistol.png");
+		else if(enemies[i].gethasWeapon()== 2)
+		enemies[i].setSprite("sprEUzi.png");
+		else if (enemies[i].gethasWeapon()== 3)
+		enemies[i].setSprite("sprEShotgun.png");
 	}
-	
-
-	//TODO Hardcode more enemies
-	//enemies.push_back(Enemy(sf::Vector2f( x , y )));
-	//enemies[i].setSprite("sprEWalkM16_strip8.png");
 	enemiesleft = enemies.size();
 }
 
@@ -308,9 +291,7 @@ void Game::playerbulletColl()
 			if (enemies[i].getWeapon()->getBulletsVector()->at(j).bulletColl(player.getSprite()) == 1)
 			{
 				hitsfx.play();
-				//For developing purposes i've commented out takedamage
-				//player.takeDamage();
-				cout << "Oof\n";
+				player.takeDamage();
 				enemies[i].getWeapon()->getBulletsVector()->erase(enemies[i].getWeapon()->getBulletsVector()->begin() + j);
 			}
 		}

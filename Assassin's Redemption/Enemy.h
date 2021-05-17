@@ -31,7 +31,6 @@ private:
 	float magnitude=0;
 	float patrolmagnitude=0;
 	float angle=0;
-	int Spriteflag;
 	sf::Vector2f PosBeforeColl;
 	bool collides= false;
 	bool stopPatrol;
