@@ -247,7 +247,7 @@ void Player::takeDamage()
 	static int x = 0;
 	health--;
 	x += 80;
-	healthSpr.setScale(0.55, 0.55);
+	healthSpr.setScale(0.55f, 0.55f);
 	healthSpr.setTextureRect(sf::IntRect(0, x, 367, 80));
 	if (health == 0) {
 		setSprite("Images/sprPDead.png");

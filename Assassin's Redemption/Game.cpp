@@ -183,7 +183,7 @@ void Game::initEnemies() {
 		else if (enemies[i].gethasWeapon()== 3)
 		enemies[i].setSprite("Images/sprEShotgun.png");
 	}
-	enemiesleft = enemies.size();
+	enemiesleft = (int)enemies.size();
 }
 
 void Game::GameOver() {
@@ -319,8 +319,8 @@ void Game::bulletWallColl()
 		}
 	}
 	//Player's Bullets
-	for (size_t i = 0; i < walls.size(); i++) {
-		for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
+	for (int i = 0; i < walls.size(); i++) {
+		for (int j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
 		{
 			if (walls[i].wallcolInter(player.getWeaponptr()->getbulletSpr(j)) == 1)
 			{
