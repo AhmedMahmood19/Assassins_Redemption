@@ -60,6 +60,7 @@ private:
 	sf::Text BikeText;
 	bool isStarted = false;
 	bool hasWon = false;
+	sf::Music music;
 	//Funcs:
 	void GameOver();
 	void GameWon();
