@@ -26,26 +26,26 @@ void Game::initVariables()
 	initStartScreen();
 	//Game Logic
 	playerCollide = 0;
-	player.setSprite("sprPWalkMagnum_strip8.png");
+	player.setSprite("Images/sprPWalkMagnum_strip8.png");
 	player.setPosition(350.f, 1450.f);
 	player.inithealthBar();
-	if (!bgTex.loadFromFile("beachmap.png"))
+	if (!bgTex.loadFromFile("Images/beachmap.png"))
 		return;
 	bgSpr.setTexture(bgTex);
 	bgSpr.setScale(2.5, 2.5);
 	bgSpr.setOrigin(170, 100);
 	//music
-	music.openFromFile("03. M.O.O.N. - Paris.wav");
+	music.openFromFile("Sounds/03. M.O.O.N. - Paris.wav");
 	music.play();
 	music.setLoop(true);
 	//sfx
-	if (!pickupbuff.loadFromFile("PickupWeapon.wav"))
+	if (!pickupbuff.loadFromFile("Sounds/PickupWeapon.wav"))
 		return;
 	pickupsfx.setBuffer(pickupbuff);
-	if (!hitbuff.loadFromFile("Hit.wav"))
+	if (!hitbuff.loadFromFile("Sounds/Hit.wav"))
 		return;
 	hitsfx.setBuffer(hitbuff);
-	if (!bikebuff.loadFromFile("BikeStart.wav"))
+	if (!bikebuff.loadFromFile("Sounds/BikeStart.wav"))
 		return;
 	bikesfx.setBuffer(bikebuff);
 	//Enemies left progress
@@ -63,18 +63,18 @@ void Game::initVariables()
 	BikeText.setString("Press Space to Drive");
 	BikeText.setPosition(700.f, -88.f);
 	//You win
-	if (!winTex.loadFromFile("WinScreen.png"))
+	if (!winTex.loadFromFile("Images/WinScreen.png"))
 		return;
 	winSpr.setTexture(winTex);
 	//Credits
-	if (!creditsTex.loadFromFile("sprCredits.png"))
+	if (!creditsTex.loadFromFile("Images/sprCredits.png"))
 		return;
 	creditsSpr.setTexture(creditsTex);
 	creditsSpr.setScale(0.8f, 0.8f);
 
 	initWalls();
 	initEnemies();
-	door.initDoor("doors.png");
+	door.initDoor("Images/doors.png");
 }
 
 void Game::initStartScreen()
@@ -85,7 +85,7 @@ void Game::initStartScreen()
 		return;
 	if (!Startfont.loadFromFile("Fonts\\Distortion Dos Analogue.otf"))
 		return;
-	if (!TitleBGtex.loadFromFile("screen/WaterP.png"))
+	if (!TitleBGtex.loadFromFile("Images/WaterP.png"))
 		return;
 	Titletext.setPosition(40, 20);
 	Starttext.setPosition(220, 270);
@@ -177,11 +177,11 @@ void Game::initEnemies() {
 	for (size_t  i = 0; i < enemies.size(); i++)
 	{
 		if(enemies[i].gethasWeapon()==1)
-		enemies[i].setSprite("sprEPistol.png");
+		enemies[i].setSprite("Images/sprEPistol.png");
 		else if(enemies[i].gethasWeapon()== 2)
-		enemies[i].setSprite("sprEUzi.png");
+		enemies[i].setSprite("Images/sprEUzi.png");
 		else if (enemies[i].gethasWeapon()== 3)
-		enemies[i].setSprite("sprEShotgun.png");
+		enemies[i].setSprite("Images/sprEShotgun.png");
 	}
 	enemiesleft = enemies.size();
 }
@@ -285,6 +285,11 @@ void Game::enemybulletColl()
 
 void Game::playerbulletColl()
 {
+	if (hit)
+	{
+		player.healthbarGlow();
+		hit = false;
+	}
 	for (size_t i = 0; i < enemies.size(); i++) {
 		for (size_t j = 0; j < enemies[i].getWeapon()->getBulletsVector()->size(); j++)
 		{
@@ -292,6 +297,7 @@ void Game::playerbulletColl()
 			{
 				hitsfx.play();
 				player.takeDamage();
+				hit = true;
 				enemies[i].getWeapon()->getBulletsVector()->erase(enemies[i].getWeapon()->getBulletsVector()->begin() + j);
 			}
 		}

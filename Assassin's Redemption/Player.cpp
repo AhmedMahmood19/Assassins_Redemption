@@ -13,22 +13,22 @@ void Player::setSprite(string file) {
 	pSpr.setTextureRect(sf::IntRect(0, 0, 44, 32));
 	pSpr.setOrigin(16.f, 16.f);
 	setSound();
-	wep->getb1ptr()->setSprite("sprM16Shell.png");
+	wep->getb1ptr()->setSprite("Images/sprM16Shell.png");
 }
 
 void Player::setSound() {
 	if (wep == &pistol) {
-		if (!shootbuff.loadFromFile("Pistol.wav"))
+		if (!shootbuff.loadFromFile("Sounds/Pistol.wav"))
 			return;
 		shootsfx.setBuffer(shootbuff);
 	}
 	else if (wep == &uzi) {
-		if (!shootbuff.loadFromFile("Uzi.wav"))
+		if (!shootbuff.loadFromFile("Sounds/Uzi.wav"))
 			return;
 		shootsfx.setBuffer(shootbuff);
 	}
 	else if (wep == &shotgun) {
-		if (!shootbuff.loadFromFile("Shotgun.wav"))
+		if (!shootbuff.loadFromFile("Sounds/Shotgun.wav"))
 			return;
 		shootsfx.setBuffer(shootbuff);
 	}
@@ -190,16 +190,16 @@ void Player::pickWeapon(int hasWeapon)
 {
 	if (hasWeapon == 1) {
 		wep = &pistol;
-		setSprite("sprPWalkMagnum_strip8.png");
+		setSprite("Images/sprPWalkMagnum_strip8.png");
 	}
 	else if (hasWeapon == 2) {
 		wep = &uzi;
-		setSprite("sprPWalkUzi_strip8.png");
+		setSprite("Images/sprPWalkUzi_strip8.png");
 	}
 	else if (hasWeapon == 3) {
 		wep = &shotgun;
-		setSprite("sprPWalkDoubleBarrel_strip8.png");
-		wep->getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
+		setSprite("Images/sprPWalkDoubleBarrel_strip8.png");
+		wep->getb1ptr()->setShotgunBulletSprite("Images/sprShotShell.png");
 	}
 	setSound();
 }
@@ -225,7 +225,7 @@ void Player::playerDies() {
 }
 
 void Player::inithealthBar(){
-	if (!healthTex.loadFromFile("sprHealthBar1.png"))
+	if (!healthTex.loadFromFile("Images/sprHealthBar1.png"))
 		return;
 	healthSpr.setScale(0.5, 0.5);
 	healthSpr.setTexture(healthTex);
@@ -247,9 +247,13 @@ void Player::takeDamage()
 	static int x = 0;
 	health--;
 	x += 80;
+	healthSpr.setScale(0.55, 0.55);
 	healthSpr.setTextureRect(sf::IntRect(0, x, 367, 80));
 	if (health == 0) {
-		setSprite("sprPDead.png");
+		setSprite("Images/sprPDead.png");
 		pDead = true;
 	}
+}
+void Player::healthbarGlow() {
+	healthSpr.setScale(0.5, 0.5);
 }

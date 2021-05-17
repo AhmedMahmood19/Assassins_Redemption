@@ -63,4 +63,5 @@ public:
 	sf::Sprite getHealthSprite();
 	void updatehealthSpr();
 	void takeDamage();
+	void healthbarGlow();
 };

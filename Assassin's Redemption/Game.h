@@ -48,6 +48,7 @@ private:
 	sf::Sprite creditsSpr;
 	int enemiesleft;
 	int blink;
+	bool hit = false;
 	sf::Sprite TitleBGspr;
 	sf::Texture TitleBGtex;
 	sf::Font Titlefont;

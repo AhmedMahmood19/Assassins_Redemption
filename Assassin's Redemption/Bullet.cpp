@@ -10,7 +10,7 @@ void Bullet::setSprite(string file) {
 	bSpr.setTexture(bTex);
 }
 void Bullet::setShotgunBulletSprite(string file){
-	if (!bTex.loadFromFile("sprShotShell.png"))
+	if (!bTex.loadFromFile("Images/sprShotShell.png"))
 		return;
 	bSpr.setScale(1.5, 1.5);
 	bSpr.setTexture(bTex);

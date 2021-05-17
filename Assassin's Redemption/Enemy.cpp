@@ -47,16 +47,16 @@ void Enemy::setSprite(string file) {
 	eSpr.setTextureRect(sf::IntRect(0, 0, 44, 24));
 	eSpr.setOrigin(16.f, 16.f);
 	if (hasPistol) {
-		pistol.getb1ptr()->setSprite("sprM16Shell.png");
-		pistol.setSprite("sprMagnum.png");
+		pistol.getb1ptr()->setSprite("Images/sprM16Shell.png");
+		pistol.setSprite("Images/sprMagnum.png");
 	}
 	else if (hasUzi) {
-		uzi.getb1ptr()->setSprite("sprM16Shell.png");
-		uzi.setSprite("sprUzi.png");
+		uzi.getb1ptr()->setSprite("Images/sprM16Shell.png");
+		uzi.setSprite("Images/sprUzi.png");
 	}
 	else if (hasShotgun) {
-		shotgun.getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
-		shotgun.setSprite("sprShotgun.png");
+		shotgun.getb1ptr()->setShotgunBulletSprite("Images/sprShotShell.png");
+		shotgun.setSprite("Images/sprShotgun.png");
 	}
 }
 
@@ -235,12 +235,12 @@ void Enemy::enemyDies() {
 	startShooting = false;
 	if(hasUzi)
 	{
-		setSprite("sprEDeadUzi.png");
+		setSprite("Images/sprEDeadUzi.png");
 		eSpr.setTextureRect(sf::IntRect(0, 0, 51, 28));
 	}
 	else
 	{
-		setSprite("sprEDead.png");
+		setSprite("Images/sprEDead.png");
 		eSpr.setTextureRect(sf::IntRect(0, 0, 49, 25));
 	}
 	getWeapon()->setisDropped(true);
@@ -248,11 +248,6 @@ void Enemy::enemyDies() {
 	eDead = true;
 }
 
-//getWeapon()->getSpritePtr()->setPosition(dropPos);
-//getWeapon()->setisDropped(true);
-//Todo when user picks up the gun setisDropped(false) and make the sprite disappear
-//Also check in wepPickup when user collides with weapon if getisDropped==true
-//Also while drawing check if each enemy's weapon is dropped or not
 void Enemy::floatWeapons()
 {
 	if (floatTimer < 10) {
