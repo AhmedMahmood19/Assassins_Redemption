@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -40,7 +41,10 @@ private:
 public:
 	Player();
 	Weapon* wep;
+	sf::SoundBuffer shootbuff;
+	sf::Sound shootsfx;
 	void setSprite(string file);
+	void setSound();
 	void setPtrmousePos(sf::Vector2i& mouse);
 	void setPosition(float x, float y);
 	sf::Sprite getSprite();

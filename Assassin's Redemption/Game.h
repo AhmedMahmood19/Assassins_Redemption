@@ -61,6 +61,14 @@ private:
 	bool isStarted = false;
 	bool hasWon = false;
 	sf::Music music;
+	sf::SoundBuffer hitbuff;
+	//sf::SoundBuffer shootbuff;
+	sf::SoundBuffer pickupbuff;
+	sf::SoundBuffer bikebuff;
+	sf::Sound hitsfx;
+	//sf::Sound shootsfx;
+	sf::Sound pickupsfx;
+	sf::Sound bikesfx;
 	//Funcs:
 	void GameOver();
 	void GameWon();
@@ -75,7 +83,6 @@ private:
 	int weaponPickup();
 	void enemybulletColl();
 	void playerbulletColl();
-	//void floatWeapons();//Floating Weapons Prototype
 public:
 	Game();
 	virtual ~Game();

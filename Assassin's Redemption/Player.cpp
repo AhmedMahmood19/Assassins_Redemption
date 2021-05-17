@@ -12,7 +12,26 @@ void Player::setSprite(string file) {
 	pSpr.setTexture(pTex);
 	pSpr.setTextureRect(sf::IntRect(0, 0, 44, 32));
 	pSpr.setOrigin(16.f, 16.f);
+	setSound();
 	wep->getb1ptr()->setSprite("sprM16Shell.png");
+}
+
+void Player::setSound() {
+	if (wep == &pistol) {
+		if (!shootbuff.loadFromFile("Pistol.wav"))
+			return;
+		shootsfx.setBuffer(shootbuff);
+	}
+	else if (wep == &uzi) {
+		if (!shootbuff.loadFromFile("Uzi.wav"))
+			return;
+		shootsfx.setBuffer(shootbuff);
+	}
+	else if (wep == &shotgun) {
+		if (!shootbuff.loadFromFile("Shotgun.wav"))
+			return;
+		shootsfx.setBuffer(shootbuff);
+	}
 }
 
 void Player::setPosition(float x, float y)
@@ -160,6 +179,7 @@ void Player::shoot() {
 		wep->getb1ptr()->setSpritePos(this->getPlayerPos());
 		wep->getb1ptr()->setcurrentVel(wep->getb1ptr()->getMaxSpd() * aimDirNorm);
 		wep->getBulletsVector()->push_back(Bullet(*wep->getb1ptr()));
+		shootsfx.play();
 	}
 	for (size_t i = 0; i < wep->getBulletsVector()->size(); i++) {
 		wep->getBulletsVector()->at(i).moveSprite();
@@ -181,6 +201,7 @@ void Player::pickWeapon(int hasWeapon)
 		setSprite("sprPWalkDoubleBarrel_strip8.png");
 		wep->getb1ptr()->setShotgunBulletSprite("sprShotShell.png");
 	}
+	setSound();
 }
 
 int Player::playerWeaponColl(sf::Sprite x)

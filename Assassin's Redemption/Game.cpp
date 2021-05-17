@@ -27,8 +27,7 @@ void Game::initVariables()
 	//Game Logic
 	playerCollide = 0;
 	player.setSprite("sprPWalkMagnum_strip8.png");
-	//player.setPosition(350.f, 1450.f);
-	player.setPosition(570.f, 212.f);
+	player.setPosition(350.f, 1450.f);
 	player.inithealthBar();
 	if (!bgTex.loadFromFile("beachmap.png"))
 		return;
@@ -39,6 +38,19 @@ void Game::initVariables()
 	music.openFromFile("03. M.O.O.N. - Paris.wav");
 	music.play();
 	music.setLoop(true);
+	//sfx
+	//if (!shootbuff.loadFromFile("Pistol.wav"))
+	//	return;
+	//shootsfx.setBuffer(shootbuff);
+	if (!pickupbuff.loadFromFile("PickupWeapon.wav"))
+		return;
+	pickupsfx.setBuffer(pickupbuff);
+	if (!hitbuff.loadFromFile("Hit.wav"))
+		return;
+	hitsfx.setBuffer(hitbuff);
+	if (!bikebuff.loadFromFile("BikeStart.wav"))
+		return;
+	bikesfx.setBuffer(bikebuff);
 	//Enemies left progress
 	ProgressText.setFont(Startfont);
 	ProgressText.setCharacterSize(25);
@@ -174,7 +186,7 @@ void Game::initEnemies() {
 	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
 	enemies.push_back(Enemy(sf::Vector2f(800.f, 1370.f), sf::Vector2f(800.f, 1530.f), 3));
 	*/
-	for (int  i = 0; i < enemies.size(); i++)
+	for (size_t  i = 0; i < enemies.size(); i++)
 	{
 		if(enemies[i].SpriteCheck()==1)
 		enemies[i].setSprite("sprESearchShotgun_strip10.png");
@@ -278,6 +290,7 @@ void Game::enemybulletColl()
 			if (player.getWeaponptr()->getBulletsVector()->at(j).bulletColl(enemies[i].getSprite()) == 1 && !enemies[i].geteDead())
 			{
 				enemiesleft--;
+				hitsfx.play();
 				enemies[i].enemyDies();
 				player.getWeaponptr()->getBulletsVector()->erase(player.getWeaponptr()->getBulletsVector()->begin() + j);
 				break;
@@ -294,6 +307,7 @@ void Game::playerbulletColl()
 		{
 			if (enemies[i].getWeapon()->getBulletsVector()->at(j).bulletColl(player.getSprite()) == 1)
 			{
+				hitsfx.play();
 				//For developing purposes i've commented out takedamage
 				//player.takeDamage();
 				cout << "Oof\n";
@@ -411,6 +425,7 @@ int Game::weaponPickup()
 		if (player.playerWeaponColl(enemies[i].getSprite()) == 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			player.pickWeapon(enemies[i].gethasWeapon());
+			pickupsfx.play();
 			enemies[i].getWeapon()->setisDropped(false);
 		}
 	}
@@ -468,6 +483,7 @@ void Game::updateProgress() {
 		ProgressText.setString("Get to the Bike");
 		ProgressText.setPosition(player.getPlayerPos() + offsetProgress);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.getPlayerPos().x >= 750.f && player.getPlayerPos().x <= 950.f && player.getPlayerPos().y >= -80.f && player.getPlayerPos().y <= 11.f) {
+			bikesfx.play();
 			hasWon = true;
 		}
 	}
