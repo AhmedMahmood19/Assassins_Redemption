@@ -1,0 +1,10 @@
+﻿  Game.cpp
+C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Game.cpp(325,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Game.cpp(326,21): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Generating code
+  17 of 427 functions ( 4.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Assassin's Redemption.vcxproj -> C:\Users\Ahmed\source\repos\TEST REPO\Assassin's Redemption\Release\Assassin's Redemption.exe
