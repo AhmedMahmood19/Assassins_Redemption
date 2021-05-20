@@ -51,8 +51,6 @@ private:
 	bool hit = false;
 	sf::Sprite TitleBGspr;
 	sf::Texture TitleBGtex;
-	sf::Sprite HTPspr; //How to play sprite
-	sf::Texture HTPtex; //How to play texture
 	sf::Font Titlefont;
 	sf::Font Startfont;
 	sf::Text Titletext;
@@ -61,7 +59,6 @@ private:
 	sf::Text EscText;
 	sf::Text ProgressText;
 	sf::Text BikeText;
-	bool HTP = false; //How to play
 	bool isStarted = false;
 	bool hasWon = false;
 	sf::Music music;

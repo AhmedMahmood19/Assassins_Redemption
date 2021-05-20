@@ -87,8 +87,6 @@ void Game::initStartScreen()
 		return;
 	if (!TitleBGtex.loadFromFile("Images/WaterP.png"))
 		return;
-	if (!HTPtex.loadFromFile("Images/HTPspr.png"))
-		return;
 	Titletext.setPosition(40, 20);
 	Starttext.setPosition(220, 270);
 	Titletext.setFont(Titlefont);
@@ -100,7 +98,6 @@ void Game::initStartScreen()
 	Titletext.setFillColor(sf::Color::Black);
 	Starttext.setFillColor(sf::Color(255, 255, 255, 200));
 	TitleBGspr.setTexture(TitleBGtex);
-	HTPspr.setTexture(HTPtex);
 }
 
 void Game::initWindow()
@@ -438,9 +435,7 @@ void Game::pollEvents()
 				break;
 			}
 			if (this->ev.key.code == sf::Keyboard::X) {
-				if(HTP)
-					isStarted = true;
-				HTP = true;
+				isStarted = true;
 				break;
 			}
 		}
@@ -521,19 +516,14 @@ void Game::render()
 	this->window->clear();
 
 	if (!isStarted) {
-		if (HTP) {
-			this->window->draw(HTPspr);
+		if (blink < 0) {
+			blink = 255;
 		}
-		else {
-			if (blink < 0) {
-				blink = 255;
-			}
-			Starttext.setFillColor(sf::Color(255, 255, 255, blink));
-			blink -= 10;
-			this->window->draw(TitleBGspr);
-			this->window->draw(Titletext);
-			this->window->draw(Starttext);
-		}
+		Starttext.setFillColor(sf::Color(255, 255, 255, blink));
+		blink -= 10;
+		this->window->draw(TitleBGspr);
+		this->window->draw(Titletext);
+		this->window->draw(Starttext);
 	}
 	else if (hasWon) {
 		this->window->draw(winSpr);
