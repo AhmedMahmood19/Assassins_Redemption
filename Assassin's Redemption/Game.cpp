@@ -319,8 +319,8 @@ void Game::bulletWallColl()
 		}
 	}
 	//Player's Bullets
-	for (int i = 0; i < walls.size(); i++) {
-		for (int j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
+	for (size_t i = 0; i < walls.size(); i++) {
+		for (size_t j = 0; j < player.getWeaponptr()->getBulletsVector()->size(); j++)
 		{
 			if (walls[i].wallcolInter(player.getWeaponptr()->getbulletSpr(j)) == 1)
 			{
